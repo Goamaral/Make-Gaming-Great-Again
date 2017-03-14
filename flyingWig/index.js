@@ -16,19 +16,13 @@ Object.prototype.setStyle = function(newStyle) {
 
 //On window full load
 this.onload = function() {
+	//Get main node from DOM
 	let main = document.getElementsByTagName("main")[0];
-
 	//create canvas and set canvas style
 	let canvas = new Canvas(main,640,360);
-	canvas.setStyle({
-		border: '1px solid #000000',
-		margin: 'auto'
-	});
+	//Create stand.png sprite
+	let sprite = new Sprite(canvas, './resources/images/sprites/stand.png', 481/7, 545/7);
 
-	//Load stand.png and draw it in the canvas left down corner
-	let _img = new Image(481/7,545/7);
-	_img.onload = () => {
-		canvas.drawImage(_img,0,canvas.getHeight()-_img.height,_img.width,_img.height);
-	}
-	_img.src = './resources/images/sprites/stand.png';
+	/* TEST ZONE */
+	canvas.drawSprite(sprite,0,0);
 };
