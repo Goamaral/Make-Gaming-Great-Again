@@ -1,5 +1,3 @@
-'use strict'
-
 class Canvas {
 	constructor(root,width,height) {
 		[ this.root,this.width,this.height ] = [ root,width,height ];
@@ -19,28 +17,26 @@ class Canvas {
 	}
 
 	//Returns current full canvas image data
-	getImageData() {
+	getFrameData() {
 		return this.ctx.getImageData(0,0,this.width,this.height);
 	}
 
-	//Recieves JS plain Object and updates convas style object
+	//Recieves JS plain Object with style and updates canvas style object
 	setStyle(newStyle) {
-		this.canvas.setStyle(newStyle);
+		let prevStyle = this.canvas.style;
+		for(let key in newStyle) {
+			prevStyle[key] = newStyle[key];
+		}
 	}
 
 	//Draws image in the canvas
-	drawImage(imgSrc,x,y,width,height) {
-		let _img = new Image(width, height);
-		_img.onload = () => {
-			this.ctx.drawImage(_img,x,y,width,height);
-		}
-		_img.src = imgSrc;
+	drawImage(img,x,y,width,height) {
+		this.ctx.drawImage(img,x,y,width,height);
 	}
 
 	//Draws sprite in the canvas
 	drawSprite(sprite,x,y) {
 		let _imgData = sprite.getImageData();
-		//HERE
 		this.ctx.putImageData(_imgData,x,y);
 	}
 
@@ -63,4 +59,6 @@ class Canvas {
 	unmountCanvas() {
 		this.root.removeChild(this.canvas);
 	}
-};
+}
+
+//export default Canvas;
