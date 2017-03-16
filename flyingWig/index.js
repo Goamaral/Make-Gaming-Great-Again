@@ -9,6 +9,7 @@
 // NOTE: When arrow functions are used in global scope, they always refer to the global this, window. For safety always use ES5 anonymous function calls in global scope.
 // NOTE: Auxiliar variables should hava a _ before their proper name, for example, _auxVar instead of auxVar
 // TODO: Make game responsive
+// NOTE: use natural dim instead of fixed ones
 
 // On window full load
 this.onload = function() {
@@ -29,6 +30,10 @@ this.onload = function() {
     // Load every sprite and create a image node for each one
     createSpriteNodes(sprites, spritesPath);
 
+    this.addEventListener("imageLoadEnded", imageLoadEndedHandler);
+}
+
+function imageLoadEndedHandler() {
     // create canvas and set canvas style
     let canvas = new Canvas(main, 640, 360);
 
