@@ -10,7 +10,7 @@
 // TODO: Make game responsive
 
 // On window full load
-this.onload = () => {
+window.onload = function() {
 	//Get main node from DOM
 	let main = document.getElementsByTagName("main")[0];
 
