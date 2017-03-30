@@ -1,0 +1,19 @@
+html,body {
+  height: 100vh;
+  margin: 0;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+iframe {
+  width: 768px;
+  height: 432px;
+  border: 1px solid black;
+}

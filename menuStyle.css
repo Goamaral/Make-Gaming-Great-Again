@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css?family=Contrail+One');
+
+#title {
+  font-size: 35px;
+  font-family: 'Contrail One', cursive;
+  margin: 0;
+  margin-bottom: 20px;
+  color: black;
+}
+
+body {
+  background: url(resources/Trump-Main.png);
+  background-size: cover;
+  padding: 0;
+  margin: 0;
+}
+
+menu {
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+left {
+  margin-top: 40px;
+  margin-left: 40px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.button {
+  width: 200px;
+  padding: 7px;
+  margin: 10px;
+  font-family: Helvetica;
+  border-radius: 5px;
+  font-size: 1em;
+  border: none;
+  color: black;
+  background-color: #ffc107;
+  font-weight: bold;
+}
+
+.button:hover {
+  background-color: #ffe082;
+}

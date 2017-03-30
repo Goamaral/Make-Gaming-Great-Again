@@ -9,11 +9,6 @@ class Canvas {
     this.canvas = document.createElement('canvas');
     this.canvas.height = this.height;
     this.canvas.width = this.width;
-    //Set canvas custom default style
-    this.setStyle({
-      border: '1px solid black',
-      margin: 'auto'
-    });
     //Mounts canvas node to root node
     this.mountCanvas();
     //Define context
@@ -23,15 +18,6 @@ class Canvas {
   // Returns current full canvas image data
   getFrameData() {
     return this.ctx.getImageData(0, 0, this.width, this.height);
-  }
-
-  // Recieves JS plain Object with style and updates canvas style object
-  setStyle(newStyle) {
-    let prevStyle = this.canvas.style;
-
-    for(let key in newStyle) {
-      prevStyle[key] = newStyle[key];
-    }
   }
 
   // Draws image in the canvas
