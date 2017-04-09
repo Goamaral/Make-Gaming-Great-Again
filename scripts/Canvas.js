@@ -5,13 +5,18 @@ class Canvas {
     this.root = root;
     this.width = width;
     this.height = height;
-    //Creates canvas node
+    // Creates canvas node
     this.canvas = document.createElement('canvas');
     this.canvas.height = this.height;
     this.canvas.width = this.width;
-    //Mounts canvas node to root node
+    // Set canvas custom default style
+    this.setStyle({
+      border: '1px solid black',
+      margin: 'auto'
+    });
+    // Mounts canvas node to root node
     this.mountCanvas();
-    //Define context
+    // Define context
     this.ctx = this.canvas.getContext('2d');
   }
 
@@ -20,8 +25,17 @@ class Canvas {
     return this.ctx.getImageData(0, 0, this.width, this.height);
   }
 
+  // Recieves JS plain Object with style and updates canvas style object
+  setStyle(newStyle) {
+    let prevStyle = this.canvas.style;
+
+    for(let key in newStyle) {
+      prevStyle[key] = newStyle[key];
+    }
+  }
+
   // Draws image in the canvas
-  drawImage(img,x,y,width,height) {
+  drawImage(img, x, y, width, height) {
     this.ctx.drawImage(img, x, y, width, height);
   }
 
