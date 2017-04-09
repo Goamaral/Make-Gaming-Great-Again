@@ -9,29 +9,19 @@
 // NOTE: Auxiliar variables should hava a _ before their proper name, for example, _auxVar instead of auxVar
 // TODO: Make game responsive
 
-// On window full load
 window.onload = function() {
-	//Get main node from DOM
 	let main = document.getElementsByTagName("main")[0];
-
-	// create canvas and set canvas style
 	let canvas = new Canvas(main, 768, 432);
-
-	// Palin JS object of fully loaded resources
 	let resources = {};
-	//Number of tasks to complete
 	let totalTasksToComplete = 2;
 	// Create event to signal end of images loading
 	window.addEventListener('imageLoadingComplete', imageLoadingCompleteHandler);
 
 	//Creates event to signal end of sprite images loading
 	window.addEventListener('spritesLoaded', spritesLoadedHandler);
-	//Load sprite images
 	let spriteNodesObject = loadSpriteImages();
-
 	//Create event to signal end of background images loading
 	window.addEventListener('backgroundsLoaded', backgroundsLoadedHandler);
-	//Load background images
 	let backgroundNodesObject = loadBackgroundImages();
 
 	// Waits for event spritesLoaded event to be triggered
@@ -63,11 +53,8 @@ window.onload = function() {
 
 //Load sprite images
 function loadSpriteImages() {
-	// Sprites path
 	let spritesPath = './resources/images/sprites/';
-	// Sprite names
 	let spriteNames = [ 'stand','jump','slide','anim1','anim2','anim3' ];
-	// Load every sprite and create a image node for each one
 	let spriteNodesObject = createImageNodes(spriteNames, spritesPath, 'sprites');
 
 	return spriteNodesObject;
@@ -75,18 +62,14 @@ function loadSpriteImages() {
 
 //Load background images
 function loadBackgroundImages() {
-	// Backgrounds path
 	let backgroundsPath = './resources/images/backgrounds/';
-	// Background names
 	let backgroundNames = [ 'desert' ];
-	// Load every background and create a image node for each one
 	let backgroundNodesObject = createImageNodes(backgroundNames, backgroundsPath, 'backgrounds');
 
 	return backgroundNodesObject;
 }
 
 // Load every sprite and create a image node for each one
-// NOT RESPONSIVE
 function createImageNodes(names, path, mode) {
 	let out = {};
 	let count = 0;
@@ -131,7 +114,7 @@ function createImageNodes(names, path, mode) {
 // Create Sprite objects for each sprite ndoe
 function spriteNodesToSpriteObjects(spriteNodesObject, root) {
 	let out = {};
-	// Create Sprite objects
+
 	for (let spriteName in spriteNodesObject) {
 		let img = spriteNodesObject[spriteName];
 		out[spriteName] = new Sprite(root, img);
@@ -153,6 +136,4 @@ function imageLoadingComplete(canvas, resources) {
 	canvas.drawSprite(sprites.anim1, 500, 0);
 	canvas.drawSprite(sprites.jump, 100, 100);
 	canvas.drawSprite(sprites.slide, 400, 100);
-
-	//NOTE: CONTINUE CODE HERE
 }
