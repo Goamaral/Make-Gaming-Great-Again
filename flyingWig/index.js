@@ -19,17 +19,17 @@ window.onload = function() {
 
 	// Palin JS object of fully loaded resources
 	let resources = {};
-	//Number of tasks to complete
+	// Number of tasks to complete
 	let totalTasksToComplete = 2;
 	// Create event to signal end of images loading
 	window.addEventListener('imageLoadingComplete', imageLoadingCompleteHandler);
 
-	//Creates event to signal end of sprite images loading
+	// Creates event to signal end of sprite images loading
 	window.addEventListener('spritesLoaded', spritesLoadedHandler);
 	//Load sprite images
 	let spriteNodesObject = loadSpriteImages();
 
-	//Create event to signal end of background images loading
+	// Create event to signal end of background images loading
 	window.addEventListener('backgroundsLoaded', backgroundsLoadedHandler);
 	//Load background images
 	let backgroundNodesObject = loadBackgroundImages();
@@ -59,7 +59,7 @@ window.onload = function() {
 		window.removeEventListener('imageLoadingComplete', imageLoadingCompleteHandler);
 		imageLoadingComplete(canvas, resources);
 	}
-}
+};
 
 //Load sprite images
 function loadSpriteImages() {
@@ -69,7 +69,6 @@ function loadSpriteImages() {
 	let spriteNames = [ 'stand','jump','slide','anim1','anim2','anim3' ];
 	// Load every sprite and create a image node for each one
 	let spriteNodesObject = createImageNodes(spriteNames, spritesPath, 'sprites');
-
 	return spriteNodesObject;
 }
 
@@ -81,7 +80,6 @@ function loadBackgroundImages() {
 	let backgroundNames = [ 'desert' ];
 	// Load every background and create a image node for each one
 	let backgroundNodesObject = createImageNodes(backgroundNames, backgroundsPath, 'backgrounds');
-
 	return backgroundNodesObject;
 }
 
@@ -99,7 +97,6 @@ function createImageNodes(names, path, mode) {
 		node.src = path + name + '.png';
 		out[name] = node;
 	}
-
 	return out;
 
 	function onloadHandler(ev) {
