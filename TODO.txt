@@ -1,0 +1,20 @@
+class background: extends sprite
+  - name
+  - move method(dx)
+
+class wig: extends sprite
+  - name
+  - move method(dx, dy)
+
+resetCanvas() -> cleares canvas
+importBackground(img) -> img is a image node, imports background object to backgrounds array
+selectBackground(backgroundName) -> change currentBackground to backgroundname (checks if it exists)
+drawBackground() -> draws currentBackground
+importEnemy(enemy) -> enemy is a Enemy object, imports enemy object to enemies array
+importHero(hero) -> hero is a Hero object, imports hero to canavas hero
+checkColisons(objectToInsert) -> objectToInsert is a Sprite to insert, checks collisons between current canvas and an object to be inserted
+gameloop() -> updates and renders sprites requesting animaniton loop
+update() -> move sprites (including background)
+render() -> draw enemies, draws currentWig, checks colisions with hero, draws hero and draws background
+updateBackground() -> get frame data, reset frame, draw background and draw previous frame data
+drawBackground() -> draws currentBackground

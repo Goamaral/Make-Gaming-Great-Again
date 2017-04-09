@@ -15,7 +15,7 @@ window.onload = function() {
 	let main = document.getElementsByTagName("main")[0];
 
 	// create canvas and set canvas style
-	let canvas = new Canvas(main, 640, 360);
+	let canvas = new Canvas(main, 768, 432);
 
 	// Palin JS object of fully loaded resources
 	let resources = {};
