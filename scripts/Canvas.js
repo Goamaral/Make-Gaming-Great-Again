@@ -1,27 +1,23 @@
 /*jshint esversion: 6 */
 
 class Canvas {
-  constructor(root,width,height) {
-    this.root = root;
-    this.width = width;
-    this.height = height;
+  constructor(width,height) {
+    this.root = null;
     // Creates canvas node
     this.canvas = document.createElement('canvas');
-    this.canvas.height = this.height;
-    this.canvas.width = this.width;
+    this.canvas.width = width;
+    this.canvas.height = height;
     // Set canvas custom default style
     this.setStyle({
       margin: 'auto'
     });
-    // Mounts canvas node to root node
-    this.mountCanvas();
     // Define context
     this.ctx = this.canvas.getContext('2d');
   }
 
   // Returns current full canvas image data
   getFrameData() {
-    return this.ctx.getImageData(0, 0, this.width, this.height);
+    return this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
   }
 
   // Recieves JS plain Object with style and updates canvas style object
@@ -55,8 +51,12 @@ class Canvas {
   }
 
   // Mount this.canvas node in the dom
-  mountCanvas() {
-    this.canvas = this.root.appendChild(this.canvas);
+  mountCanvas(root=this.root) {
+    if (this.root == null) {
+      this.root = root;
+	  }
+
+    this.root.appendChild(this.canvas);
   }
 
   // Unmount canvas

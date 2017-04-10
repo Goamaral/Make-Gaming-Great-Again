@@ -15,7 +15,8 @@ window.onload = function() {
   let main = document.getElementsByTagName("main")[0];
 
   // create canvas and set canvas style
-  let canvas = new Canvas(main, 768, 432);
+  let canvas = new Canvas(768, 432);
+  canvas.mountCanvas(main);
 
   // Palin JS object of fully loaded resources
   let resources = {};
@@ -37,7 +38,7 @@ window.onload = function() {
   // Waits for event spritesLoaded event to be triggered
   function spritesLoadedHandler() {
     window.removeEventListener('spritesLoaded', spritesLoadedHandler);
-    resources['sprites'] = spriteNodesToSpriteObjects(spriteNodesObject, main);
+    resources['sprites'] = spriteNodesToSpriteObjects(spriteNodesObject);
     if(Object.keys(resources).length == totalTasksToComplete) {
       let imageLoadingCompleteEvent = new Event('imageLoadingComplete');
       window.dispatchEvent(imageLoadingCompleteEvent);
@@ -126,12 +127,12 @@ function createImageNodes(names, path, mode) {
 }
 
 // Create Sprite objects for each sprite ndoe
-function spriteNodesToSpriteObjects(spriteNodesObject, root) {
+function spriteNodesToSpriteObjects(spriteNodesObject) {
   let out = {};
   // Create Sprite objects
   for (let spriteName in spriteNodesObject) {
     let img = spriteNodesObject[spriteName];
-    out[spriteName] = new Sprite(root, img);
+    out[spriteName] = new Sprite(img);
   }
   return out;
 }
