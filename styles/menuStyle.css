@@ -2,10 +2,10 @@
 
 #title {
   font-size: 35px;
-  font-family: 'Contrail One', cursive;
+  font-family: 'Helvetica', sans-serif;
   margin: 0;
   margin-bottom: 20px;
-  color: black;
+  color: #595959;
 }
 
 body {
@@ -24,27 +24,26 @@ menu {
 }
 
 left {
-  margin-top: 40px;
-  margin-left: 40px;
+  margin-top: 5%;
+  margin-left: 5%;
   display: inline-flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .button {
-  width: 200px;
-  padding: 7px;
-  margin: 10px;
+  width: 180px;
+  padding: 9px;
+  margin-top: 5%;
+  margin-left: 11%;
   font-family: Helvetica;
   border-radius: 5px;
-  font-size: 1em;
+  font-size: 0.85em;
   border: none;
-  color: black;
-  background-color: #ffc107;
+  color: #404040;
+  background-color: #fcca67;
   font-weight: bold;
 }
 
 .button:hover {
-  background-color: #ffe082;
+  background-color: #fcd482;
 }

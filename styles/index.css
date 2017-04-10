@@ -15,5 +15,5 @@ main {
 iframe {
   width: 768px;
   height: 432px;
-  border: 1px solid black;
+  border: 2px solid #595959;
 }

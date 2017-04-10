@@ -11,7 +11,6 @@ class Canvas {
     this.canvas.width = this.width;
     // Set canvas custom default style
     this.setStyle({
-      border: '1px solid black',
       margin: 'auto'
     });
     // Mounts canvas node to root node
