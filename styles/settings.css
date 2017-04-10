@@ -27,17 +27,17 @@ body {
 }
 
 /* Dropdown Button */
-.dropbtn {
-    background-color: #595959;
-    color: white;
-	width: 180px;
-	padding: 9px;
-    border: none;
-    cursor: pointer;
-	font-family: Helvetica;
-    border-radius: 5px;
-    font-size: 0.85em;
-    border: none;
+.btn {
+  background-color: #595959;
+  color: white;
+  width: 180px;
+  padding: 9px;
+  border: none;
+  cursor: pointer;
+  font-family: Helvetica;
+  border-radius: 5px;
+  font-size: 0.85em;
+  border: none;
 }
 
 menu {

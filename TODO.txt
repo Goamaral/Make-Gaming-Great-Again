@@ -6,6 +6,7 @@ class wig: extends sprite
   - name
   - move method(dx, dy)
 
+pauseGame() -> pauses game
 resetCanvas() -> cleares canvas
 importBackground(img) -> img is a image node, imports background object to backgrounds array
 selectBackground(backgroundName) -> change currentBackground to backgroundname (checks if it exists)
