@@ -42,8 +42,13 @@ left {
   color: #404040;
   background-color: #fcca67;
   font-weight: bold;
+  outline: 0;
 }
 
 .button:hover {
-  background-color: #fcd482;
+  background-color: #fcdc9c;
+}
+
+.back {
+    font-size: 1em;
 }
