@@ -18,3 +18,5 @@ update() -> move sprites (including background)
 render() -> draw enemies, draws currentWig, checks colisions with hero, draws hero and draws background
 updateBackground() -> get frame data, reset frame, draw background and draw previous frame data
 drawBackground() -> draws currentBackground
+
+create loading animation -> create animation while resources are loading
