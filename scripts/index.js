@@ -45,7 +45,6 @@ window.onload = function() {
 };
 
 function menuHandler(nodes) {
-    //console.log(nodes);
     let {
         iframeMenu,
         iframeStoryGame,
@@ -55,11 +54,7 @@ function menuHandler(nodes) {
         iframeSettings,
         main
     } = nodes;
-
-    console.log(iframeMenu);
-
     let iframeMenuDocument = getDocument(iframeMenu);
-    console.log(iframeMenuDocument);
 
     // Buttons
     let storyGameButton = iframeMenuDocument.getElementById('storyGameButton');
