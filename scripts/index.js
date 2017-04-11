@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 "use strict";
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -39,17 +41,6 @@ window.onload = function() {
   let iframeSettings = document.createElement("iframe");
   iframeSettings.src = 'settings.html';
 
-  let nodes = {
-    iframeMenu: iframeMenu,
-    iframeStoryGame: iframeStoryGame,
-    iframeInfiniteGame: iframeInfiniteGame,
-    iframeHowToPlay: iframeHowToPlay,
-    iframeHighscores: iframeHighscores,
-    iframeSettings: iframeSettings,
-    audio: audio,
-    main: main
-  };
-
   mountIframe(iframeMenu);
 
   function messageRecievedHandler(ev) {
@@ -88,7 +79,6 @@ window.onload = function() {
       }
       currentIframe = iframe;
     }
-  }
 }
 
 function mount(root, element) {
@@ -99,6 +89,8 @@ function unmount(root, element) {
   root.removeChild(element);
 }
 
-function toggleAudio(audio) {
-  audio.muted = !audio.muted;
+function toggleAudio(audio, buttonToHide, buttonToShow) {
+    buttonToHide.style.display = "none";
+    buttonToShow.style.display = "";
+    audio.muted = !audio.muted;
 }
