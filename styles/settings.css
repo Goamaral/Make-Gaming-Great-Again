@@ -22,8 +22,12 @@ body {
   margin: 0;
 }
 
-#mute-sound {
-	margin-top: 10%;
+.volume-up {
+	width: 30px;
+}
+
+#backButton {
+	font-size: 30px;
 }
 
 /* Dropdown Button */
