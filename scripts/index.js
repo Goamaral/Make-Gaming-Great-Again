@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function() {
   window.addEventListener('message', messagesHandler);
 
   function messagesHandler(ev) {
-    console.log(ev.data);
     let newEvent = new Event('messageRecieved');
     newEvent.data = ev.data;
     window.dispatchEvent(newEvent);
@@ -44,6 +43,9 @@ window.onload = function() {
   mountIframe(iframeMenu);
 
   function messageRecievedHandler(ev) {
+    let iframeDoc = null;
+    let muteButton = null;
+    let unmuteButton = null;
     switch(ev.data) {
       case 'storyGameButton':
         mountIframe(iframeStoryGame);
@@ -61,7 +63,16 @@ window.onload = function() {
         mountIframe(iframeSettings);
         break;
       case 'muteButton':
-        toggleAudio(audio);
+        iframeDoc = currentIframe.contentDocument;
+        muteButton = iframeDoc.getElementById('muteButton');
+        unmuteButton = iframeDoc.getElementById('unmuteButton');
+        toggleAudio(audio, muteButton, unmuteButton );
+        break;
+      case 'unmuteButton':
+        iframeDoc = currentIframe.contentDocument;
+        muteButton = iframeDoc.getElementById('muteButton');
+        unmuteButton = iframeDoc.getElementById('unmuteButton');
+        toggleAudio(audio, unmuteButton, muteButton );
         break;
       case 'backButton':
         mountIframe(iframeMenu);
@@ -79,6 +90,7 @@ window.onload = function() {
       }
       currentIframe = iframe;
     }
+  }
 }
 
 function mount(root, element) {
