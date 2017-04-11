@@ -1,10 +1,24 @@
 "use strict";
 
+document.addEventListener("DOMContentLoaded", function() {
+  window.addEventListener('message', messagesHandler);
+
+  function messagesHandler(ev) {
+    console.log(ev.data);
+    let newEvent = new Event('messageRecieved');
+    newEvent.data = ev.data;
+    window.dispatchEvent(newEvent);
+  }
+});
+
 window.onload = function() {
+  window.addEventListener('messageRecieved', messageRecievedHandler);
   //Get Audio node
   let audio = document.getElementsByTagName('audio')[0];
 
   let main = document.getElementsByTagName('main')[0];
+
+  let currentIframe = null;
 
   // Create all screens
   let iframeMenu = document.createElement("iframe");
@@ -36,128 +50,53 @@ window.onload = function() {
     main: main
   };
 
-  main.appendChild(iframeMenu);
-  iframeMenu.onload = function() {
-    menuHandler(nodes);
-  }
-}
+  mountIframe(iframeMenu);
 
-function menuHandler(nodes) {
-  let {
-    iframeMenu,
-    iframeStoryGame,
-    iframeInfiniteGame,
-    iframeHowToPlay,
-    iframeHighscores,
-    iframeSettings,
-    main
-  } = nodes;
-
-  let iframeMenuDocument = getDocument(iframeMenu);
-
-  //Buttons
-  let storyGameButton = iframeMenuDocument.getElementById('storyGameButton');
-  storyGameButton.onclick = buttonHandler;
-
-  let infiniteGameButton = iframeMenuDocument.getElementById('infiniteGameButton');
-  infiniteGameButton.onclick = buttonHandler;
-
-  let howToPlayButton = iframeMenuDocument.getElementById('howToPlayButton');
-  howToPlayButton.onclick = buttonHandler;
-
-  let highscoresButton = iframeMenuDocument.getElementById('highscoresButton');
-  highscoresButton.onclick = buttonHandler;
-
-  let settingsButton = iframeMenuDocument.getElementById('settingsButton');
-  settingsButton.onclick = buttonHandler;
-
-  function buttonHandler(ev){
-    switch (ev.target.id) {
+  function messageRecievedHandler(ev) {
+    switch(ev.data) {
       case 'storyGameButton':
-        replaceChildren(main, iframeMenu, iframeStoryGame);
-        iframeStoryGame.onload = function() {
-          gameHandler(nodes);
-        }
+        mountIframe(iframeStoryGame);
         break;
       case 'infiniteGameButton':
-        replaceChildren(main, iframeMenu, iframeInfiniteGame);
-        iframeInfiniteGame.onload = function() {
-          gameHandler(nodes);
-        }
+        mountIframe(iframeInfiniteGame);
         break;
       case 'howToPlayButton':
-        replaceChildren(main, iframeMenu, iframeHowToPlay);
-        iframeHowToPlay.onload = function() {
-          howToPlayHandler(nodes);
-        }
+        mountIframe(iframeHowToPlay);
         break;
       case 'highscoresButton':
-        replaceChildren(main, iframeMenu, iframeHighscores);
-        iframeHighscores.onload = function() {
-          highscoresHandler(nodes);
-        }
+        mountIframe(iframeHighscores);
         break;
       case 'settingsButton':
-        replaceChildren(main, iframeMenu, iframeSettings);
-        iframeSettings.onload = function() {
-          settingsHandler(nodes);
-        }
+        mountIframe(iframeSettings);
         break;
-      default:
-        console.log('On click event poorly configured -> buttonHandler');
-        return;
-    }
-  }
-}
-
-function gameHandler(nodes) {
-
-}
-
-function howToPlayHandler(nodes) {
-
-}
-
-function highscoresHandler(nodes) {
-
-}
-
-function settingsHandler(nodes) {
-  let { iframeSettings, audio, iframeMenu, main } = nodes;
-  let iframeSettingsDocument = getDocument(iframeSettings);
-
-  //Buttons
-  let toggleAudioButton = iframeSettingsDocument.getElementById('muteButton');
-  toggleAudioButton.onclick = buttonHandler;
-
-  let backButton = iframeSettingsDocument.getElementById('backButton');
-  backButton.onclick = buttonHandler;
-
-  function buttonHandler(ev) {
-    switch (ev.target.id) {
       case 'muteButton':
-        toggleAudio(audio)
+        toggleAudio(audio);
         break;
       case 'backButton':
-        replaceChildren(main, iframeSettings, iframeMenu);
-        iframeMenu.onload = function() {
-          menuHandler(nodes);
-        }
+        mountIframe(iframeMenu);
         break;
-      default:
-        console.log('On click event poorly configured -> buttonHandler');
-        return;
+    }
+  }
+
+  function mountIframe(iframe) {
+    if (currentIframe !== iframe) {
+      if (currentIframe === null) {
+        mount(main, iframe);
+      } else {
+        unmount(main, currentIframe);
+        mount(main, iframe);
+      }
+      currentIframe = iframe;
     }
   }
 }
 
-function replaceChildren(root, from, to) {
-  root.removeChild(from);
-  root.appendChild(to);
+function mount(root, element) {
+  root.appendChild(element);
 }
 
-function getDocument(iframe) {
-  return iframe.contentDocument || iframe.contentWindow.document;
+function unmount(root, element) {
+  root.removeChild(element);
 }
 
 function toggleAudio(audio) {

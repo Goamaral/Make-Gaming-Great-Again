@@ -9,17 +9,13 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 window.onload = function() {
-  let buttons = [];
-  buttons.push(document.getElementsByTagName('button')[0]);
-  buttons.push(document.getElementById('backButton'));
-  console.log(buttons);
+  let buttons = document.getElementsByTagName('button');
 
   for( let button of buttons ) {
     button.onclick = buttonClickHandler;
   }
 
   function buttonClickHandler(ev) {
-    console.log('clicked');
     talkWithParent(ev.target.id)
   }
 };
