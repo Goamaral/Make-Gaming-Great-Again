@@ -139,18 +139,8 @@ function spriteNodesToSpriteObjects(spriteNodesObject) {
 
 function imageLoadingComplete(canvas, resources) {
   let { sprites, backgrounds } = resources;
-  // Set canvas background
-  //canvas.setBackground(backgrounds.desert);
 
-  // Draw sprite on canvas
-  canvas.drawSprite(sprites.stand, 0, 0);
-  canvas.drawSprite(sprites.anim1, 100, 0);
-  canvas.drawSprite(sprites.anim2, 200, 0);
-  canvas.drawSprite(sprites.anim3, 300, 0);
-  canvas.drawSprite(sprites.anim2, 400, 0);
-  canvas.drawSprite(sprites.anim1, 500, 0);
-  canvas.drawSprite(sprites.jump, 100, 100);
-  canvas.drawSprite(sprites.slide, 400, 100);
+  
 
   //NOTE: CONTINUE CODE HERE
 }
