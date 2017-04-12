@@ -1,7 +1,5 @@
-class Enemy extends hero {
+class Enemy extends Hero {
   constructor(sprites) {
-    super(sprites) {
-
-    }
+    super(sprites);
   }
 }

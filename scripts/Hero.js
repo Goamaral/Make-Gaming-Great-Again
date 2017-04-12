@@ -56,11 +56,11 @@ class Hero {
       case 'run':
         if (this.currentSprite == 'anim1') {
           this.currentSprite == 'anim2';
-        } elif (this.currentSprite == 'anim2') {
+        } else if (this.currentSprite == 'anim2') {
           this.currentSprite == 'anim3';
-        } elif (this.currentSprite == 'anim3'){
+        } else if (this.currentSprite == 'anim3'){
           this.currentSprite == 'anim1';
-        } elif (this.jumping == 0 && this.sliding == False) {
+        } else if (this.jumping == 0 && this.sliding == False) {
           this.currentSprite == 'anim1';
         }
       case 'up':

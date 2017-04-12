@@ -13,6 +13,38 @@ class Canvas {
     });
     // Define context
     this.ctx = this.canvas.getContext('2d');
+    // Object with available backgrounds
+    this.backgrounds = {};
+    // Name of current selected background
+    this.currentBackground = null;
+    // Hero object
+    this.hero = null;
+    // Enemies object
+    this.enemies = {};
+  }
+
+  importEnemy(enemyName, enemy) {
+    this.enemies[enemyName] = enemy;
+  }
+
+  // Import Hero
+  importHero(hero) {
+    this.hero = hero;
+  }
+
+  // Selects background
+  selectBackground(backgroundName) {
+    if (backgroundName in this.backgrounds) {
+      this.currentBackground = backgroundName;
+    }
+  }
+
+  // Imports background
+  importBackground(name, background) {
+    this.backgrounds[name] = background;
+    if (this.currentBackground == null) {
+      this.currentBackground = name;
+    }
   }
 
   // Returns current full canvas image data
