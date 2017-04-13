@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Contrail+One');
+@import url(https://fonts.googleapis.com/css?family=Righteous);
 
 .pointer {
   cursor:pointer;
@@ -6,7 +6,7 @@
 
 #title {
 	font-size: 30px;
-	font-family: 'Helvetica', sans-serif;
+  font-family: 'Righteous', cursive;
 	margin: 0;
 	margin-bottom: 20px;
 	color: #595959;
