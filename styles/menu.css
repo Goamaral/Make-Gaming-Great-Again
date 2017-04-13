@@ -13,9 +13,9 @@
 }
 
 .menu-subtitle {
-    font-size: 12px;
-    margin: 0;
-    font-family: 'Cabin', sans-serif;
+  font-size: 12px;
+  margin: 0;
+  font-family: 'Cabin', sans-serif;
 }
 
 body {
@@ -60,5 +60,5 @@ left {
 }
 
 .back {
-    font-size: 1em;
+  font-size: 1em;
 }
