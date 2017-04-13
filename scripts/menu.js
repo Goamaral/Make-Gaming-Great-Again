@@ -9,11 +9,10 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 window.onload = function() {
-    let buttons = document.getElementsByTagName('button');
-    for (var i = 0; i < buttons.length; i++) {
-      buttons[i].onclick = buttonClickHandler;
-    }
-
+  let buttons = document.getElementsByTagName('button');
+  for (var i = 0; i < buttons.length; i++) {
+    buttons[i].onclick = buttonClickHandler;
+  }
   function buttonClickHandler(ev) {
     talkWithParent(ev.target.id)
   }
@@ -23,13 +22,10 @@ function talkWithParent(msg) {
   parent.postMessage(msg, '*');
 }
 
-function PlaySound(soundobj) {
-    var thissound=document.getElementById(soundobj);
-    thissound.play();
+function PlaySound(obj) {
+  var sound = document.getElementById(obj).play();
 }
 
-function StopSound(soundobj) {
-    var thissound=document.getElementById(soundobj);
-    thissound.pause();
-    thissound.currentTime = 0;
+function StopSound(obj) {
+  var sound = document.getElementById(obj).pause();
 }
