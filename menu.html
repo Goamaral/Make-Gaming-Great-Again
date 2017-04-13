@@ -1,20 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="styles/menu.css">
-  </head>
-  <body>
+    <link href="https://fonts.googleapis.com/css?family=Cabin|Righteous" rel="stylesheet">
+</head>
+<body>
     <left>
-      <h1 id="title">Make Gaming Great Again</h1>
-      <menu>
-        <button id='storyGameButton' class="button pointer">Story Mode</button>
-        <button id='infiniteGameButton' class="button pointer">Infinite Mode</button>
-        <button id='howToPlayButton' class="button pointer">How To Play</button>
-        <button id='highscoresButton'class="button pointer">Highscores</button>
-        <button id='settingsButton' class="button pointer">Settings</button>
-      </menu>
+        <h1 id="title">Make Gaming Great Again</h1>
+        <menu>
+            <button id='storyGameButton' class="button pointer">
+                <p class="menu-subtitle" onmouseover="PlaySound('mySound')" onmouseout="StopSound('mySound')">Story Mode</p>
+                <audio id='mySound' src='resources/hover-sound.mp3'/></p>
+            </button>
+            <button id='infiniteGameButton' class="button pointer">
+                <p class="menu-subtitle" onmouseover="PlaySound('mySound')" onmouseout="StopSound('mySound')">Infinite Mode</p>
+                <audio id='mySound' src='resources/hover-sound.mp3'/></p>
+            </button>
+            <button id='howToPlayButton' class="button pointer">
+                <p class="menu-subtitle" onmouseover="PlaySound('mySound')" onmouseout="StopSound('mySound')">How to play</p>
+                <audio id='mySound' src='resources/hover-sound.mp3'/></p>
+            </button>
+            <button id='highscoresButton' class="button pointer">
+                <p class="menu-subtitle" onmouseover="PlaySound('mySound')" onmouseout="StopSound('mySound')">Highscores</p>
+                <audio id='mySound' src='resources/hover-sound.mp3'/></p>
+            </button>
+            <button id='settingsButton' class="button pointer">
+                <p class="menu-subtitle" onmouseover="PlaySound('mySound')" onmouseout="StopSound('mySound')">Settings</p>
+                <audio id='mySound' src='resources/hover-sound.mp3'/></p>
+            </button>
+        </menu>
     </left>
     <script type="text/javascript" src="scripts/menu.js" charset="utf-8"></script>
-  </body>
+</body>
 </html>

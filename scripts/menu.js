@@ -9,11 +9,10 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 window.onload = function() {
-  let buttons = document.getElementsByTagName('button');
-
-  for( let button of buttons ) {
-    button.onclick = buttonClickHandler;
-  }
+    let buttons = document.getElementsByTagName('button');
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].onclick = buttonClickHandler;
+    }
 
   function buttonClickHandler(ev) {
     talkWithParent(ev.target.id)
@@ -22,4 +21,15 @@ window.onload = function() {
 
 function talkWithParent(msg) {
   parent.postMessage(msg, '*');
+}
+
+function PlaySound(soundobj) {
+    var thissound=document.getElementById(soundobj);
+    thissound.play();
+}
+
+function StopSound(soundobj) {
+    var thissound=document.getElementById(soundobj);
+    thissound.pause();
+    thissound.currentTime = 0;
 }

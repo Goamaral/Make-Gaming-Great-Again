@@ -5,11 +5,16 @@
 }
 
 #title {
-  font-size: 35px;
-  font-family: 'Helvetica', sans-serif;
+  font-size: 40px;
+  font-family: 'Righteous', cursive;
   margin: 0;
-  margin-bottom: 20px;
   color: #595959;
+}
+
+.menu-subtitle {
+    font-size: 12px;
+    margin: 0;
+    font-family: 'Cabin', sans-serif;
 }
 
 body {
@@ -35,8 +40,8 @@ left {
 }
 
 .button {
-  width: 180px;
-  padding: 9px;
+  width: 33%;
+  padding: 2%;
   margin-top: 4.5%;
   margin-left: 11%;
   font-family: Helvetica;
