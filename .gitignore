@@ -107,6 +107,8 @@ typings/
 # dotenv environment variables file
 .env
 
+# Exe
+*.exe
 
 ### Vim ###
 # swap
