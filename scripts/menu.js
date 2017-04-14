@@ -1,13 +1,5 @@
 "use strict";
 
-document.addEventListener("DOMContentLoaded", function() {
-  window.addEventListener('message', messagesHandler);
-
-  function messagesHandler(ev) {
-    console.log(ev.data);
-  }
-});
-
 window.onload = function() {
   let buttons = document.getElementsByTagName('button');
   let audio = {};
@@ -26,7 +18,6 @@ window.onload = function() {
   }
 
   function buttonClickChildHandler(ev) {
-    console.log('pressed');
     talkWithParent(ev.target.parentNode.id);
   }
 
