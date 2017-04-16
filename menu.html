@@ -1,35 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <link rel="stylesheet" type="text/css" href="styles/menu.css">
-  <link href="https://fonts.googleapis.com/css?family=Cabin|Righteous" rel="stylesheet">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="styles/menu.css">
 </head>
 <body>
-  <left>
-    <h1 id="title">Make Gaming Great Again</h1>
-    <menu>
-      <button id='storyGameButton' class="button pointer" onmouseover="PlaySound('hoverSound')" onmouseout="StopSound('hoverSound')">
-        <p class="menu-subtitle" id='storyGameButton'>Story Mode</p>
-      </button>
-      <button id='infiniteGameButton' class="button pointer" onmouseover="PlaySound('hoverSound')" onmouseout="StopSound('hoverSound')">
-        <p class="menu-subtitle" id='infiniteGameButton'>Infinite Mode</p>
-        <audio id='hoverSound' src='resources/hover-sound.mp3'/>
-      </button>
-      <button id='howToPlayButton' class="button pointer" onmouseover="PlaySound('hoverSound')" onmouseout="StopSound('hoverSound')">
-        <p class="menu-subtitle" id='howToPlayButton'>How to play</p>
-        <audio id='hoverSound' src='resources/hover-sound.mp3'/>
-      </button>
-      <button id='highscoresButton' class="button pointer" onmouseover="PlaySound('hoverSound')" onmouseout="StopSound('hoverSound')">
-        <p class="menu-subtitle" id='highscoresButton'>Highscores</p>
-        <audio id='hoverSound' src='resources/hover-sound.mp3'/>
-      </button>
-      <button id='settingsButton' class="button pointer" onmouseover="PlaySound('hoverSound')" onmouseout="StopSound('hoverSound')">
-        <p class="menu-subtitle" id='settingsButton'>Settings</p>
-        <audio id='hoverSound' src='resources/hover-sound.mp3'/>
-      </button>
-    </menu>
-  </left>
-  <script type="text/javascript" src="scripts/menu.js" charset="utf-8"></script>
+    <left>
+        <h1 id="title">Make Gaming Great Again</h1>
+        <menu>
+            <button id='storyGameButton' class="button pointer">
+                <p class="menu-subtitle">Story Mode</p>
+            </button>
+            <button id='infiniteGameButton' class="button pointer">
+                <p class="menu-subtitle">Infinite Mode</p>
+            </button>
+            <button id='howToPlayButton' class="button pointer">
+                <p class="menu-subtitle">How to play</p>
+            </button>
+            <button id='highscoresButton' class="button pointer">
+                <p class="menu-subtitle">Highscores</p>
+            </button>
+            <button id='settingsButton' class="button pointer">
+                <p class="menu-subtitle">Settings</p>
+            </button>
+        </menu>
+    </left>
+    <script type="text/javascript" src="scripts/menu.js" charset="utf-8"></script>
 </body>
 </html>
