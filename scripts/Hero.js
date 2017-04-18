@@ -18,7 +18,8 @@ class Hero {
   }
 
   update(instructions) {
-    for (let instruction of instructions) {
+    for (let i=0; i<instructions.length(); ++i) {
+      let instruction = instructions[i],
       runInstruction(instruction);
     }
 
@@ -60,7 +61,7 @@ class Hero {
           this.currentSprite == 'anim3';
         } else if (this.currentSprite == 'anim3'){
           this.currentSprite == 'anim1';
-        } else if (this.jumping == 0 && this.sliding == False) {
+        } else if (this.jumping == 0 && this.sliding == false) {
           this.currentSprite == 'anim1';
         }
       case 'up':

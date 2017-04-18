@@ -1,10 +1,9 @@
-class background: extends sprite
-  - name
-  - move method(dx)
-
 class wig: extends sprite
   - name
   - move method(dx, dy)
+
+change import size of background
+join flipped and normal background
 
 pauseGame() -> pauses game
 resetCanvas() -> cleares canvas
@@ -13,7 +12,5 @@ checkColisons(objectToInsert) -> objectToInsert is a Sprite to insert, checks co
 gameloop() -> updates and renders sprites requesting animaniton loop
 update() -> move sprites (including background)
 render() -> draw enemies, draws currentWig, checks colisions with hero, draws hero and draws background
-updateBackground() -> get frame data, reset frame, draw background and draw previous frame data
-drawBackground() -> draws currentBackground
 
 create loading animation -> create animation while resources are loading
