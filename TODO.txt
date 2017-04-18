@@ -2,15 +2,10 @@ class wig: extends sprite
   - name
   - move method(dx, dy)
 
-change import size of background
-join flipped and normal background
-create background object
 add volume control
 lower button hover volume
 
 pauseGame() -> pauses game
-resetCanvas() -> cleares canvas
-drawBackground() -> draws currentBackground
 checkColisons(objectToInsert) -> objectToInsert is a Sprite to insert, checks collisons between current canvas and an object to be inserted
 gameloop() -> updates and renders sprites requesting animaniton loop
 update() -> move sprites (including background)

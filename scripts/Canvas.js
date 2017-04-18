@@ -23,6 +23,10 @@ class Canvas {
     this.enemies = {};
   }
 
+  resetCanvas() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+
   importEnemy(enemyName, enemy) {
     this.enemies[enemyName] = enemy;
   }
