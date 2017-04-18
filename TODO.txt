@@ -4,6 +4,7 @@ class wig: extends sprite
 
 change import size of background
 join flipped and normal background
+create background object
 
 pauseGame() -> pauses game
 resetCanvas() -> cleares canvas
