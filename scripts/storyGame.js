@@ -159,6 +159,8 @@ function imageLoadingComplete(canvas, resources) {
     canvas.importBackground(backgroundName, backgrounds[backgroundName]);
   }
 
+  canvas.backgrounds[canvas.currentBackground].move(10000);
+
   canvas.drawBackground();
 
   //NOTE: CONTINUE CODE HERE
