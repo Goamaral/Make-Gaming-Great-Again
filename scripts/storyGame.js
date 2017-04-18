@@ -132,9 +132,9 @@ function spriteNodesToHeroObjects(heroSpriteNodesObject) {
   // Create Sprite objects
   for (let spriteName in heroSpriteNodesObject) {
     let img = heroSpriteNodesObject[spriteName];
-    out[spriteName] = new Hero(img);
+    out[spriteName] = new Sprite(img);
   }
-  return out;
+  return new Hero(out);
 }
 
 // Create Sprite objects for each background node
@@ -158,12 +158,6 @@ function imageLoadingComplete(canvas, resources) {
   for( let backgroundName in backgrounds ) {
     canvas.importBackground(backgroundName, backgrounds[backgroundName]);
   }
-
-  canvas.backgrounds[canvas.currentBackground].move(1000);
-
-  canvas.drawBackground();
-
-  canvas.resetCanvas();
 
   //NOTE: CONTINUE CODE HERE
 }

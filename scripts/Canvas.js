@@ -84,7 +84,7 @@ class Canvas {
   // Draws sprite in the canvas
   drawSprite(sprite, x, y) {
     let _img = sprite.img;
-    this.ctx.drawImage(img, x, y, sprite.width, sprite.height);
+    this.ctx.drawImage(_img, x, y, sprite.width, sprite.height);
   }
 
   // Get current canvas height
