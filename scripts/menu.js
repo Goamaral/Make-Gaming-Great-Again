@@ -10,7 +10,7 @@ window.onload = function() {
     }
     buttons[i].onmouseover = playSoundHandler;
     audio[buttons[i].id] = document.createElement('audio');
-    audio[buttons[i].id].src = 'resources/hover-sound.mp3';
+    audio[buttons[i].id].src = 'resources/sounds/hover-sound.mp3';
   }
 
   function playSoundHandler(ev) {
