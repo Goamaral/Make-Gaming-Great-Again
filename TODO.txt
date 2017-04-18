@@ -5,6 +5,8 @@ class wig: extends sprite
 change import size of background
 join flipped and normal background
 create background object
+add volume control
+lower button hover volume
 
 pauseGame() -> pauses game
 resetCanvas() -> cleares canvas

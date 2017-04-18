@@ -52,7 +52,15 @@ class Canvas {
     let background = this.backgrounds[this.currentBackground];
     let img = background.img;
 
-    ctx.drawImage(img, background.x, 0, background.screenWidth, img.height, 0, 0, background.width, background.height);
+    // If the image hasnt ended
+    if (background.x < background.width) {
+      ctx.drawImage(img, background.x, 0, background.screenWidth, img.height, 0, 0, background.width, background.height)
+    } else {
+      let widthOld = 2*background.screenWidth - background.x;
+      let widthNew = ;
+      ctx.drawImage(img, background.x, 0, widthOld, img.height, 0, 0, background.width, background.height)
+      ctx.drawImage(img, 0, 0, widthNew, img.height, widthOld, 0, background.width, background.height)
+    }
   }
 
   // Returns current full canvas image data
