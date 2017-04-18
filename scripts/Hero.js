@@ -18,8 +18,9 @@ class Hero {
   }
 
   update(instructions) {
-    for (let i=0; i<instructions.length(); ++i) {
-      let instruction = instructions[i],
+    let instruction = null;
+    for (let i=0; i<instructions.length; ++i) {
+      instruction = instructions[i];
       runInstruction(instruction);
     }
 

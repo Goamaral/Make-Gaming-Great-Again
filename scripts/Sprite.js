@@ -14,7 +14,7 @@ class Sprite {
     if(this.imgData === undefined) {
       //Creates aux canvas and fetchs canvas data
       let _canvas = new Canvas(this.width, this.height);
-      _canvas.drawImage(this.img, 0, 0, this.width, this.height);
+      _canvas.ctx.drawImage(this.img, 0, 0, this.width, this.height);
       this.imgData = _canvas.getFrameData();
     }
     return this.imgData;

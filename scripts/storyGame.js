@@ -28,7 +28,7 @@ window.onload = function() {
   // Creates event to signal end of sprite images loading
   window.addEventListener('spritesLoaded', spritesLoadedHandler);
   //Load sprite images
-  let spriteNodesObject = loadSpriteImages();
+  let heroSpriteNodesObject = loadHeroSpriteImages();
 
   // Create event to signal end of background images loading
   window.addEventListener('backgroundsLoaded', backgroundsLoadedHandler);
@@ -38,7 +38,7 @@ window.onload = function() {
   // Waits for event spritesLoaded event to be triggered
   function spritesLoadedHandler() {
     window.removeEventListener('spritesLoaded', spritesLoadedHandler);
-    resources['sprites'] = spriteNodesToSpriteObjects(spriteNodesObject);
+    resources['hero'] = spriteNodesToHeroObjects(heroSpriteNodesObject);
     if(Object.keys(resources).length == totalTasksToComplete) {
       let imageLoadingCompleteEvent = new Event('imageLoadingComplete');
       window.dispatchEvent(imageLoadingCompleteEvent);
@@ -48,7 +48,7 @@ window.onload = function() {
   // Waits for event backgroundsLoaded event to be triggered
   function backgroundsLoadedHandler() {
     window.removeEventListener('backgroundsLoaded', backgroundsLoadedHandler);
-    resources['backgrounds'] = backgroundNodesObject;
+    resources['backgrounds'] = spriteNodesToBackgroundObjects(backgroundNodesObject);
     if(Object.keys(resources).length == totalTasksToComplete) {
       let imageLoadingCompleteEvent = new Event('imageLoadingComplete');
       window.dispatchEvent(imageLoadingCompleteEvent);
@@ -62,15 +62,15 @@ window.onload = function() {
   }
 };
 
-//Load sprite images
-function loadSpriteImages() {
+//Load hero sprite images
+function loadHeroSpriteImages() {
   // Sprites path
-  let spritesPath = './resources/images/sprites/';
+  let spritesPath = './resources/images/hero/';
   // Sprite names
   let spriteNames = [ 'stand','jump','slide','anim1','anim2','anim3' ];
   // Load every sprite and create a image node for each one
-  let spriteNodesObject = createImageNodes(spriteNames, spritesPath, 'sprites');
-  return spriteNodesObject;
+  let heroSpritesObject = createImageNodes(spriteNames, spritesPath, 'sprites');
+  return heroSpritesObject;
 }
 
 //Load background images
@@ -127,20 +127,39 @@ function createImageNodes(names, path, mode) {
 }
 
 // Create Sprite objects for each sprite ndoe
-function spriteNodesToSpriteObjects(spriteNodesObject) {
+function spriteNodesToHeroObjects(heroSpriteNodesObject) {
   let out = {};
   // Create Sprite objects
-  for (let spriteName in spriteNodesObject) {
-    let img = spriteNodesObject[spriteName];
-    out[spriteName] = new Sprite(img);
+  for (let spriteName in heroSpriteNodesObject) {
+    let img = heroSpriteNodesObject[spriteName];
+    out[spriteName] = new Hero(img);
+  }
+  return out;
+}
+
+// Create Sprite objects for each background node
+function spriteNodesToBackgroundObjects(backgroundNodesObject) {
+  let out = {};
+  // Create Sprite objects
+  for (let backgroundName in backgroundNodesObject) {
+    let img = backgroundNodesObject[backgroundName];
+    out[backgroundName] = new Background(img);
   }
   return out;
 }
 
 function imageLoadingComplete(canvas, resources) {
-  let { sprites, backgrounds } = resources;
+  let { hero, backgrounds } = resources;
 
-  
+  // Import hero
+  canvas.importHero(hero);
+
+  // Import background
+  for( let backgroundName in backgrounds ) {
+    canvas.importBackground(backgroundName, backgrounds[backgroundName]);
+  }
+
+  canvas.drawBackground();
 
   //NOTE: CONTINUE CODE HERE
 }

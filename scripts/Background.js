@@ -6,13 +6,13 @@ class Background extends Sprite {
   }
 
   move(dx) {
-    this.x = this.x + dx,
+    this.x = this.x + dx;
     if (this.x > 2*this.screenWidth ) {
       this.x = 0;
     }
   }
 
   update(speed) {
-    this.move(speed),
+    this.move(speed);
   }
 }

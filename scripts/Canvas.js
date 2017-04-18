@@ -53,13 +53,13 @@ class Canvas {
     let img = background.img;
 
     // If the image hasnt ended
-    if (background.x < background.width) {
-      ctx.drawImage(img, background.x, 0, background.screenWidth, img.height, 0, 0, background.width, background.height)
+    if (background.x < background.screenWidth) {
+      this.ctx.drawImage(img, 0, 0, background.screenWidth + background.x , background.height, 0, 0, background.screenWidth, background.height)
     } else {
-      let widthOld = 2*background.screenWidth - background.x;
-      let widthNew = ;
-      ctx.drawImage(img, background.x, 0, widthOld, img.height, 0, 0, background.width, background.height)
-      ctx.drawImage(img, 0, 0, widthNew, img.height, widthOld, 0, background.width, background.height)
+      let widthOld = background.width - background.x;
+      let widthNew = background.screenWidth - widthOld;
+      this.ctx.drawImage(img, background.x, 0, widthOld, img.height, 0, 0, background.width, background.height);
+      this.ctx.drawImage(img, 0, 0, widthNew, img.height, widthOld, 0, background.width, background.height);
     }
   }
 
