@@ -7,7 +7,7 @@ window.onload = function() {
   buttons.push(document.getElementById('unmuteButton'));
   buttons.push(document.getElementById('backButton'));
   audio[buttons[2].id] = document.createElement('audio');
-  audio[buttons[2].id].src = 'resources/hover-sound.mp3';
+  audio[buttons[2].id].src = 'resources/sounds/hover-sound.mp3';
 
   for (let i = 0; i < buttons.length; i++) {
     buttons[i].onclick = buttonClickHandler;

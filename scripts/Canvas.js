@@ -36,6 +36,11 @@ class Canvas {
 
   }
 
+  // Clear canvas
+  resetCanvas() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+
   // Import Enemy
   importEnemy(enemyName, enemy) {
     this.enemies[enemyName] = enemy;
@@ -61,6 +66,22 @@ class Canvas {
     }
   }
 
+  // Draws background
+  drawBackground() {
+    let background = this.backgrounds[this.currentBackground];
+    let img = background.img;
+
+    // If the image hasnt ended
+    if (background.x < background.screenWidth) {
+      this.ctx.drawImage(img, background.x, 0, background.screenWidth, background.height, 0, 0, background.screenWidth, background.height)
+    } else {
+      let widthOld = background.width - background.x;
+      let widthNew = background.screenWidth - widthOld;
+      this.ctx.drawImage(img, background.x, 0, widthOld, img.height, 0, 0, widthOld, background.height);
+      this.ctx.drawImage(img, 0, 0, widthNew, img.height, widthOld, 0, widthNew, background.height);
+    }
+  }
+
   // Returns current full canvas image data
   getFrameData() {
     return this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
@@ -75,15 +96,10 @@ class Canvas {
     }
   }
 
-  // Draws image in the canvas
-  drawImage(img, x, y, width, height) {
-    this.ctx.drawImage(img, x, y, width, height);
-  }
-
   // Draws sprite in the canvas
   drawSprite(sprite, x, y) {
-    let _imgData = sprite.getImageData();
-    this.ctx.putImageData(_imgData, x, y);
+    let _img = sprite.img;
+    this.ctx.drawImage(_img, x, y, sprite.width, sprite.height);
   }
 
   // Get current canvas height
