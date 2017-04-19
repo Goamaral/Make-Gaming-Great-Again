@@ -23,6 +23,20 @@ class Canvas {
     this.enemies = {};
   }
 
+  gameloop() {
+    window.requestAnimationFrame(gameLoop);
+
+    this.update();
+    this.render();
+  }
+
+  update() {
+    let background = this.backgrounds[this.currentBackground];
+
+
+  }
+
+  // Import Enemy
   importEnemy(enemyName, enemy) {
     this.enemies[enemyName] = enemy;
   }
