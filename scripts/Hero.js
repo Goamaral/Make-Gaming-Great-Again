@@ -2,7 +2,7 @@ class Hero {
   constructor(sprites) {
     this.sprites = sprites;
     this.y = 0;
-    this.currentSprite = null;
+    this.currentSprite = 'stand';
 
     this.jumping = 0;
     this.jumpingTime = 11;
@@ -18,12 +18,14 @@ class Hero {
   }
 
   update(instructions) {
-    for (let instruction of instructions) {
-      runInstruction(instruction);
+    let instruction = null;
+    for (let i=0; i<instructions.length; ++i) {
+      instruction = instructions[i];
+      this.runInstruction(instruction);
     }
 
     if (this.jumping > 0) {
-      runInstruction('jump');
+      this.runInstruction('jump');
     }
 
     return this.sprites[this.currentSprite];
@@ -35,13 +37,13 @@ class Hero {
         if (this.jumping == 0) {
           this.jumping = this.jumpingTime;
           this.currentSprite = 'jump';
-          runInstruction('up');
+          this.runInstruction('up');
         } else {
           if (this.jumping < this.jumpingTime / 2) {
-            runInstruction('down');
+            this.runInstruction('down');
             this.jumping = this.jumping - 1;
           } else {
-            runInstruction('up');
+            this.runInstruction('up');
             this.jumping = this.jumping - 1;
           }
         }
@@ -51,24 +53,29 @@ class Hero {
         if (this.sliding) {
           this.currentSprite = 'slide';
         } else {
-          runInstruction('run');
+          this.runInstruction('run');
         }
+        break;
       case 'run':
         if (this.currentSprite == 'anim1') {
-          this.currentSprite == 'anim2';
+          this.currentSprite = 'anim2';
         } else if (this.currentSprite == 'anim2') {
-          this.currentSprite == 'anim3';
+          this.currentSprite = 'anim3';
         } else if (this.currentSprite == 'anim3'){
-          this.currentSprite == 'anim1';
-        } else if (this.jumping == 0 && this.sliding == False) {
-          this.currentSprite == 'anim1';
+          this.currentSprite = 'anim1';
+        } else if (this.jumping == 0 && this.sliding == false) {
+          this.currentSprite = 'anim1';
         }
+        console.log(this.currentSprite);
+        break;
       case 'up':
-        move(1);
+        this.move(1);
+        break;
       case 'down':
-        move(-1);
+        this.move(-1);
+        break;
       default:
-        alert('Instruction not defined');
+        alert('Instruction not defined -> ' + instruction);
     }
   }
 }
