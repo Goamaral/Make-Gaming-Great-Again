@@ -104,9 +104,9 @@ function createImageNodes(names, path, mode) {
     let targ = ev.target;
     if(mode == 'sprites') {
       //NOT RESPONSIVE
-      targ.height = targ.naturalHeight/7;
+      targ.height = targ.naturalHeight/5;
       //NOT RESPONSIVE
-      targ.width = targ.naturalWidth/7;
+      targ.width = targ.naturalWidth/5;
     } else if(mode == 'backgrounds') {
       //NOT RESPONSIVE
       targ.height = targ.naturalHeight;
@@ -159,5 +159,13 @@ function imageLoadingComplete(canvas, resources) {
     canvas.importBackground(backgroundName, backgrounds[backgroundName]);
   }
 
+  window.onkeydown = keyDownHandler;
+
+  canvas.gameloop();
+
   //NOTE: CONTINUE CODE HERE
+
+  function keyDownHandler(ev) {
+    canvas.keyDownHandler(ev.key);
+  }
 }

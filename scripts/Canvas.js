@@ -21,19 +21,41 @@ class Canvas {
     this.hero = null;
     // Enemies object
     this.enemies = {};
+    // Framerate
+    this.framerate = 30;
+    this.ticksPerFrame = 60 / this.framerate;
+    this.tickCount = 0;
+  }
+
+  keyDownHandler(key) {
+    console.log(key);
+    this.hero.update(key);
   }
 
   gameloop() {
-    window.requestAnimationFrame(gameLoop);
+    window.requestAnimationFrame(this.gameloop.bind(this))
 
-    this.update();
-    this.render();
+    this.tickCount += 1;
+    if(this.tickCount > this.ticksPerFrame) {
+      this.tickCount = 0;
+
+      this.update();
+      this.render();
+    }
+
   }
 
   update() {
     let background = this.backgrounds[this.currentBackground];
 
+    background.update(5);
+    this.hero.update('run');
+  }
 
+  render() {
+    let sprite = this.hero.sprites[this.hero.currentSprite];
+    this.drawBackground();
+    this.drawSprite(sprite, this.hero.x, this.hero.y);
   }
 
   // Clear canvas
@@ -48,6 +70,8 @@ class Canvas {
 
   // Import Hero
   importHero(hero) {
+    hero.y = 280;
+    hero.x = 50;
     this.hero = hero;
   }
 
