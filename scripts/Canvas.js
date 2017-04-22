@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 
 class Canvas {
-  constructor(width,height) {
+  constructor(width, height) {
     this.root = null;
     // Creates canvas node
     this.canvas = document.createElement('canvas');
@@ -21,18 +21,56 @@ class Canvas {
     this.hero = null;
     // Enemies object
     this.enemies = {};
+    // Framerate
+    this.framerate = 30;
+    this.ticksPerFrame = 60 / this.framerate;
+    this.tickCount = 0;
   }
 
+  keyDownHandler(key) {
+    this.hero.update(key);
+  }
+
+  gameloop() {
+    window.requestAnimationFrame(this.gameloop.bind(this))
+
+    this.tickCount += 1;
+    if(this.tickCount > this.ticksPerFrame) {
+      this.tickCount = 0;
+
+      this.update();
+      this.render();
+    }
+
+  }
+
+  update() {
+    let background = this.backgrounds[this.currentBackground];
+
+    background.update(8);
+    this.hero.update('run');
+  }
+
+  render() {
+    let sprite = this.hero.sprites[this.hero.currentSprite];
+    this.drawBackground();
+    this.drawSprite(sprite, this.hero.x, this.hero.y);
+  }
+
+  // Clear canvas
   resetCanvas() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   }
 
+  // Import Enemy
   importEnemy(enemyName, enemy) {
     this.enemies[enemyName] = enemy;
   }
 
   // Import Hero
   importHero(hero) {
+    hero.y = 280;
+    hero.x = 50;
     this.hero = hero;
   }
 
