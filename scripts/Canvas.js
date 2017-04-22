@@ -64,6 +64,7 @@ class Canvas {
 
   // Import Enemy
   importEnemy(enemyName, enemy) {
+    enemy.y = 280;
     this.enemies[enemyName] = enemy;
   }
 
