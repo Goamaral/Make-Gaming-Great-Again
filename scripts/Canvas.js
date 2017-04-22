@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 
 class Canvas {
-  constructor(width,height) {
+  constructor(width, height) {
     this.root = null;
     // Creates canvas node
     this.canvas = document.createElement('canvas');
@@ -28,7 +28,6 @@ class Canvas {
   }
 
   keyDownHandler(key) {
-    console.log(key);
     this.hero.update(key);
   }
 
@@ -48,7 +47,7 @@ class Canvas {
   update() {
     let background = this.backgrounds[this.currentBackground];
 
-    background.update(5);
+    background.update(8);
     this.hero.update('run');
   }
 

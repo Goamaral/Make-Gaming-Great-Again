@@ -1,3 +1,5 @@
+let debugging = false;
+
 class Hero {
   constructor(sprites) {
     this.sprites = sprites;
@@ -7,7 +9,9 @@ class Hero {
 
     this.jumping = 0;
     this.jumpingTime = 21;
-    this.sliding = false;
+    this.sliding = 0;
+    this.slidingTime = 15;
+    this.prevSliding = false;
 
     this.runTick = 0;
     this.maxRunTicks = 5;
@@ -20,12 +24,17 @@ class Hero {
   update(instruction) {
     if (this.jumping > 0) {
       this.runInstruction('ArrowUp');
+    } else if (this.sliding > 0) {
+      this.runInstruction('ArrowDown');
     } else {
       this.runInstruction(instruction);
     }
   }
 
   runInstruction(instruction) {
+    if(debugging) {
+      console.log(instruction);
+    }
     switch (instruction) {
       case 'ArrowUp':
         if (this.jumping == 0) {
@@ -42,12 +51,14 @@ class Hero {
           }
         }
         break;
-      case 'slide':
-        this.sliding = !this.sliding;
-        if (this.sliding) {
+      case 'ArrowDown':
+        if (this.sliding == 0) {
+          this.sliding = this.slidingTime;
           this.currentSprite = 'slide';
+          this.move(25);
+          this.prevSliding = true;
         } else {
-          this.runInstruction('run');
+          this.sliding = this.sliding - 1;
         }
         break;
       case 'run':
@@ -67,6 +78,12 @@ class Hero {
         } else {
           this.runTick += 1;
         }
+        
+        if (this.sliding == 0 && this.prevSliding) {
+          this.prevSliding = false;
+          this.move(-25);
+        }
+
         break;
       case 'up':
         this.move(15);
@@ -75,7 +92,9 @@ class Hero {
         this.move(-15);
         break;
       default:
+      if (debugging) {
         alert('Instruction not defined -> ' + instruction);
+      }
     }
   }
 }

@@ -159,7 +159,11 @@ function imageLoadingComplete(canvas, resources) {
     canvas.importBackground(backgroundName, backgrounds[backgroundName]);
   }
 
+  parent.window.onkeydown = keyDownHandler;
   window.onkeydown = keyDownHandler;
+
+  parent.window.onkeyup = keyUpHandler;
+  window.onkeyup = keyUpHandler;
 
   canvas.gameloop();
 
@@ -167,5 +171,11 @@ function imageLoadingComplete(canvas, resources) {
 
   function keyDownHandler(ev) {
     canvas.keyDownHandler(ev.key);
+  }
+
+  function keyUpHandler(ev) {
+    if (ev.key == 'ArrowDown') {
+      canvas.keyDownHandler(ev.key);
+    }
   }
 }
