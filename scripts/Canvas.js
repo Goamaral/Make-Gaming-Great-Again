@@ -28,7 +28,7 @@ class Canvas {
   }
 
   keyDownHandler(key) {
-    this.hero.update(key);
+    this.hero.keyPress(key);
   }
 
   gameloop() {
@@ -64,14 +64,13 @@ class Canvas {
 
   // Import Enemy
   importEnemy(enemyName, enemy) {
-    enemy.y = 280;
+    enemy.setCoord(0, 280);
     this.enemies[enemyName] = enemy;
   }
 
   // Import Hero
   importHero(hero) {
-    hero.y = 280;
-    hero.x = 50;
+    hero.setCoord(50, 280);
     this.hero = hero;
   }
 

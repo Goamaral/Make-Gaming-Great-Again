@@ -3,6 +3,7 @@ let debugging = false;
 class Hero {
   constructor(sprites) {
     this.sprites = sprites;
+    this.baseY = 0;
     this.y = 0;
     this.x = 0;
     this.currentSprite = 'stand';
@@ -12,6 +13,7 @@ class Hero {
     this.sliding = 0;
     this.slidingTime = 15;
     this.prevSliding = false;
+    this.slidingY = 0;
 
     this.runTick = 0;
     this.maxRunTicks = 5;
@@ -21,13 +23,26 @@ class Hero {
     this.y = this.y + dy;
   }
 
-  update(instruction) {
+  setCoord(x,y) {
+    this.x = x;
+    this.y = y;
+    this.baseY = y;
+    this.slidingY = y + 25;
+  }
+
+  update() {
     if (this.jumping > 0) {
-      this.runInstruction('ArrowUp');
+      this.runInstruction('ContinueJump');
     } else if (this.sliding > 0) {
-      this.runInstruction('ArrowDown');
+      this.runInstruction('ContinueSliding');
     } else {
-      this.runInstruction(instruction);
+      this.runInstruction('run');
+    }
+  }
+
+  keyPress(key) {
+    if(this.sliding == 0 && this.jumping == 0) {
+      this.runInstruction(key);
     }
   }
 
@@ -37,29 +52,27 @@ class Hero {
     }
     switch (instruction) {
       case 'ArrowUp':
-        if (this.jumping == 0) {
           this.jumping = this.jumpingTime;
           this.currentSprite = 'jump';
           this.runInstruction('up');
+        break;
+      case 'ContinueJump':
+        if (this.jumping < this.jumpingTime / 2) {
+          this.runInstruction('up');
+          this.jumping = this.jumping - 1;
         } else {
-          if (this.jumping < this.jumpingTime / 2) {
-            this.runInstruction('up');
-            this.jumping = this.jumping - 1;
-          } else {
-            this.runInstruction('down');
-            this.jumping = this.jumping - 1;
-          }
+          this.runInstruction('down');
+          this.jumping = this.jumping - 1;
         }
         break;
       case 'ArrowDown':
-        if (this.sliding == 0) {
           this.sliding = this.slidingTime;
           this.currentSprite = 'slide';
-          this.move(25);
+          this.y = this.slidingY;
           this.prevSliding = true;
-        } else {
-          this.sliding = this.sliding - 1;
-        }
+        break;
+      case 'ContinueSliding':
+        this.sliding = this.sliding - 1;
         break;
       case 'run':
         if (this.runTick == 0) {
@@ -78,10 +91,10 @@ class Hero {
         } else {
           this.runTick += 1;
         }
-        
+
         if (this.sliding == 0 && this.prevSliding) {
           this.prevSliding = false;
-          this.move(-25);
+          this.y = this.baseY;
         }
 
         break;
