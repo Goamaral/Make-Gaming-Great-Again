@@ -1,4 +1,4 @@
-let debugging = false;
+let debugging = true;
 
 class Hero {
   constructor(sprites) {
@@ -11,12 +11,12 @@ class Hero {
     this.jumping = 0;
     this.jumpingTime = 21;
     this.sliding = 0;
-    this.slidingTime = 15;
-    this.prevSliding = false;
     this.slidingY = 0;
 
     this.runTick = 0;
     this.maxRunTicks = 5;
+
+    this.lock = false;
   }
 
   move(dy) {
@@ -36,14 +36,26 @@ class Hero {
     } else if (this.sliding > 0) {
       this.runInstruction('ContinueSliding');
     } else {
-      this.runInstruction('run');
+      if (!this.lock) {
+        this.runInstruction('run');
+      }
     }
   }
 
   keyPress(key) {
+    this.lockRun();
     if(this.sliding == 0 && this.jumping == 0) {
       this.runInstruction(key);
     }
+    this.unlockRun();
+  }
+
+  lockRun() {
+    this.lock = true;
+  }
+
+  unlockRun() {
+    this.lock = false;
   }
 
   runInstruction(instruction) {
@@ -66,10 +78,14 @@ class Hero {
         }
         break;
       case 'ArrowDown':
-          this.sliding = this.slidingTime;
+          /*this.sliding = this.slidingTime;
           this.currentSprite = 'slide';
           this.y = this.slidingY;
           this.prevSliding = true;
+          */
+          this.y = this.slidingY;
+          this.currentSprite = 'slide';
+          this.sliding = 5;
         break;
       case 'ContinueSliding':
         this.sliding = this.sliding - 1;
@@ -82,8 +98,9 @@ class Hero {
             this.currentSprite = 'anim3';
           } else if (this.currentSprite == 'anim3'){
             this.currentSprite = 'anim1';
-          } else if (this.jumping == 0 && this.sliding == false) {
+          } else if (this.jumping == 0 && this.jumping == 0) {
             this.currentSprite = 'anim1';
+            this.y = this.baseY;
           }
           this.runTick += 1;
         } else if(this.runTick == this.maxRunTicks){
@@ -91,12 +108,6 @@ class Hero {
         } else {
           this.runTick += 1;
         }
-
-        if (this.sliding == 0 && this.prevSliding) {
-          this.prevSliding = false;
-          this.y = this.baseY;
-        }
-
         break;
       case 'up':
         this.move(15);
