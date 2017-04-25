@@ -6,7 +6,7 @@ class Sprite {
     this.img = img;
     this.width = img.width;
     this.height = img.height;
-    this.imgData = this.getImageData();
+    this.imgData = undefined;
   }
 
   getImageData() {

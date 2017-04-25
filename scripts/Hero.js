@@ -3,6 +3,7 @@ let debugging = false;
 class Hero {
   constructor(sprites) {
     this.sprites = sprites;
+    this.baseY = 0;
     this.y = 0;
     this.x = 0;
     this.currentSprite = 'stand';
@@ -10,24 +11,41 @@ class Hero {
     this.jumping = 0;
     this.jumpingTime = 21;
     this.sliding = 0;
-    this.slidingTime = 15;
-    this.prevSliding = false;
+    this.slidingY = 0;
+    this.slidingTime = 1;
 
     this.runTick = 0;
     this.maxRunTicks = 5;
+
+    this.lock = false;
   }
 
   move(dy) {
     this.y = this.y + dy;
   }
 
-  update(instruction) {
+  setCoord(x,y) {
+    this.x = x;
+    this.y = y;
+    this.baseY = y;
+    this.slidingY = y + 25;
+  }
+
+  update(locked) {
     if (this.jumping > 0) {
-      this.runInstruction('ArrowUp');
+      this.runInstruction('ContinueJump');
     } else if (this.sliding > 0) {
-      this.runInstruction('ArrowDown');
+      this.runInstruction('ContinueSliding');
     } else {
-      this.runInstruction(instruction);
+      if (!locked) {
+        this.runInstruction('run');
+      }
+    }
+  }
+
+  keyPress(key) {
+    if(this.sliding == 0 && this.jumping == 0) {
+      this.runInstruction(key);
     }
   }
 
@@ -37,29 +55,26 @@ class Hero {
     }
     switch (instruction) {
       case 'ArrowUp':
-        if (this.jumping == 0) {
           this.jumping = this.jumpingTime;
           this.currentSprite = 'jump';
           this.runInstruction('up');
+        break;
+      case 'ContinueJump':
+        if (this.jumping < this.jumpingTime / 2) {
+          this.runInstruction('up');
+          this.jumping = this.jumping - 1;
         } else {
-          if (this.jumping < this.jumpingTime / 2) {
-            this.runInstruction('up');
-            this.jumping = this.jumping - 1;
-          } else {
-            this.runInstruction('down');
-            this.jumping = this.jumping - 1;
-          }
+          this.runInstruction('down');
+          this.jumping = this.jumping - 1;
         }
         break;
       case 'ArrowDown':
-        if (this.sliding == 0) {
-          this.sliding = this.slidingTime;
+          this.y = this.slidingY;
           this.currentSprite = 'slide';
-          this.move(25);
-          this.prevSliding = true;
-        } else {
-          this.sliding = this.sliding - 1;
-        }
+          this.sliding = this.slidingTime;
+        break;
+      case 'ContinueSliding':
+        this.sliding = this.sliding - 1;
         break;
       case 'run':
         if (this.runTick == 0) {
@@ -69,21 +84,21 @@ class Hero {
             this.currentSprite = 'anim3';
           } else if (this.currentSprite == 'anim3'){
             this.currentSprite = 'anim1';
-          } else if (this.jumping == 0 && this.sliding == false) {
+          } else if (this.jumping == 0 && this.sliding == 0) {
             this.currentSprite = 'anim1';
+            this.y = this.baseY;
           }
           this.runTick += 1;
         } else if(this.runTick == this.maxRunTicks){
           this.runTick = 0;
         } else {
-          this.runTick += 1;
-        }
-        
-        if (this.sliding == 0 && this.prevSliding) {
-          this.prevSliding = false;
-          this.move(-25);
-        }
+          if (this.jumping != 0 || this.sliding != 0) {
+            this.runTick = 0;
+          } else {
+            this.runTick += 1;
+          }
 
+        }
         break;
       case 'up':
         this.move(15);

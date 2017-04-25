@@ -25,10 +25,23 @@ class Canvas {
     this.framerate = 30;
     this.ticksPerFrame = 60 / this.framerate;
     this.tickCount = 0;
+    // Hero running lock
+    this.locker = null;
   }
 
   keyDownHandler(key) {
-    this.hero.update(key);
+    if (this.locker == null) {
+      this.locker = key;
+      this.hero.keyPress(key);
+    } else if (this.locker == key) {
+      this.hero.keyPress(key);
+    }
+  }
+
+  keyUpHandler(key) {
+    if (this.locker == key) {
+      this.locker = null;
+    }
   }
 
   gameloop() {
@@ -38,17 +51,17 @@ class Canvas {
     if(this.tickCount > this.ticksPerFrame) {
       this.tickCount = 0;
 
-      this.update();
+      this.update(this.locker != null);
       this.render();
     }
 
   }
 
-  update() {
+  update(locked) {
     let background = this.backgrounds[this.currentBackground];
 
     background.update(8);
-    this.hero.update('run');
+    this.hero.update(locked);
   }
 
   render() {
@@ -64,13 +77,13 @@ class Canvas {
 
   // Import Enemy
   importEnemy(enemyName, enemy) {
+    enemy.setCoord(0, 280);
     this.enemies[enemyName] = enemy;
   }
 
   // Import Hero
   importHero(hero) {
-    hero.y = 280;
-    hero.x = 50;
+    hero.setCoord(50, 280);
     this.hero = hero;
   }
 
