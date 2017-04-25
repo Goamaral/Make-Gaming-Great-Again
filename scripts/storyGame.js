@@ -263,12 +263,13 @@ function imageLoadingComplete(canvas, resources) {
   //NOTE: CONTINUE CODE HERE
 
   function keyDownHandler(ev) {
-    canvas.keyDownHandler(ev.key);
+    let key = ev.key;
+    if (key == 'ArrowDown' || key == 'ArrowUp') {
+      canvas.keyDownHandler(ev.key);
+    }
   }
 
   function keyUpHandler(ev) {
-    if (ev.key == 'ArrowDown') {
-      canvas.keyDownHandler(ev.key);
-    }
+    canvas.keyUpHandler(ev.key);
   }
 }

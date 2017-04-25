@@ -1,4 +1,4 @@
-let debugging = true;
+let debugging = false;
 
 class Hero {
   constructor(sprites) {
@@ -12,6 +12,7 @@ class Hero {
     this.jumpingTime = 21;
     this.sliding = 0;
     this.slidingY = 0;
+    this.slidingTime = 1;
 
     this.runTick = 0;
     this.maxRunTicks = 5;
@@ -30,32 +31,22 @@ class Hero {
     this.slidingY = y + 25;
   }
 
-  update() {
+  update(locked) {
     if (this.jumping > 0) {
       this.runInstruction('ContinueJump');
     } else if (this.sliding > 0) {
       this.runInstruction('ContinueSliding');
     } else {
-      if (!this.lock) {
+      if (!locked) {
         this.runInstruction('run');
       }
     }
   }
 
   keyPress(key) {
-    this.lockRun();
     if(this.sliding == 0 && this.jumping == 0) {
       this.runInstruction(key);
     }
-    this.unlockRun();
-  }
-
-  lockRun() {
-    this.lock = true;
-  }
-
-  unlockRun() {
-    this.lock = false;
   }
 
   runInstruction(instruction) {
@@ -78,14 +69,9 @@ class Hero {
         }
         break;
       case 'ArrowDown':
-          /*this.sliding = this.slidingTime;
-          this.currentSprite = 'slide';
-          this.y = this.slidingY;
-          this.prevSliding = true;
-          */
           this.y = this.slidingY;
           this.currentSprite = 'slide';
-          this.sliding = 5;
+          this.sliding = this.slidingTime;
         break;
       case 'ContinueSliding':
         this.sliding = this.sliding - 1;
@@ -98,7 +84,7 @@ class Hero {
             this.currentSprite = 'anim3';
           } else if (this.currentSprite == 'anim3'){
             this.currentSprite = 'anim1';
-          } else if (this.jumping == 0 && this.jumping == 0) {
+          } else if (this.jumping == 0 && this.sliding == 0) {
             this.currentSprite = 'anim1';
             this.y = this.baseY;
           }
@@ -106,7 +92,12 @@ class Hero {
         } else if(this.runTick == this.maxRunTicks){
           this.runTick = 0;
         } else {
-          this.runTick += 1;
+          if (this.jumping != 0 || this.sliding != 0) {
+            this.runTick = 0;
+          } else {
+            this.runTick += 1;
+          }
+
         }
         break;
       case 'up':

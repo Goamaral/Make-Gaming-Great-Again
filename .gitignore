@@ -107,9 +107,6 @@ typings/
 # dotenv environment variables file
 .env
 
-# Bat
-*.bat
-
 ### Vim ###
 # swap
 [._]*.s[a-v][a-z]
@@ -124,3 +121,9 @@ Session.vim
 tags
 
 # End of https://www.gitignore.io/api/vim,node,emacs
+
+# Bat
+*.bat
+
+# Shell
+*.sh
