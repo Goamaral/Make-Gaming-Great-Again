@@ -29,7 +29,7 @@ window.onload = function() {
     iframeStoryGame.src = 'storyGame.html';
 
     let iframeInfiniteGame = document.createElement("iframe");
-    //iframeInfiniteGame.src = 'infiniteGame.html';
+    iframeInfiniteGame.src = 'infiniteGame.html';
 
     let iframeHowToPlay = document.createElement("iframe");
     //iframeHowToPlay.src = 'howToPlay.html';
@@ -39,6 +39,9 @@ window.onload = function() {
 
     let iframeSettings = document.createElement("iframe");
     iframeSettings.src = 'settings.html';
+
+    let iframeEndOfGame = document.createElement("iframe");
+    iframeSettings.src = 'endOfGame.html';
 
     mountIframe(iframeMenu);
 
@@ -76,6 +79,9 @@ window.onload = function() {
                 break;
             case 'backButton':
                 mountIframe(iframeMenu);
+                break;
+            case 'endGameButton':
+                mountIframe(iframeEndOfGame);
                 break;
         }
     }
