@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var ScoreSchema = new Schema({
   name: {
     type: String,
-    Required: 'Kindly enter the name of the task'
+    Required: 'Enter name of player'
   },
   Created_date: {
     type: Date,
@@ -13,7 +13,7 @@ var ScoreSchema = new Schema({
   },
   score: {
     type: String,
-    Required: 'Please enter a score'
+    Required: 'Enter a score'
   }
 });
 
