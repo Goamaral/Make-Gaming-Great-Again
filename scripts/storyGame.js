@@ -18,7 +18,7 @@ window.onload = function() {
   let canvas = new Canvas(768, 432);
   canvas.mountCanvas(main);
 
-  // Palin JS object of fully loaded resources
+  // Plain JS object of fully loaded resources
   let resources = {};
   // Number of tasks to complete
   let totalTasksToComplete = 3;
@@ -239,6 +239,30 @@ function spriteNodesToBackgroundObjects(backgroundNodesObject) {
 function imageLoadingComplete(canvas, resources) {
   let { hero, backgrounds, enemies } = resources;
 
+  canvas.ctx.putImageData(hero.sprites.stand.getImageData(), 0, 0);
+  console.log(checkColisions(canvas, hero.sprites.stand.getImageData(), 50, 50));
+  //canvas.drawSprite(obama.sprites.obamaDown, 0, 0);
+
+  function checkColisions(c, s, x, y) {
+    let canvasSection = c.ctx.getImageData(x, y, s.width, s.height);
+
+    for (let i=0; i<canvasSection.data.length; i+=4) {
+      if (canvasSection.data[i+3] == 255 && s.data[i+3] == 255 ) {
+        c.ctx.putImageData(s, x, y);
+        return false;
+      }
+    }
+
+    c.ctx.putImageData(s, x, y);
+
+    return true;
+
+    function coordToArrPos(x, y, w) {
+      return y*w + x;
+    }
+  }
+
+  /*
   // Import hero
   canvas.importHero(hero);
 
@@ -259,6 +283,7 @@ function imageLoadingComplete(canvas, resources) {
   window.onkeyup = keyUpHandler;
 
   canvas.gameloop();
+  */
 
   //NOTE: CONTINUE CODE HERE
 
