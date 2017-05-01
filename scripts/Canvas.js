@@ -7,6 +7,7 @@ class Canvas {
     this.canvas = document.createElement('canvas');
     this.canvas.width = width;
     this.canvas.height = height;
+    this._canvas = undefined;
     // Set canvas custom default style
     this.setStyle({
       margin: 'auto'
@@ -57,6 +58,25 @@ class Canvas {
 
   }
 
+  checkColisions(sprite, x, y) {
+    if (this._canvas === undefined) {
+      this._canvas = new Canvas(this.canvas.width, this.canvas.height);
+    }
+    let s = sprite.getImageData();
+    let canvasSection = this._canvas.ctx.getImageData(x, y, s.width, s.height);
+
+    for (let i=0; i<canvasSection.data.length; i+=4) {
+      if (canvasSection.data[i+3] == 255 && s.data[i+3] == 255 ) {
+        this.canvas.drawSprite(sprite, x, y);
+        return false;
+      }
+    }
+
+    this.canvas.drawSprite(sprite, x, y);
+
+    return true;
+  }
+
   update(locked) {
     let background = this.backgrounds[this.currentBackground];
 
@@ -65,9 +85,19 @@ class Canvas {
   }
 
   render() {
-    let sprite = this.hero.sprites[this.hero.currentSprite];
     this.drawBackground();
-    this.drawSprite(sprite, this.hero.x, this.hero.y);
+    this.drawForeground();
+  }
+
+  drawForeground() {
+    if (this._canvas === undefined) {
+      this._canvas = new Canvas(this.canvas.width, this.canvas.height);
+    }
+    let self = this._canvas;
+    self.resetCanvas();
+    let heroSprite = this.hero.sprites[this.hero.currentSprite];
+    self.drawSprite(heroSprite, this.hero.x, this.hero.y);
+    this.drawSprite(heroSprite, this.hero.x, this.hero.y);
   }
 
   // Clear canvas
