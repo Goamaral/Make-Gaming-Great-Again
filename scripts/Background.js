@@ -13,6 +13,6 @@ class Background extends Sprite {
   }
 
   update(speed) {
-    this.move(speed);
+    this.move(speed * 4);
   }
 }

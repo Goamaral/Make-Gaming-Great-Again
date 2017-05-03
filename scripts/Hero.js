@@ -9,7 +9,7 @@ class Hero {
     this.currentSprite = 'stand';
 
     this.jumping = 0;
-    this.jumpingTime = 21;
+    this.jumpingTime = 25;
     this.sliding = 0;
     this.slidingY = 0;
     this.slidingTime = 1;
@@ -60,11 +60,11 @@ class Hero {
           this.runInstruction('up');
         break;
       case 'ContinueJump':
-        if (this.jumping < this.jumpingTime / 2) {
-          this.runInstruction('up');
+        if (this.jumping <= this.jumpingTime / 2) {
+          this.runInstruction('down');
           this.jumping = this.jumping - 1;
         } else {
-          this.runInstruction('down');
+          this.runInstruction('up');
           this.jumping = this.jumping - 1;
         }
         break;
@@ -97,19 +97,18 @@ class Hero {
           } else {
             this.runTick += 1;
           }
-
         }
         break;
       case 'up':
-        this.move(15);
-        break;
-      case 'down':
         this.move(-15);
         break;
+      case 'down':
+        this.move(15);
+        break;
       default:
-      if (debugging) {
-        alert('Instruction not defined -> ' + instruction);
-      }
+      	if (debugging) {
+        	alert('Instruction not defined -> ' + instruction);
+  		}
     }
   }
 }

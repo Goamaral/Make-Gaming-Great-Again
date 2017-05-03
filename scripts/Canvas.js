@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 
 class Canvas {
-  constructor(width, height) {
+  constructor(width, height, mode=null) {
     this.root = null;
     // Creates canvas node
     this.canvas = document.createElement('canvas');
@@ -26,8 +26,23 @@ class Canvas {
     this.framerate = 30;
     this.ticksPerFrame = 60 / this.framerate;
     this.tickCount = 0;
+    this.speed = 3;
+    this.animationRequest = 0;
+
     // Hero running lock
     this.locker = null;
+
+    // Enemies properties
+    this.enemySpace = this.canvas.width / 2;
+    this.enemiesQueue = [];
+    this.head = 0;
+
+    // If enemy has collide
+    this.end = false;
+
+    // Game mode
+    this.mode = mode;
+    this.maxRequests = 1000;
   }
 
   keyDownHandler(key) {
@@ -46,7 +61,18 @@ class Canvas {
   }
 
   gameloop() {
-    window.requestAnimationFrame(this.gameloop.bind(this))
+    console.log(this.animationRequest);
+    if (this.mode == 'storyGame' && this.animationRequest == this.maxRequests) {
+      this.end = true;
+    }
+
+    if (this.end) {
+      window.cancelAnimationFrame(this.animationRequest);
+      window.dispatchEvent( new Event('gameEnded') );
+      return;
+    }
+
+    this.animationRequest = window.requestAnimationFrame(this.gameloop.bind(this));
 
     this.tickCount += 1;
     if(this.tickCount > this.ticksPerFrame) {
@@ -55,33 +81,56 @@ class Canvas {
       this.update(this.locker != null);
       this.render();
     }
-
   }
 
-  checkColisions(sprite, x, y) {
-    if (this._canvas === undefined) {
-      this._canvas = new Canvas(this.canvas.width, this.canvas.height);
-    }
-    let s = sprite.getImageData();
+  checkColisions(sprite, x, y) {    let s = sprite.getImageData();
     let canvasSection = this._canvas.ctx.getImageData(x, y, s.width, s.height);
 
     for (let i=0; i<canvasSection.data.length; i+=4) {
       if (canvasSection.data[i+3] == 255 && s.data[i+3] == 255 ) {
-        this.canvas.drawSprite(sprite, x, y);
-        return false;
+        return true;
       }
-    }
-
-    this.canvas.drawSprite(sprite, x, y);
-
-    return true;
+    }    return false;
   }
 
   update(locked) {
     let background = this.backgrounds[this.currentBackground];
 
-    background.update(8);
+    background.update(this.speed);
     this.hero.update(locked);
+    this.updateEnemies();
+  }
+
+  updateEnemies() {
+  	if (this._canvas === undefined) {
+        this._canvas = new Canvas(this.canvas.width, this.canvas.height);
+    }
+    if (this.enemiesQueue.length == 0) {
+      this.enemyGenerator();
+      this.head = 0;
+    } else if (this.enemiesQueue[this.head].x < this.enemySpace) {
+    	this.enemyGenerator();
+      this.head = 1;
+    }
+
+    this.enemiesQueue.map((enemy) =>{
+      enemy.update(this.speed);
+      if (enemy.x <= 0) {
+        this.enemiesQueue.shift();
+        this.head = 0;
+      }
+    });
+  }
+
+  enemyGenerator() {
+    let enemyKeys = Object.keys(this.enemies);
+    let enemyName = enemyKeys[this.random(0, enemyKeys.length)];
+    let enemy = Object.assign(new Enemy(), this.enemies[enemyName]);
+    this.resetEnemy(enemy);
+    this.enemiesQueue.push(enemy);  }
+
+  random(min, max) {
+    return Math.floor((Math.random() * max) + min);
   }
 
   render() {
@@ -98,6 +147,13 @@ class Canvas {
     let heroSprite = this.hero.sprites[this.hero.currentSprite];
     self.drawSprite(heroSprite, this.hero.x, this.hero.y);
     this.drawSprite(heroSprite, this.hero.x, this.hero.y);
+    this.enemiesQueue.map((enemy) => {
+    	let enemySprite = enemy.sprites[enemy.currentSprite];
+      if (!this.end) {
+    	 this.end = this.checkColisions(enemySprite, enemy.x, enemy.y);
+      }
+    	this.drawSprite(enemySprite, enemy.x, enemy.y);
+    });
   }
 
   // Clear canvas
@@ -107,8 +163,12 @@ class Canvas {
 
   // Import Enemy
   importEnemy(enemyName, enemy) {
-    enemy.setCoord(0, 280);
     this.enemies[enemyName] = enemy;
+  }
+
+  // Reset Enemy
+  resetEnemy(enemy) {
+  	enemy.setCoord(this.canvas.width, 280);
   }
 
   // Import Hero
