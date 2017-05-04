@@ -6,7 +6,4 @@ module.exports = function(app) {
   app.route('/scores')
     .get(game.list_all_scores)
     .post(game.create_a_score);
-
-  app.route('/scores/:scoreId')
-    .get(game.read_a_score);
 };
