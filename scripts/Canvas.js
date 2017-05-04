@@ -14,6 +14,7 @@ class Canvas {
     });
     // Define context
     this.ctx = this.canvas.getContext('2d');
+    this.ctx.font = '30px Monaco';
     // Object with available backgrounds
     this.backgrounds = {};
     // Name of current selected background
@@ -33,7 +34,7 @@ class Canvas {
     this.locker = null;
 
     // Enemies properties
-    this.enemySpace = this.canvas.width / 2;
+    this.nextEnemyDist = this.canvas.width / 3;
     this.enemiesQueue = [];
     this.head = 0;
 
@@ -61,9 +62,10 @@ class Canvas {
   }
 
   gameloop() {
-    console.log(this.animationRequest);
     if (this.mode == 'storyGame' && this.animationRequest == this.maxRequests) {
       this.end = true;
+    } else if (this.mode == 'infiniteGame' && this.animationRequest % 200 == 0) {
+      this.speed += 0.1;
     }
 
     if (this.end) {
@@ -108,7 +110,7 @@ class Canvas {
     if (this.enemiesQueue.length == 0) {
       this.enemyGenerator();
       this.head = 0;
-    } else if (this.enemiesQueue[this.head].x < this.enemySpace) {
+    } else if (this.enemiesQueue[this.head].x < this.nextEnemyDist) {
     	this.enemyGenerator();
       this.head = 1;
     }
@@ -145,15 +147,18 @@ class Canvas {
     let self = this._canvas;
     self.resetCanvas();
     let heroSprite = this.hero.sprites[this.hero.currentSprite];
-    self.drawSprite(heroSprite, this.hero.x, this.hero.y);
     this.drawSprite(heroSprite, this.hero.x, this.hero.y);
     this.enemiesQueue.map((enemy) => {
     	let enemySprite = enemy.sprites[enemy.currentSprite];
       if (!this.end) {
-    	 this.end = this.checkColisions(enemySprite, enemy.x, enemy.y);
+        self.drawSprite(heroSprite, this.hero.x, this.hero.y);
+        this.end = this.checkColisions(enemySprite, enemy.x, enemy.y);
+        self.resetCanvas();
       }
-    	this.drawSprite(enemySprite, enemy.x, enemy.y);
+      this.drawSprite(enemySprite, enemy.x, enemy.y);
     });
+
+    if (this.mode == 'infiniteGame') this.ctx.fillText(['SCORE', this.animationRequest+1].join(' '), 300, 50);
   }
 
   // Clear canvas
@@ -197,7 +202,6 @@ class Canvas {
     let background = this.backgrounds[this.currentBackground];
     let img = background.img;
 
-    // If the image hasnt ended
     if (background.x < background.screenWidth) {
       this.ctx.drawImage(img, background.x, 0, background.screenWidth, background.height, 0, 0, background.screenWidth, background.height)
     } else {
