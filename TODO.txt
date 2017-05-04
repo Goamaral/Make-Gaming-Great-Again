@@ -6,9 +6,3 @@ add volume control
 lower button hover volume
 
 pauseGame() -> pauses game
-checkColisons(objectToInsert) -> objectToInsert is a Sprite to insert, checks collisons between current canvas and an object to be inserted
-gameloop() -> updates and renders sprites requesting animaniton loop
-update() -> move sprites (including background)
-render() -> draw enemies, draws currentWig, checks colisions with hero, draws hero and draws background
-
-create loading animation -> create animation while resources are loading

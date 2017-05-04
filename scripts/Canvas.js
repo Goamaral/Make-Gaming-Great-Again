@@ -1,18 +1,20 @@
 /*jshint esversion: 6 */
 
 class Canvas {
-  constructor(width, height) {
+  constructor(width, height, mode=null) {
     this.root = null;
     // Creates canvas node
     this.canvas = document.createElement('canvas');
     this.canvas.width = width;
     this.canvas.height = height;
+    this._canvas = undefined;
     // Set canvas custom default style
     this.setStyle({
       margin: 'auto'
     });
     // Define context
     this.ctx = this.canvas.getContext('2d');
+    this.ctx.font = '30px Monaco';
     // Object with available backgrounds
     this.backgrounds = {};
     // Name of current selected background
@@ -25,8 +27,23 @@ class Canvas {
     this.framerate = 30;
     this.ticksPerFrame = 60 / this.framerate;
     this.tickCount = 0;
+    this.speed = 3;
+    this.animationRequest = 0;
+
     // Hero running lock
     this.locker = null;
+
+    // Enemies properties
+    this.nextEnemyDist = this.canvas.width / 3;
+    this.enemiesQueue = [];
+    this.head = 0;
+
+    // If enemy has collide
+    this.end = false;
+
+    // Game mode
+    this.mode = mode;
+    this.maxRequests = 1000;
   }
 
   keyDownHandler(key) {
@@ -45,7 +62,19 @@ class Canvas {
   }
 
   gameloop() {
-    window.requestAnimationFrame(this.gameloop.bind(this))
+    if (this.mode == 'storyGame' && this.animationRequest == this.maxRequests) {
+      this.end = true;
+    } else if (this.mode == 'infiniteGame' && this.animationRequest % 200 == 0) {
+      this.speed += 0.1;
+    }
+
+    if (this.end) {
+      window.cancelAnimationFrame(this.animationRequest);
+      window.dispatchEvent( new Event('gameEnded') );
+      return;
+    }
+
+    this.animationRequest = window.requestAnimationFrame(this.gameloop.bind(this));
 
     this.tickCount += 1;
     if(this.tickCount > this.ticksPerFrame) {
@@ -54,20 +83,82 @@ class Canvas {
       this.update(this.locker != null);
       this.render();
     }
+  }
 
+  checkColisions(sprite, x, y) {    let s = sprite.getImageData();
+    let canvasSection = this._canvas.ctx.getImageData(x, y, s.width, s.height);
+
+    for (let i=0; i<canvasSection.data.length; i+=4) {
+      if (canvasSection.data[i+3] == 255 && s.data[i+3] == 255 ) {
+        return true;
+      }
+    }    return false;
   }
 
   update(locked) {
     let background = this.backgrounds[this.currentBackground];
 
-    background.update(8);
+    background.update(this.speed);
     this.hero.update(locked);
+    this.updateEnemies();
+  }
+
+  updateEnemies() {
+  	if (this._canvas === undefined) {
+        this._canvas = new Canvas(this.canvas.width, this.canvas.height);
+    }
+    if (this.enemiesQueue.length == 0) {
+      this.enemyGenerator();
+      this.head = 0;
+    } else if (this.enemiesQueue[this.head].x < this.nextEnemyDist) {
+    	this.enemyGenerator();
+      this.head = 1;
+    }
+
+    this.enemiesQueue.map((enemy) =>{
+      enemy.update(this.speed);
+      if (enemy.x <= 0) {
+        this.enemiesQueue.shift();
+        this.head = 0;
+      }
+    });
+  }
+
+  enemyGenerator() {
+    let enemyKeys = Object.keys(this.enemies);
+    let enemyName = enemyKeys[this.random(0, enemyKeys.length)];
+    let enemy = Object.assign(new Enemy(), this.enemies[enemyName]);
+    this.resetEnemy(enemy);
+    this.enemiesQueue.push(enemy);  }
+
+  random(min, max) {
+    return Math.floor((Math.random() * max) + min);
   }
 
   render() {
-    let sprite = this.hero.sprites[this.hero.currentSprite];
     this.drawBackground();
-    this.drawSprite(sprite, this.hero.x, this.hero.y);
+    this.drawForeground();
+  }
+
+  drawForeground() {
+    if (this._canvas === undefined) {
+      this._canvas = new Canvas(this.canvas.width, this.canvas.height);
+    }
+    let self = this._canvas;
+    self.resetCanvas();
+    let heroSprite = this.hero.sprites[this.hero.currentSprite];
+    this.drawSprite(heroSprite, this.hero.x, this.hero.y);
+    this.enemiesQueue.map((enemy) => {
+    	let enemySprite = enemy.sprites[enemy.currentSprite];
+      if (!this.end) {
+        self.drawSprite(heroSprite, this.hero.x, this.hero.y);
+        this.end = this.checkColisions(enemySprite, enemy.x, enemy.y);
+        self.resetCanvas();
+      }
+      this.drawSprite(enemySprite, enemy.x, enemy.y);
+    });
+
+    if (this.mode == 'infiniteGame') this.ctx.fillText(['SCORE', this.animationRequest+1].join(' '), 300, 50);
   }
 
   // Clear canvas
@@ -77,8 +168,12 @@ class Canvas {
 
   // Import Enemy
   importEnemy(enemyName, enemy) {
-    enemy.setCoord(0, 280);
     this.enemies[enemyName] = enemy;
+  }
+
+  // Reset Enemy
+  resetEnemy(enemy) {
+  	enemy.setCoord(this.canvas.width, 280);
   }
 
   // Import Hero
@@ -107,7 +202,6 @@ class Canvas {
     let background = this.backgrounds[this.currentBackground];
     let img = background.img;
 
-    // If the image hasnt ended
     if (background.x < background.screenWidth) {
       this.ctx.drawImage(img, background.x, 0, background.screenWidth, background.height, 0, 0, background.screenWidth, background.height)
     } else {

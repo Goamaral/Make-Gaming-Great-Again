@@ -6,8 +6,7 @@
 //import Sprite from 'Sprite';
 
 // NOTE: When arrow functions are used in global scope, they always refer to the global this, window. For safety always use ES5 anonymous function calls in global scope.
-// NOTE: Auxiliar variables should hava a _ before their proper name, for example, _auxVar instead of auxVar
-// TODO: Make game responsive
+// NOTE: Auxiliar variables should hava a _ before their proper name, for example, _auxVar instead of auxVar
 
 // On window full load
 window.onload = function() {
@@ -15,10 +14,10 @@ window.onload = function() {
   let main = document.getElementsByTagName("main")[0];
 
   // create canvas and set canvas style
-  let canvas = new Canvas(768, 432);
+  let canvas = new Canvas(768, 432, parent.document.getElementsByTagName('iframe')[0].name);
   canvas.mountCanvas(main);
 
-  // Palin JS object of fully loaded resources
+  // Plain JS object of fully loaded resources
   let resources = {};
   // Number of tasks to complete
   let totalTasksToComplete = 3;
@@ -212,12 +211,12 @@ function spriteNodesToEnemiesObjects(enemiesSpriteNodesObject) {
   let out = {};
 
   for (let key in enemiesSpriteNodesObject) {
-    let _out = {};
+    let _out = [];
     let obj = enemiesSpriteNodesObject[key];
     // Create Sprite objects
     for (let spriteName in obj) {
       let img = obj[spriteName];
-      _out[spriteName] = new Sprite(img);
+      _out.push(new Sprite(img));
     }
     out[key] = new Enemy(_out);
   }
@@ -258,9 +257,13 @@ function imageLoadingComplete(canvas, resources) {
   parent.window.onkeyup = keyUpHandler;
   window.onkeyup = keyUpHandler;
 
+  window.addEventListener('gameEnded', gameEndedHandler);
   canvas.gameloop();
 
-  //NOTE: CONTINUE CODE HERE
+  function gameEndedHandler() {
+    // Display end video -> story mode
+    // Display highscores -> infinite mode
+  }
 
   function keyDownHandler(ev) {
     let key = ev.key;
