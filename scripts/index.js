@@ -40,6 +40,9 @@ window.onload = function() {
     let iframeEndOfGame = document.createElement("iframe");
     iframeEndOfGame.src = 'endOfGame.html';
 
+    let iframeEndOfInfiniteGame = document.createElement("iframe");
+    iframeEndOfInfiniteGame.src = 'endOfInfiniteGame.html';
+
     mountIframe(iframeMenu);
 
     function messageRecievedHandler(ev) {
@@ -79,6 +82,9 @@ window.onload = function() {
                 break;
             case 'gameEnd':
                 mountIframe(iframeEndOfGame);
+                break;
+            case 'gameEndInfinite':
+                mountIframe(iframeEndOfInfiniteGame);
                 break;
         }
     }
