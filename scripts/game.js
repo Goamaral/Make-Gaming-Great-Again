@@ -261,6 +261,7 @@ function imageLoadingComplete(canvas, resources) {
   canvas.gameloop();
 
   function gameEndedHandler() {
+    talkWithParent('gameEnd');
     // Display end video -> story mode
     // Display highscores -> infinite mode
   }
@@ -275,4 +276,8 @@ function imageLoadingComplete(canvas, resources) {
   function keyUpHandler(ev) {
     canvas.keyUpHandler(ev.key);
   }
+};
+
+function talkWithParent(msg) {
+  parent.postMessage(msg, '*');
 }

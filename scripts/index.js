@@ -77,7 +77,7 @@ window.onload = function() {
             case 'backButton':
                 mountIframe(iframeMenu);
                 break;
-            case 'endGameButton':
+            case 'gameEnd':
                 mountIframe(iframeEndOfGame);
                 break;
         }
