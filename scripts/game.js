@@ -78,7 +78,7 @@ window.onload = function() {
   }
 };
 
-//Load hero sprite images
+// Load hero sprite images
 function loadHeroSpriteImages() {
   // Sprites path
   let spritesPath = './resources/images/hero/';
