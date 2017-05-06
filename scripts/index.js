@@ -3,13 +3,13 @@
 "use strict";
 
 document.addEventListener("DOMContentLoaded", function() {
-    window.addEventListener('message', messagesHandler);
+  window.addEventListener('message', messagesHandler);
 
-    function messagesHandler(ev) {
-        let newEvent = new Event('messageRecieved');
-        newEvent.data = ev.data;
-        window.dispatchEvent(newEvent);
-    }
+  function messagesHandler(ev) {
+    let newEvent = new Event('messageRecieved');
+    newEvent.data = ev.data;
+    window.dispatchEvent(newEvent);
+  }
 });
 
 window.onload = function() {
@@ -25,11 +25,8 @@ window.onload = function() {
     let iframeMenu = document.createElement("iframe");
     iframeMenu.src = 'menu.html';
 
-    let iframeStoryGame = document.createElement("iframe");
-    iframeStoryGame.src = 'storyGame.html';
-
-    let iframeInfiniteGame = document.createElement("iframe");
-    iframeInfiniteGame.src = 'infiniteGame.html';
+    let iframeGame = document.createElement("iframe");
+    iframeGame.src = 'game.html';
 
     let iframeHowToPlay = document.createElement("iframe");
     //iframeHowToPlay.src = 'howToPlay.html';
@@ -41,7 +38,7 @@ window.onload = function() {
     iframeSettings.src = 'settings.html';
 
     let iframeEndOfGame = document.createElement("iframe");
-    iframeSettings.src = 'endOfGame.html';
+    iframeEndOfGame.src = 'endOfGame.html';
 
     mountIframe(iframeMenu);
 
@@ -87,28 +84,28 @@ window.onload = function() {
     }
 
     function mountIframe(iframe) {
-        if (currentIframe !== iframe) {
-            if (currentIframe === null) {
-                mount(main, iframe);
-            } else {
-                unmount(main, currentIframe);
-                mount(main, iframe);
-            }
-            currentIframe = iframe;
+      if (currentIframe !== iframe) {
+        if (currentIframe === null) {
+          mount(main, iframe);
+        } else {
+          unmount(main, currentIframe);
+          mount(main, iframe);
         }
+        currentIframe = iframe;
+      }
     }
 }
 
 function mount(root, element) {
-    root.appendChild(element);
+  root.appendChild(element);
 }
 
 function unmount(root, element) {
-    root.removeChild(element);
+  root.removeChild(element);
 }
 
 function toggleAudio(audio, buttonToHide, buttonToShow) {
-    buttonToHide.style.display = "none";
-    buttonToShow.style.display = "";
-    audio.muted = !audio.muted;
+  buttonToHide.style.display = "none";
+  buttonToShow.style.display = "";
+  audio.muted = !audio.muted;
 }
