@@ -101,7 +101,10 @@ function loadEnemiesSpriteImages() {
   // Obama sprite names
   let obamaSpriteNames = { name: 'obama', arr: [ 'obamaDown','obamaUp' ] };
 
-  let spriteNames = { mexicanSpriteNames, obamaSpriteNames };
+  // Nyan sprite names
+  let nyanSpriteNames = { name: 'nyan', arr: [ 'nyan', 'nyan2' ]};
+
+  let spriteNames = { mexicanSpriteNames, obamaSpriteNames, nyanSpriteNames };
 
   // Load every sprite and create a image node for each one
   let enemiesSpritesObject = createImageNodes(spriteNames, spritesPath, 'enemies');
