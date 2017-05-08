@@ -2,6 +2,7 @@
 
 "use strict";
 
+// Before windown loading receives child id and send the work to the handle below
 document.addEventListener("DOMContentLoaded", function() {
   window.addEventListener('message', messagesHandler);
 
@@ -17,27 +18,23 @@ window.onload = function() {
     //Get Audio node
     let audio = document.getElementsByTagName('audio')[0];
 
+    // The place we load the iframes onto
     let main = document.getElementsByTagName('main')[0];
-
     let currentIframe = null;
 
     // Create all screens
     let iframeMenu = document.createElement("iframe");
-    iframeMenu.src = 'menu.html';
-
     let iframeGame = document.createElement("iframe");
-    iframeGame.src = 'game.html';
-
     let iframeHowToPlay = document.createElement("iframe");
-    //iframeHowToPlay.src = 'howToPlay.html';
-
     let iframeHighscores = document.createElement("iframe");
-    iframeHighscores.src = 'highscores.html';
-
     let iframeSettings = document.createElement("iframe");
-    iframeSettings.src = 'settings.html';
-
     let iframeEndOfGame = document.createElement("iframe");
+    
+    iframeMenu.src = 'menu.html';
+    iframeGame.src = 'game.html';
+    //iframeHowToPlay.src = 'howToPlay.html';
+    iframeHighscores.src = 'highscores.html';
+    iframeSettings.src = 'settings.html';
     iframeEndOfGame.src = 'endOfGame.html';
 
     mountIframe(iframeMenu);
@@ -46,6 +43,7 @@ window.onload = function() {
         let iframeDoc = null;
         let muteButton = null;
         let unmuteButton = null;
+        
         switch (ev.data) {
             case 'storyGameButton':
                 iframeGame.name = 'storyGame';
@@ -84,7 +82,8 @@ window.onload = function() {
                 break;
         }
     }
-
+    
+    // Appends the iframe onto main view
     function mountIframe(iframe) {
       if (currentIframe !== iframe) {
         if (currentIframe === null) {
