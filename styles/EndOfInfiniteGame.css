@@ -11,32 +11,24 @@
 }
 
 body {
-  background: url(../resources/images/Trump-Main2.png);
+  background: url(../resources/images/fundo1.jpg);
   background-size: cover;
   padding: 0;
   margin: 0;
 }
 
 menu {
-  margin-left: 12%;
   padding: 0px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-left {
-  margin-top: 5%;
-  margin-left: 5%;
-  display: inline-flex;
-  flex-direction: column;
-}
-
 .button {
-  width: 50%;
-  padding: 6%;
-  margin-top: 20%;
-  margin-left: 11%;
+  width: 10%;
+  margin-top: 45px;
+  margin-left: 35%;
+  padding: 0.2%;
   font-family: Helvetica;
   border-radius: 5px;
   font-size: 0.85em;
@@ -49,33 +41,6 @@ left {
 
 .button:hover {
   background-color: #fcdc9c;
-}
-
-.menu-subtitle {
-  font-size: 12px;
-  margin: 0;
-  font-family: 'Cabin', sans-serif;
-}
-
-table {
-  width: 100%;
-}
-
-th, td {
-  text-align: left;
-}
-
-.table-row {
-  height: 30px;
-}
-
-.winner {
-  font-size: 0.9em;
-  font-family: 'Cabin', sans-serif;
-}
-
-.medal {
-  max-width: 50px;
 }
 
 input[type=text], select {
