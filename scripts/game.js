@@ -240,6 +240,9 @@ function spriteNodesToBackgroundObjects(backgroundNodesObject) {
 function imageLoadingComplete(canvas, resources) {
   let { hero, backgrounds, enemies } = resources;
 
+  let highscores = parent.document.createElement('iframe');
+  highscores.src = 'highscores.html';
+
   // Import hero
   canvas.importHero(hero);
 
@@ -264,14 +267,21 @@ function imageLoadingComplete(canvas, resources) {
 
   function gameEndedHandler(ev) {
     let { score, mode } = ev.data;
-    console.log(document);
+    let main = parent.document.getElementsByTagName('main')[0]
+    let startIframe = parent.document.getElementsByTagName('iframe')[0];
+
     switch(mode) {
       case 'storyGame':
         // Display end video -> story mode
         break;
-      case 'infinite Game':
-        // Display highscores -> infinite mode
+      case 'infiniteGame':
+        highscoresHandler();
         break;
+    }
+
+    function highscoresHandler() {
+      main.removeChild(startIframe);
+      main.appendChild(highscores);
     }
   }
 

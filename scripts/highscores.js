@@ -11,11 +11,13 @@ window.onload = function() {
     }
 
     function buttonClickChildHandler(ev) {
+      console.log(ev.target.parentNode.id);
       talkWithParent(ev.target.parentNode.id);
     }
 
     function buttonClickHandler(ev) {
-        talkWithParent(ev.target.id)
+      console.log(ev.target.id);
+      talkWithParent(ev.target.id);
     }
 };
 
