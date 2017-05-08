@@ -96,13 +96,13 @@ function loadEnemiesSpriteImages() {
   let spritesPath = './resources/images/obstacles/';
 
   // Mexican sprite names
-  let mexicanSpriteNames = { name: 'mexican', arr: [ 'mexicanDown','mexicanUp' ] };
+  let mexicanSpriteNames = { name: 'mexican', arr: [ 'mexicanDown','mexicanUp' ], type: 'ground' };
 
   // Obama sprite names
-  let obamaSpriteNames = { name: 'obama', arr: [ 'obamaDown','obamaUp' ] };
+  let obamaSpriteNames = { name: 'obama', arr: [ 'obamaDown','obamaUp' ], type: 'ground' };
 
   // Nyan sprite names
-  let nyanSpriteNames = { name: 'nyan', arr: [ 'nyan', 'nyan2' ]};
+  let nyanSpriteNames = { name: 'nyan', arr: [ 'nyan', 'nyan2' ], type: 'air'};
 
   let spriteNames = { mexicanSpriteNames, obamaSpriteNames, nyanSpriteNames };
 
@@ -144,9 +144,8 @@ function createImageNodes(names, path, mode) {
         node.src = path + name + '.png';
         _out[name] = node;
       }
-      out[names[key].name] = _out;
+      out[names[key].name] = { sprites: _out, type: names[key].type };
     }
-
     return out;
   }
 
@@ -215,13 +214,13 @@ function spriteNodesToEnemiesObjects(enemiesSpriteNodesObject) {
 
   for (let key in enemiesSpriteNodesObject) {
     let _out = [];
-    let obj = enemiesSpriteNodesObject[key];
+    let obj = enemiesSpriteNodesObject[key].sprites;
     // Create Sprite objects
     for (let spriteName in obj) {
       let img = obj[spriteName];
       _out.push(new Sprite(img));
     }
-    out[key] = new Enemy(_out);
+    out[key] = new Enemy(_out, enemiesSpriteNodesObject[key].type);
   }
 
   return out;
@@ -263,9 +262,16 @@ function imageLoadingComplete(canvas, resources) {
   window.addEventListener('gameEnded', gameEndedHandler);
   canvas.gameloop();
 
-  function gameEndedHandler() {
-    // Display end video -> story mode
-    // Display highscores -> infinite mode
+  function gameEndedHandler(ev) {
+    let { score, mode } = ev.data;
+    switch(mode) {
+      case 'storyGame':
+        // Display end video -> story mode
+        break;
+      case 'infinite Game':
+        // Display highscores -> infinite mode
+        break;
+    }
   }
 
   function keyDownHandler(ev) {

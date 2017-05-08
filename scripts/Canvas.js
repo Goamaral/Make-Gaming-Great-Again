@@ -70,7 +70,9 @@ class Canvas {
 
     if (this.end) {
       window.cancelAnimationFrame(this.animationRequest);
-      window.dispatchEvent( new Event('gameEnded') );
+      let ev = new Event('gameEnded');
+      ev.data = { score: this.animationRequest+1, mode: this.mode };
+      window.dispatchEvent(ev);
       return;
     }
 
@@ -173,7 +175,14 @@ class Canvas {
 
   // Reset Enemy
   resetEnemy(enemy) {
-  	enemy.setCoord(this.canvas.width, 280);
+    switch(enemy.type) {
+      case 'ground':
+        enemy.setCoord(this.canvas.width, 280);
+        break;
+      case 'air':
+        enemy.setCoord(this.canvas.width, 235);
+        break;
+    }
   }
 
   // Import Hero

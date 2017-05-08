@@ -48,9 +48,11 @@ window.onload = function() {
         let unmuteButton = null;
         switch (ev.data) {
             case 'storyGameButton':
+                iframeGame.name = 'storyGame';
                 mountIframe(iframeGame);
                 break;
             case 'infiniteGameButton':
+                iframeGame.name = 'infiniteGame';
                 mountIframe(iframeGame);
                 break;
             case 'howToPlayButton':

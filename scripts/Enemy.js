@@ -1,10 +1,11 @@
 class Enemy {
-  constructor(sprites) {
+  constructor(sprites, type) {
     this.sprites = sprites;
     this.baseY = 0;
     this.y = 0;
     this.x = 0;
     this.currentSprite = 0;
+    this.type = type;
 
     this.runTick = 0;
     this.maxRunTicks = 8;
