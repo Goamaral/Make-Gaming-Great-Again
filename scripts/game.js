@@ -20,7 +20,7 @@ window.onload = function() {
   // Plain JS object of fully loaded resources
   let resources = {};
   // Number of tasks to complete
-  let totalTasksToComplete = 3;
+  let totalTasksToComplete = 4;
   // Create event to signal end of images loading
   window.addEventListener('imageLoadingComplete', imageLoadingCompleteHandler);
 
@@ -35,6 +35,12 @@ window.onload = function() {
 
   // Load enemies sprite images
   let enemiesSpriteNodesObject = loadEnemiesSpriteImages();
+
+  // Creates event to signal end of wig sprite image loading
+  window.addEventListener('wigSpritesLoaded', wigSpritesLoadedHandler);
+
+  // Load enemies sprite images
+  let wigSpriteNodesObject = loadWigsSpriteImages();
 
   // Create event to signal end of background images loading
   window.addEventListener('backgroundsLoaded', backgroundsLoadedHandler);
@@ -55,6 +61,16 @@ window.onload = function() {
   function enemiesSpritesLoadedHandler() {
     window.removeEventListener('enemiesSpritesLoaded', enemiesSpritesLoadedHandler);
     resources['enemies'] = spriteNodesToEnemiesObjects(enemiesSpriteNodesObject);
+    if(Object.keys(resources).length == totalTasksToComplete) {
+      let imageLoadingCompleteEvent = new Event('imageLoadingComplete');
+      window.dispatchEvent(imageLoadingCompleteEvent);
+    }
+  }
+
+  // Waits for event wigLoaded event to be triggered
+  function wigSpritesLoadedHandler() {
+    window.removeEventListener('wigSpritesLoaded', wigSpritesLoadedHandler);
+    resources['wigs'] = spriteNodesToWigObjects(wigSpriteNodesObject);
     if(Object.keys(resources).length == totalTasksToComplete) {
       let imageLoadingCompleteEvent = new Event('imageLoadingComplete');
       window.dispatchEvent(imageLoadingCompleteEvent);
@@ -111,6 +127,17 @@ function loadEnemiesSpriteImages() {
   return enemiesSpritesObject;
 }
 
+// Load wigs sprite images
+function loadWigsSpriteImages() {
+  // Sprites path
+  let spritesPath = './resources/images/wigs/';
+  // Sprite names
+  let spriteNames = [ 'wig' ];
+  // Load every sprite and create a image node for each one
+  let wigSpritesObject = createImageNodes(spriteNames, spritesPath, 'wigs');
+  return wigSpritesObject;
+}
+
 //Load background images
 function loadBackgroundImages() {
   // Backgrounds path
@@ -160,6 +187,7 @@ function createImageNodes(names, path, mode) {
   return out;
 
   function onloadHandler(ev) {
+    console.log(mode);
     let targ = ev.target;
     if(mode == 'hero') {
       //NOT RESPONSIVE
@@ -176,6 +204,11 @@ function createImageNodes(names, path, mode) {
       targ.height = targ.naturalHeight;
       //NOT RESPONSIVE
       targ.width = targ.naturalWidth;
+    } else if (mode == 'wigs') {
+      //NOT RESPONSIVE
+      targ.height = targ.naturalHeight;
+      //NOT RESPONSIVE
+      targ.width = targ.naturalWidth;
     }
     ++count;
     if (mode == 'enemies') {
@@ -183,6 +216,11 @@ function createImageNodes(names, path, mode) {
         let enemiesSpritesLoadedEvent = new Event('enemiesSpritesLoaded');
         window.dispatchEvent(enemiesSpritesLoadedEvent);
       }
+    } else if(mode == 'wigs') {
+        if(count == names.length) {
+          let wigsSpritesLoadedEvent = new Event('wigSpritesLoaded');
+          window.dispatchEvent(wigsSpritesLoadedEvent);
+        }
     } else {
       if(count == names.length) {
         if(mode == 'hero') {
@@ -222,8 +260,18 @@ function spriteNodesToEnemiesObjects(enemiesSpriteNodesObject) {
     }
     out[key] = new Enemy(_out, enemiesSpriteNodesObject[key].type);
   }
-
   return out;
+}
+
+// Create Sprite objects for each sprite node of hero
+function spriteNodesToWigObjects(wigSpriteNodesObject) {
+  let out = {};
+  // Create Sprite objects
+  for (let spriteName in wigSpriteNodesObject) {
+    let img = wigSpriteNodesObject[spriteName];
+    out[spriteName] = new Sprite(img);
+  }
+  return new Hero(out);
 }
 
 // Create Sprite objects for each background node
@@ -238,13 +286,7 @@ function spriteNodesToBackgroundObjects(backgroundNodesObject) {
 }
 
 function imageLoadingComplete(canvas, resources) {
-  let { hero, backgrounds, enemies } = resources;
-
-  let highscores = parent.document.createElement('iframe');
-  highscores.src = 'highscores.html';
-
-  let endOfStoryGame = parent.document.createElement('iframe');
-  endOfStoryGame.src = 'endOfStoryGame.html';
+  let { hero, backgrounds, enemies, wig } = resources;
 
   // Import hero
   canvas.importHero(hero);
@@ -258,6 +300,7 @@ function imageLoadingComplete(canvas, resources) {
   for( let enemyName in enemies ) {
     canvas.importEnemy(enemyName, enemies[enemyName]);
   }
+
 
   parent.window.onkeydown = keyDownHandler;
   window.onkeydown = keyDownHandler;
@@ -275,19 +318,11 @@ function imageLoadingComplete(canvas, resources) {
 
     switch(mode) {
       case 'storyGame':
-        endOfStoryGameHandler();
+        talkWithParent("endOfStoryGame");
         break;
       case 'infiniteGame':
-        highscoresHandler();
+        talkWithParent("endOfInfiniteGame");
         break;
-    }
-
-    function endOfStoryGameHandler() {
-      talkWithParent("endOfStoryGame");
-    }
-
-    function highscoresHandler() {
-      talkWithParent("endOfInfiniteGame");
     }
   }
 

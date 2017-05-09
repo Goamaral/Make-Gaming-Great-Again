@@ -107,7 +107,7 @@ class Canvas {
 
   updateEnemies() {
   	if (this._canvas === undefined) {
-        this._canvas = new Canvas(this.canvas.width, this.canvas.height);
+      this._canvas = new Canvas(this.canvas.width, this.canvas.height);
     }
     if (this.enemiesQueue.length == 0) {
       this.enemyGenerator();
