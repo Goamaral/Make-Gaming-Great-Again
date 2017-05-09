@@ -90,7 +90,7 @@ class Canvas {
   checkColisions(sprite, x, y) {    let s = sprite.getImageData();
     let canvasSection = this._canvas.ctx.getImageData(x, y, s.width, s.height);
 
-    for (let i=0; i<canvasSection.data.length; i+=4) {
+    for (let i = 0; i < canvasSection.data.length; i += 4) {
       if (canvasSection.data[i+3] == 255 && s.data[i+3] == 255 ) {
         return true;
       }

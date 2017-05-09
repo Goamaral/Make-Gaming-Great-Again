@@ -28,12 +28,14 @@ window.onload = function() {
     let iframeHowToPlay = document.createElement("iframe");
     let iframeHighscores = document.createElement("iframe");
     let iframeSettings = document.createElement("iframe");
+    let iframeEndOfStoryGame = document.createElement("iframe");
 
     iframeMenu.src = 'menu.html';
     iframeGame.src = 'game.html';
     //iframeHowToPlay.src = 'howToPlay.html';
     iframeHighscores.src = 'highscores.html';
     iframeSettings.src = 'settings.html';
+    iframeEndOfStoryGame.src = 'endOfStoryGame.html';
 
     mountIframe(iframeMenu);
 
@@ -59,6 +61,12 @@ window.onload = function() {
                 break;
             case 'settingsButton':
                 mountIframe(iframeSettings);
+                break;
+            case 'endOfStoryGame':
+                mountIframe(iframeEndOfStoryGame);
+                break;
+            case 'endOfInfiniteGame':
+                mountIframe(iframeHighscores);
                 break;
             case 'muteButton':
                 iframeDoc = currentIframe.contentDocument;
