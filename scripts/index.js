@@ -46,10 +46,12 @@ window.onload = function() {
 
         switch (ev.data) {
             case 'storyGameButton':
+                audio.muted = !audio.muted;
                 iframeGame.name = 'storyGame';
                 mountIframe(iframeGame);
                 break;
             case 'infiniteGameButton':
+                audio.muted = !audio.muted;
                 iframeGame.name = 'infiniteGame';
                 mountIframe(iframeGame);
                 break;
@@ -63,9 +65,13 @@ window.onload = function() {
                 mountIframe(iframeSettings);
                 break;
             case 'endOfStoryGame':
+                audio.currentTime = 0;
+                audio.muted = !audio.muted;
                 mountIframe(iframeEndOfStoryGame);
                 break;
             case 'endOfInfiniteGame':
+                audio.currentTime = 0;
+                audio.muted = !audio.muted;
                 mountIframe(iframeHighscores);
                 break;
             case 'muteButton':
