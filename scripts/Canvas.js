@@ -23,6 +23,8 @@ class Canvas {
     this.hero = null;
     // Enemies object
     this.enemies = {};
+    // Wig object
+    this.wig = null;
     // Framerate
     this.framerate = 30;
     this.ticksPerFrame = 60 / this.framerate;
@@ -150,6 +152,8 @@ class Canvas {
     self.resetCanvas();
     let heroSprite = this.hero.sprites[this.hero.currentSprite];
     this.drawSprite(heroSprite, this.hero.x, this.hero.y);
+    let wigSprite = this.wig.sprites[this.wig.currentSprite];
+    this.drawSprite(wigSprite, this.wig.x, this.wig.y);
     this.enemiesQueue.map((enemy) => {
     	let enemySprite = enemy.sprites[enemy.currentSprite];
       if (!this.end) {
@@ -185,11 +189,17 @@ class Canvas {
     }
   }
 
-  // Import Hero
   importHero(hero) {
     hero.setCoord(50, 280);
     this.hero = hero;
   }
+
+  // Import Wig
+  importWig(wig) {
+    wig.setCoord(500, 280);
+    this.wig = wig;
+  }
+
 
   // Selects background
   selectBackground(backgroundName) {

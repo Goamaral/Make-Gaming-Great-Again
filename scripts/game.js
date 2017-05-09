@@ -271,7 +271,7 @@ function spriteNodesToWigObjects(wigSpriteNodesObject) {
     let img = wigSpriteNodesObject[spriteName];
     out[spriteName] = new Sprite(img);
   }
-  return new Hero(out);
+  return new Wig(out);
 }
 
 // Create Sprite objects for each background node
@@ -286,7 +286,7 @@ function spriteNodesToBackgroundObjects(backgroundNodesObject) {
 }
 
 function imageLoadingComplete(canvas, resources) {
-  let { hero, backgrounds, enemies, wig } = resources;
+  let { wigs, hero, backgrounds, enemies } = resources;
 
   // Import hero
   canvas.importHero(hero);
@@ -301,6 +301,8 @@ function imageLoadingComplete(canvas, resources) {
     canvas.importEnemy(enemyName, enemies[enemyName]);
   }
 
+  // Import wig
+  canvas.importWig(wigs);
 
   parent.window.onkeydown = keyDownHandler;
   window.onkeydown = keyDownHandler;
