@@ -28,14 +28,14 @@ window.onload = function() {
     let iframeHowToPlay = document.createElement("iframe");
     let iframeHighscores = document.createElement("iframe");
     let iframeSettings = document.createElement("iframe");
-    let iframeEndOfGame = document.createElement("iframe");
-    
+    let iframeEndOfStoryGame = document.createElement("iframe");
+
     iframeMenu.src = 'menu.html';
     iframeGame.src = 'game.html';
     //iframeHowToPlay.src = 'howToPlay.html';
     iframeHighscores.src = 'highscores.html';
     iframeSettings.src = 'settings.html';
-    iframeEndOfGame.src = 'endOfGame.html';
+    iframeEndOfStoryGame.src = 'endOfStoryGame.html';
 
     mountIframe(iframeMenu);
 
@@ -43,7 +43,7 @@ window.onload = function() {
         let iframeDoc = null;
         let muteButton = null;
         let unmuteButton = null;
-        
+
         switch (ev.data) {
             case 'storyGameButton':
                 iframeGame.name = 'storyGame';
@@ -62,6 +62,12 @@ window.onload = function() {
             case 'settingsButton':
                 mountIframe(iframeSettings);
                 break;
+            case 'endOfStoryGame':
+                mountIframe(iframeEndOfStoryGame);
+                break;
+            case 'endOfInfiniteGame':
+                mountIframe(iframeHighscores);
+                break;
             case 'muteButton':
                 iframeDoc = currentIframe.contentDocument;
                 muteButton = iframeDoc.getElementById('muteButton');
@@ -77,12 +83,9 @@ window.onload = function() {
             case 'backButton':
                 mountIframe(iframeMenu);
                 break;
-            case 'endGameButton':
-                mountIframe(iframeEndOfGame);
-                break;
         }
     }
-    
+
     // Appends the iframe onto main view
     function mountIframe(iframe) {
       if (currentIframe !== iframe) {

@@ -94,7 +94,7 @@ class Canvas {
   checkColisions(sprite, x, y) {    let s = sprite.getImageData();
     let canvasSection = this._canvas.ctx.getImageData(x, y, s.width, s.height);
 
-    for (let i=0; i<canvasSection.data.length; i+=4) {
+    for (let i = 0; i < canvasSection.data.length; i += 4) {
       if (canvasSection.data[i+3] == 255 && s.data[i+3] == 255 ) {
         return true;
       }
@@ -113,7 +113,7 @@ class Canvas {
 
   updateEnemies() {
   	if (this._canvas === undefined) {
-        this._canvas = new Canvas(this.canvas.width, this.canvas.height);
+      this._canvas = new Canvas(this.canvas.width, this.canvas.height);
     }
     if (this.enemiesQueue.length == 0) {
       this.enemyGenerator();
@@ -156,6 +156,7 @@ class Canvas {
     self.resetCanvas();
     let heroSprite = this.hero.sprites[this.hero.currentSprite];
     this.drawSprite(heroSprite, this.hero.x, this.hero.y);
+
     this.enemiesQueue.map((enemy) => {
     	let enemySprite = enemy.sprites[enemy.currentSprite];
       if (!this.end) {
@@ -195,7 +196,6 @@ class Canvas {
     }
   }
 
-  // Import Hero
   importHero(hero) {
     hero.setCoord(50, 280);
     this.hero = hero;
@@ -218,7 +218,7 @@ class Canvas {
 
   // Imports wig
   importWig(name, wig) {
-    wig.setCoord(500, 150);
+    wig.setCoord(550, 150);
     this.wigs[name] = wig;
     if (this.currentWig == null) {
       this.currentWig = name;
@@ -231,7 +231,7 @@ class Canvas {
       this.currentWig = wigName;
     }
 
-    this.wigs[this.currentWig].setCoord(400, 150);
+    this.wigs[this.currentWig].setCoord(550, 150);
   }
 
   // Draws background
