@@ -10,10 +10,10 @@
 
 // On window full load
 window.onload = function() {
-  //Get main node from DOM
+  // Get main node from DOM
   let main = document.getElementsByTagName("main")[0];
 
-  // create canvas and set canvas style
+  // Create canvas and set canvas style
   let canvas = new Canvas(768, 432, parent.document.getElementsByTagName('iframe')[0].name);
   canvas.mountCanvas(main);
 
@@ -27,13 +27,13 @@ window.onload = function() {
   // Creates event to signal end of hero sprite images loading
   window.addEventListener('heroSpritesLoaded', heroSpritesLoadedHandler);
 
-  //Load hero sprite images
+  // Load hero sprite images
   let heroSpriteNodesObject = loadHeroSpriteImages();
 
   // Creates event to signal end of enemies sprite images loading
   window.addEventListener('enemiesSpritesLoaded', enemiesSpritesLoadedHandler);
 
-  //Load enemies sprite images
+  // Load enemies sprite images
   let enemiesSpriteNodesObject = loadEnemiesSpriteImages();
 
   // Create event to signal end of background images loading
@@ -243,6 +243,9 @@ function imageLoadingComplete(canvas, resources) {
   let highscores = parent.document.createElement('iframe');
   highscores.src = 'highscores.html';
 
+  let endOfStoryGame = parent.document.createElement('iframe');
+  endOfStoryGame.src = 'endOfStoryGame.html';
+
   // Import hero
   canvas.importHero(hero);
 
@@ -272,16 +275,19 @@ function imageLoadingComplete(canvas, resources) {
 
     switch(mode) {
       case 'storyGame':
-        // Display end video -> story mode
+        endOfStoryGameHandler();
         break;
       case 'infiniteGame':
         highscoresHandler();
         break;
     }
 
+    function endOfStoryGameHandler() {
+      talkWithParent("endOfStoryGame");
+    }
+
     function highscoresHandler() {
-      main.removeChild(startIframe);
-      main.appendChild(highscores);
+      talkWithParent("endOfInfiniteGame");
     }
   }
 
