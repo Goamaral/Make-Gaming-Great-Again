@@ -19,12 +19,14 @@ class Canvas {
     this.backgrounds = {};
     // Name of current selected background
     this.currentBackground = null;
+    // Object with available wigs
+    this.wigs = {};
+    // Name of current selected wig
+    this.currentWig = null;
     // Hero object
     this.hero = null;
     // Enemies object
     this.enemies = {};
-    // Wig object
-    this.wig = null;
     // Framerate
     this.framerate = 30;
     this.ticksPerFrame = 60 / this.framerate;
@@ -101,8 +103,10 @@ class Canvas {
 
   update(locked) {
     let background = this.backgrounds[this.currentBackground];
+    let wig = this.wigs[this.currentWig];
 
     background.update(this.speed);
+    wig.update();
     this.hero.update(locked);
     this.updateEnemies();
   }
@@ -152,8 +156,7 @@ class Canvas {
     self.resetCanvas();
     let heroSprite = this.hero.sprites[this.hero.currentSprite];
     this.drawSprite(heroSprite, this.hero.x, this.hero.y);
-    let wigSprite = this.wig.sprites[this.wig.currentSprite];
-    this.drawSprite(wigSprite, this.wig.x, this.wig.y);
+
     this.enemiesQueue.map((enemy) => {
     	let enemySprite = enemy.sprites[enemy.currentSprite];
       if (!this.end) {
@@ -164,6 +167,10 @@ class Canvas {
       this.drawSprite(enemySprite, enemy.x, enemy.y);
     });
 
+    let wig = this.wigs[this.currentWig];
+    let wigSprite = wig.sprite;
+    this.drawSprite(wigSprite, wig.x, wig.y);
+
     if (this.mode == 'infiniteGame') this.ctx.fillText(['SCORE', this.animationRequest+1].join(' '), 300, 50);
   }
 
@@ -173,8 +180,8 @@ class Canvas {
   }
 
   // Import Enemy
-  importEnemy(enemyName, enemy) {
-    this.enemies[enemyName] = enemy;
+  importEnemy(name, enemy) {
+    this.enemies[name] = enemy;
   }
 
   // Reset Enemy
@@ -194,13 +201,6 @@ class Canvas {
     this.hero = hero;
   }
 
-  // Import Wig
-  importWig(wig) {
-    wig.setCoord(500, 280);
-    this.wig = wig;
-  }
-
-
   // Selects background
   selectBackground(backgroundName) {
     if (backgroundName in this.backgrounds) {
@@ -216,18 +216,36 @@ class Canvas {
     }
   }
 
+  // Imports wig
+  importWig(name, wig) {
+    wig.setCoord(550, 150);
+    this.wigs[name] = wig;
+    if (this.currentWig == null) {
+      this.currentWig = name;
+    }
+  }
+
+  // Selects wig
+  selectWig(wigName) {
+    if (wigName in this.wigs) {
+      this.currentWig = wigName;
+    }
+
+    this.wigs[this.currentWig].setCoord(550, 150);
+  }
+
   // Draws background
   drawBackground() {
     let background = this.backgrounds[this.currentBackground];
-    let img = background.img;
+    let backgroundImg = background.img;
 
     if (background.x < background.screenWidth) {
-      this.ctx.drawImage(img, background.x, 0, background.screenWidth, background.height, 0, 0, background.screenWidth, background.height)
+      this.ctx.drawImage(backgroundImg, background.x, 0, background.screenWidth, backgroundImg.height, 0, 0, background.screenWidth, background.height)
     } else {
       let widthOld = background.width - background.x;
       let widthNew = background.screenWidth - widthOld;
-      this.ctx.drawImage(img, background.x, 0, widthOld, img.height, 0, 0, widthOld, background.height);
-      this.ctx.drawImage(img, 0, 0, widthNew, img.height, widthOld, 0, widthNew, background.height);
+      this.ctx.drawImage(backgroundImg, background.x, 0, widthOld, backgroundImg.height, 0, 0, widthOld, background.height);
+      this.ctx.drawImage(backgroundImg, 0, 0, widthNew, backgroundImg.height, widthOld, 0, widthNew, background.height);
     }
   }
 

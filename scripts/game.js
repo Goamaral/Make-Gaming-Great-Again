@@ -21,24 +21,22 @@ window.onload = function() {
   let resources = {};
   // Number of tasks to complete
   let totalTasksToComplete = 4;
+
   // Create event to signal end of images loading
   window.addEventListener('imageLoadingComplete', imageLoadingCompleteHandler);
 
+  // Load hero sprite images
+  let heroSpriteNodesObject = loadHeroSpriteImages();
   // Creates event to signal end of hero sprite images loading
   window.addEventListener('heroSpritesLoaded', heroSpritesLoadedHandler);
 
-  // Load hero sprite images
-  let heroSpriteNodesObject = loadHeroSpriteImages();
-
+  // Load enemies sprite images
+  let enemiesSpriteNodesObject = loadEnemiesSpriteImages();
   // Creates event to signal end of enemies sprite images loading
   window.addEventListener('enemiesSpritesLoaded', enemiesSpritesLoadedHandler);
 
-  // Load enemies sprite images
-  let enemiesSpriteNodesObject = loadEnemiesSpriteImages();
-
   // Creates event to signal end of wig sprite image loading
   window.addEventListener('wigSpritesLoaded', wigSpritesLoadedHandler);
-
   // Load enemies sprite images
   let wigSpriteNodesObject = loadWigsSpriteImages();
 
@@ -67,20 +65,20 @@ window.onload = function() {
     }
   }
 
-  // Waits for event wigLoaded event to be triggered
-  function wigSpritesLoadedHandler() {
-    window.removeEventListener('wigSpritesLoaded', wigSpritesLoadedHandler);
-    resources['wigs'] = spriteNodesToWigObjects(wigSpriteNodesObject);
+  // Waits for event backgroundsLoaded event to be triggered
+  function backgroundsLoadedHandler() {
+    window.removeEventListener('backgroundsLoaded', backgroundsLoadedHandler);
+    resources['backgrounds'] = spriteNodesToBackgroundObjects(backgroundNodesObject);
     if(Object.keys(resources).length == totalTasksToComplete) {
       let imageLoadingCompleteEvent = new Event('imageLoadingComplete');
       window.dispatchEvent(imageLoadingCompleteEvent);
     }
   }
 
-  // Waits for event backgroundsLoaded event to be triggered
-  function backgroundsLoadedHandler() {
-    window.removeEventListener('backgroundsLoaded', backgroundsLoadedHandler);
-    resources['backgrounds'] = spriteNodesToBackgroundObjects(backgroundNodesObject);
+  // Waits for event wigLoaded event to be triggered
+  function wigSpritesLoadedHandler() {
+    window.removeEventListener('wigSpritesLoaded', wigSpritesLoadedHandler);
+    resources['wigs'] = spriteNodesToWigObjects(wigSpriteNodesObject);
     if(Object.keys(resources).length == totalTasksToComplete) {
       let imageLoadingCompleteEvent = new Event('imageLoadingComplete');
       window.dispatchEvent(imageLoadingCompleteEvent);
@@ -104,7 +102,6 @@ function loadHeroSpriteImages() {
   let heroSpritesObject = createImageNodes(spriteNames, spritesPath, 'hero');
   return heroSpritesObject;
 }
-
 
 //Load enemies sprite images
 function loadEnemiesSpriteImages() {
@@ -187,7 +184,6 @@ function createImageNodes(names, path, mode) {
   return out;
 
   function onloadHandler(ev) {
-    console.log(mode);
     let targ = ev.target;
     if(mode == 'hero') {
       //NOT RESPONSIVE
@@ -229,6 +225,9 @@ function createImageNodes(names, path, mode) {
         } else if(mode == 'backgrounds') {
           let backgroundsLoadedEvent = new Event('backgroundsLoaded');
           window.dispatchEvent(backgroundsLoadedEvent);
+        } else if(mode == 'wigs') {
+          let wigsLoadedEvent = new Event('wigsLoaded');
+          window.dispatchEvent(wigsLoadedEvent);
         }
       }
     }
@@ -263,15 +262,15 @@ function spriteNodesToEnemiesObjects(enemiesSpriteNodesObject) {
   return out;
 }
 
-// Create Sprite objects for each sprite node of hero
-function spriteNodesToWigObjects(wigSpriteNodesObject) {
+// Create Sprite objects for each wig node
+function spriteNodesToWigObjects(wigNodesObject) {
   let out = {};
   // Create Sprite objects
-  for (let spriteName in wigSpriteNodesObject) {
-    let img = wigSpriteNodesObject[spriteName];
-    out[spriteName] = new Sprite(img);
+  for (let wigName in wigNodesObject) {
+    let img = wigNodesObject[wigName];
+    out[wigName] = new Wig(img);
   }
-  return new Wig(out);
+  return out;
 }
 
 // Create Sprite objects for each background node
@@ -286,10 +285,15 @@ function spriteNodesToBackgroundObjects(backgroundNodesObject) {
 }
 
 function imageLoadingComplete(canvas, resources) {
-  let { wigs, hero, backgrounds, enemies } = resources;
+  let { hero, backgrounds, enemies, wigs } = resources;
 
   // Import hero
   canvas.importHero(hero);
+
+  // Import wigs
+  for( let wigName in wigs ) {
+    canvas.importWig(wigName, wigs[wigName]);
+  }
 
   // Import backgrounds
   for( let backgroundName in backgrounds ) {
@@ -300,9 +304,6 @@ function imageLoadingComplete(canvas, resources) {
   for( let enemyName in enemies ) {
     canvas.importEnemy(enemyName, enemies[enemyName]);
   }
-
-  // Import wig
-  canvas.importWig(wigs);
 
   parent.window.onkeydown = keyDownHandler;
   window.onkeydown = keyDownHandler;
