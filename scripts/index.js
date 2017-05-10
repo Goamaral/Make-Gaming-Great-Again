@@ -29,6 +29,7 @@ window.onload = function() {
     let iframeHighscores = document.createElement("iframe");
     let iframeSettings = document.createElement("iframe");
     let iframeEndOfStoryGame = document.createElement("iframe");
+    let iframeEndOfInfiniteGame = document.createElement("iframe");
 
     iframeMenu.src = 'menu.html';
     iframeGame.src = 'game.html';
@@ -36,6 +37,7 @@ window.onload = function() {
     iframeHighscores.src = 'highscores.html';
     iframeSettings.src = 'settings.html';
     iframeEndOfStoryGame.src = 'endOfStoryGame.html';
+    iframeEndOfInfiniteGame.src = 'endOfInfiniteGame.html';
 
     mountIframe(iframeMenu);
 
@@ -43,6 +45,15 @@ window.onload = function() {
         let iframeDoc = null;
         let muteButton = null;
         let unmuteButton = null;
+
+        if(ev.data.msg == 'endOfStoryGame') {
+            mountIframe(iframeEndOfStoryGame);
+        }
+        if(ev.data.msg =='endOfInfiniteGame') {
+            mountIframe(iframeEndOfInfiniteGame);
+            console.log(ev.data.score);
+            iframeEndOfInfiniteGame.document.getElementById('score').innerHTML = ev.data.score;
+        }
 
         switch (ev.data) {
             case 'storyGameButton':
@@ -61,12 +72,6 @@ window.onload = function() {
                 break;
             case 'settingsButton':
                 mountIframe(iframeSettings);
-                break;
-            case 'endOfStoryGame':
-                mountIframe(iframeEndOfStoryGame);
-                break;
-            case 'endOfInfiniteGame':
-                mountIframe(iframeHighscores);
                 break;
             case 'muteButton':
                 iframeDoc = currentIframe.contentDocument;
