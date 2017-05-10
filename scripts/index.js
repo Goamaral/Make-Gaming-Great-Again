@@ -57,10 +57,12 @@ window.onload = function() {
 
         switch (ev.data) {
             case 'storyGameButton':
+                audio.muted = !audio.muted;
                 iframeGame.name = 'storyGame';
                 mountIframe(iframeGame);
                 break;
             case 'infiniteGameButton':
+                audio.muted = !audio.muted;
                 iframeGame.name = 'infiniteGame';
                 mountIframe(iframeGame);
                 break;
