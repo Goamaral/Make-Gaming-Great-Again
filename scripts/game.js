@@ -135,7 +135,7 @@ function loadWigsSpriteImages() {
   return wigSpritesObject;
 }
 
-//Load background images
+// Load background images
 function loadBackgroundImages() {
   // Backgrounds path
   let backgroundsPath = './resources/images/backgrounds/';
@@ -318,15 +318,10 @@ function imageLoadingComplete(canvas, resources) {
     let { score, mode } = ev.data;
     let main = parent.document.getElementsByTagName('main')[0]
     let startIframe = parent.document.getElementsByTagName('iframe')[0];
-
-    switch(mode) {
-      case 'storyGame':
-        talkWithParent("endOfStoryGame");
-        break;
-      case 'infiniteGame':
-        talkWithParent("endOfInfiniteGame");
-        break;
-    }
+    if(mode == 'storyGame')
+      talkWithParent("endOfStoryGame", 0);
+    else
+      talkWithParent("endOfInfiniteGame", score);
   }
 
   function keyDownHandler(ev) {
@@ -341,6 +336,6 @@ function imageLoadingComplete(canvas, resources) {
   }
 };
 
-function talkWithParent(msg) {
-  parent.postMessage(msg, '*');
+function talkWithParent(msg_given, score_given) {
+  parent.postMessage({msg: msg_given, score: score_given}, '*');
 }
