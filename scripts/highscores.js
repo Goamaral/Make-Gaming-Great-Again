@@ -20,30 +20,25 @@ window.onload = function() {
 
     // HTTP GET Request
     let xmlhttp = new XMLHttpRequest();
-    const url = "https://make-gaming-great-again-api.herokuapp.com/scores/";
+    xmlhttp.withCredentials = true;
+    const url = "https://pure-ridge-22716.herokuapp.com/scores";
     // Specifies a function to be executed every time the status of the XMLHttpRequest object changes
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             let scores = JSON.parse(this.responseText);
-            // a and b are object elements of your array
-            function mycomparator(a,b) {
-              return parseInt(b.score, 10) - parseInt(a.score, 10);
-            }
-            scores.sort(mycomparator);
-            scores = scores.slice(0, 3);
-            let top3 = [];
-            Object.keys(scores).forEach(function(key) {
-              let val = [scores[key]["name"], scores[key]["score"]]
-              top3.push(val);
-            });
-            document.getElementById("winner-1").innerHTML = top3[0][0];
-            document.getElementById("winner-2").innerHTML = top3[1][0];
-            document.getElementById("winner-3").innerHTML = top3[2][0];
-            document.getElementById("score-1").innerHTML = top3[0][1];
-            document.getElementById("score-2").innerHTML = top3[1][1];
-            document.getElementById("score-3").innerHTML = top3[2][1];
+            document.getElementById("winner-1").innerHTML = scores[0].name;
+            document.getElementById("winner-2").innerHTML = scores[1].name;
+            document.getElementById("winner-3").innerHTML = scores[2].name;
+            document.getElementById("score-1").innerHTML = scores[0].score;
+            document.getElementById("score-2").innerHTML = scores[1].score;
+            document.getElementById("score-3").innerHTML = scores[2].score;
         }
     };
+    
+    xmlhttp.onerror = function () {
+      console.log('request failed');
+    }
+
     xmlhttp.open("GET", url, true);
     xmlhttp.send();
 
