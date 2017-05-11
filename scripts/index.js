@@ -47,22 +47,27 @@ window.onload = function() {
     let unmuteButton = null;
 
     if(ev.data.msg == 'endOfStoryGame') {
+      audio.currentTime = 0;
+      audio.muted = false;
       mountIframe(iframeEndOfStoryGame);
     }
     if(ev.data.msg =='endOfInfiniteGame') {
+      audio.currentTime = 0;
+      audio.muted = false;
       mountIframe(iframeEndOfInfiniteGame);
-      console.log(ev.data.score);
-      iframeEndOfInfiniteGame.document.getElementById('score').innerHTML = ev.data.score;
+      iframeEndOfInfiniteGame.onload = function () {
+        iframeEndOfInfiniteGame.contentWindow.document.getElementById('score').innerHTML = ev.data.score;
+      };
     }
 
     switch (ev.data) {
       case 'storyGameButton':
-        audio.muted = !audio.muted;
+        audio.muted = true;
         iframeGame.name = 'storyGame';
         mountIframe(iframeGame);
         break;
       case 'infiniteGameButton':
-        audio.muted = !audio.muted;
+        audio.muted = true;
         iframeGame.name = 'infiniteGame';
         mountIframe(iframeGame);
         break;

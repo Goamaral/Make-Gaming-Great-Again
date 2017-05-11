@@ -55,8 +55,8 @@ input[type=text], select {
 
 input[type=submit] {
   width: 50%;
-  background-color: #b3b3b3;
-  color: white;
+  color: #404040;
+  background-color: #fcca67;
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
@@ -65,7 +65,32 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-  background-color: #8c8c8c;
+  background-color: #fcdc9c;
+}
+
+#score-title {
+  font-size: 1.5em;
+  font-family: 'Cabin', sans-serif;
+}
+
+#score {
+  font-size: 0.9em;
+  font-family: 'Cabin', sans-serif;
+}
+
+#skip {
+  width: 50%;
+  color: #404040;
+  background-color: #fcca67;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#skip:hover {
+  background-color: #fcdc9c;
 }
 
 div {
