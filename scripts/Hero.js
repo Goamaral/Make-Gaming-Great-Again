@@ -55,9 +55,9 @@ class Hero {
     }
     switch (instruction) {
       case 'ArrowUp':
-          this.jumping = this.jumpingTime;
-          this.currentSprite = 'jump';
-          this.runInstruction('up');
+        this.jumping = this.jumpingTime;
+        this.currentSprite = 'jump';
+        this.runInstruction('up');
         break;
       case 'ContinueJump':
         if (this.jumping <= this.jumpingTime / 2) {
@@ -69,9 +69,9 @@ class Hero {
         }
         break;
       case 'ArrowDown':
-          this.y = this.slidingY;
-          this.currentSprite = 'slide';
-          this.sliding = this.slidingTime;
+        this.y = this.slidingY;
+        this.currentSprite = 'slide';
+        this.sliding = this.slidingTime;
         break;
       case 'ContinueSliding':
         this.sliding = this.sliding - 1;
@@ -106,9 +106,9 @@ class Hero {
         this.move(15);
         break;
       default:
-      	if (debugging) {
-        	alert('Instruction not defined -> ' + instruction);
-  		}
+        if (debugging) {
+          alert('Instruction not defined -> ' + instruction);
+        }
     }
   }
 }

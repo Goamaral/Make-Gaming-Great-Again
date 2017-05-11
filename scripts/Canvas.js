@@ -69,7 +69,7 @@ class Canvas {
     if (this.mode == 'storyGame' && this.animationRequest == this.maxRequests) {
       this.end = true;
     } else if (this.mode == 'infiniteGame' && this.animationRequest % 200 == 0) {
-      this.speed += 0.1;
+      this.speed += 0.2;
     }
 
     if (this.end) {
@@ -91,14 +91,17 @@ class Canvas {
     }
   }
 
-  checkColisions(sprite, x, y) {    let s = sprite.getImageData();
+  checkColisions(sprite, x, y) {
+    let s = sprite.getImageData();
     let canvasSection = this._canvas.ctx.getImageData(x, y, s.width, s.height);
 
     for (let i = 0; i < canvasSection.data.length; i += 4) {
       if (canvasSection.data[i+3] == 255 && s.data[i+3] == 255 ) {
         return true;
       }
-    }    return false;
+    }
+
+    return false;
   }
 
   update(locked) {
@@ -112,14 +115,14 @@ class Canvas {
   }
 
   updateEnemies() {
-  	if (this._canvas === undefined) {
+    if (this._canvas === undefined) {
       this._canvas = new Canvas(this.canvas.width, this.canvas.height);
     }
     if (this.enemiesQueue.length == 0) {
       this.enemyGenerator();
       this.head = 0;
     } else if (this.enemiesQueue[this.head].x < this.nextEnemyDist) {
-    	this.enemyGenerator();
+      this.enemyGenerator();
       this.head = 1;
     }
 
@@ -137,7 +140,8 @@ class Canvas {
     let enemyName = enemyKeys[this.random(0, enemyKeys.length)];
     let enemy = Object.assign(new Enemy(), this.enemies[enemyName]);
     this.resetEnemy(enemy);
-    this.enemiesQueue.push(enemy);  }
+    this.enemiesQueue.push(enemy);
+  }
 
   random(min, max) {
     return Math.floor((Math.random() * max) + min);
@@ -158,7 +162,7 @@ class Canvas {
     this.drawSprite(heroSprite, this.hero.x, this.hero.y);
 
     this.enemiesQueue.map((enemy) => {
-    	let enemySprite = enemy.sprites[enemy.currentSprite];
+      let enemySprite = enemy.sprites[enemy.currentSprite];
       if (!this.end) {
         self.drawSprite(heroSprite, this.hero.x, this.hero.y);
         this.end = this.checkColisions(enemySprite, enemy.x, enemy.y);
@@ -283,7 +287,7 @@ class Canvas {
   mountCanvas(root=this.root) {
     if (this.root == null) {
       this.root = root;
-	  }
+    }
 
     this.root.appendChild(this.canvas);
   }

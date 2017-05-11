@@ -6,7 +6,8 @@
 //import Sprite from 'Sprite';
 
 // NOTE: When arrow functions are used in global scope, they always refer to the global this, window. For safety always use ES5 anonymous function calls in global scope.
-// NOTE: Auxiliar variables should hava a _ before their proper name, for example, _auxVar instead of auxVar
+// NOTE: Auxiliar variables should hava a _ before their proper name, for example, _auxVar instead of auxVar
+
 
 // On window full load
 window.onload = function() {
@@ -213,10 +214,10 @@ function createImageNodes(names, path, mode) {
         window.dispatchEvent(enemiesSpritesLoadedEvent);
       }
     } else if(mode == 'wigs') {
-        if(count == names.length) {
-          let wigsSpritesLoadedEvent = new Event('wigSpritesLoaded');
-          window.dispatchEvent(wigsSpritesLoadedEvent);
-        }
+      if(count == names.length) {
+        let wigsSpritesLoadedEvent = new Event('wigSpritesLoaded');
+        window.dispatchEvent(wigsSpritesLoadedEvent);
+      }
     } else {
       if(count == names.length) {
         if(mode == 'hero') {
