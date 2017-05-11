@@ -1,23 +1,6 @@
 "use strict";
 
 window.onload = function() {
-  /*
-  // POST
-    var http = new XMLHttpRequest();
-    const url = "https://make-gaming-great-again-api.herokuapp.com/scores/";
-    var params = "name=Goa&score=40";
-    http.open("POST", url, true);
-
-  // Send the proper header information along with the request
-    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  // Call a function when the state changes
-    http.onreadystatechange = function() {
-        if(http.readyState == 4 && http.status == 200) {
-            alert(http.responseText);
-        }
-    }
-    http.send(params);*/
-
   // HTTP GET Request
   let xmlhttp = new XMLHttpRequest();
   const url = "https://make-gaming-great-again-api.herokuapp.com/scores/";
