@@ -64,8 +64,11 @@ class Canvas {
         return;
       }
       this.level++;
+      this.speed += 1;
       this.selectBackground(this.backgroundsNames[this.level]);
       this.newLevel = false;
+      window.cancelAnimationFrame(this.animationRequest);
+      console.log("oi");
     } else if (this.mode == 'infiniteGame' && this.animationRequest % 200 == 0) {
       this.speed += 0.2;
     }
