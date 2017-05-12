@@ -12,11 +12,12 @@ class Canvas {
     this.setStyle({
       margin: 'auto'
     });
-    // Define context
+    // Defines context
     this.ctx = this.canvas.getContext('2d');
     this.ctx.font = '30px Monaco';
     // Object with available backgrounds
     this.backgrounds = {};
+    this.backgroundsNames = ['desert', 'new-york', 'white-house'];
     // Name of current selected background
     this.currentBackground = null;
     // Object with available wigs
@@ -32,7 +33,8 @@ class Canvas {
     this.ticksPerFrame = 60 / this.framerate;
     this.tickCount = 0;
     this.speed = 3;
-    this.animationRequest = 0;
+    this.animationRequest = 1;
+    this.level = 0;
 
     // Hero running lock
     this.locker = null;
@@ -45,29 +47,25 @@ class Canvas {
     // If enemy has collide
     this.end = false;
 
+    // If player wins level
+    this.newLevel = false;
+
     // Game mode
     this.mode = mode;
-    this.maxRequests = 1000;
-  }
-
-  keyDownHandler(key) {
-    if (this.locker == null) {
-      this.locker = key;
-      this.hero.keyPress(key);
-    } else if (this.locker == key) {
-      this.hero.keyPress(key);
-    }
-  }
-
-  keyUpHandler(key) {
-    if (this.locker == key) {
-      this.locker = null;
-    }
+    this.maxRequests = 1500;
   }
 
   gameloop() {
-    if (this.mode == 'storyGame' && this.animationRequest == this.maxRequests) {
-      this.end = true;
+    if (this.mode == 'storyGame' && this.animationRequest % 500 == 0) {
+      if (this.animationRequest == this.maxRequests) {
+        window.cancelAnimationFrame(this.animationRequest);
+        let ev = new Event('win');
+        window.dispatchEvent(ev);
+        return;
+      }
+      this.level++;
+      this.selectBackground(this.backgroundsNames[this.level]);
+      this.newLevel = false;
     } else if (this.mode == 'infiniteGame' && this.animationRequest % 200 == 0) {
       this.speed += 0.2;
     }
@@ -88,6 +86,21 @@ class Canvas {
 
       this.update(this.locker != null);
       this.render();
+    }
+  }
+
+  keyDownHandler(key) {
+    if (this.locker == null) {
+      this.locker = key;
+      this.hero.keyPress(key);
+    } else if (this.locker == key) {
+      this.hero.keyPress(key);
+    }
+  }
+
+  keyUpHandler(key) {
+    if (this.locker == key) {
+      this.locker = null;
     }
   }
 

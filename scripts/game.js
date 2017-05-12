@@ -141,7 +141,7 @@ function loadBackgroundImages() {
   // Backgrounds path
   let backgroundsPath = './resources/images/backgrounds/';
   // Background names
-  let backgroundNames = [ 'desert' ];
+  let backgroundNames = [ 'desert', 'new-york', 'white-house' ];
   // Load every background and create a image node for each one
   let backgroundNodesObject = createImageNodes(backgroundNames, backgroundsPath, 'backgrounds');
   return backgroundNodesObject;
@@ -313,16 +313,20 @@ function imageLoadingComplete(canvas, resources) {
   window.onkeyup = keyUpHandler;
 
   window.addEventListener('gameEnded', gameEndedHandler);
+  window.addEventListener('win', winHandler);
+
   canvas.gameloop();
 
   function gameEndedHandler(ev) {
     let { score, mode } = ev.data;
-    let main = parent.document.getElementsByTagName('main')[0]
-    let startIframe = parent.document.getElementsByTagName('iframe')[0];
-    if(mode == 'storyGame')
+    if (mode == 'storyGame')
       talkWithParent("endOfStoryGame", 0);
     else
       talkWithParent("endOfInfiniteGame", score);
+  }
+
+  function winHandler(ev) {
+    talkWithParent_2("win");
   }
 
   function keyDownHandler(ev) {
@@ -339,4 +343,8 @@ function imageLoadingComplete(canvas, resources) {
 
 function talkWithParent(msg_given, score_given) {
   parent.postMessage({msg: msg_given, score: score_given}, '*');
+}
+
+function talkWithParent_2(msg) {
+  parent.postMessage(msg, '*');
 }

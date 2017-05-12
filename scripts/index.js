@@ -95,6 +95,9 @@ window.onload = function() {
       case 'backButton':
         mountIframe(iframeMenu);
         break;
+      case 'win':
+        mountIframe(iframeMenu);
+        break;
     }
   }
 
