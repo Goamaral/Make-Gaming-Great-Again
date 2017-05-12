@@ -30,6 +30,7 @@ window.onload = function() {
   let iframeSettings = document.createElement("iframe");
   let iframeEndOfStoryGame = document.createElement("iframe");
   let iframeEndOfInfiniteGame = document.createElement("iframe");
+  let iframeWin = document.createElement("iframe");
 
   iframeMenu.src = 'menu.html';
   iframeGame.src = 'game.html';
@@ -38,6 +39,7 @@ window.onload = function() {
   iframeSettings.src = 'settings.html';
   iframeEndOfStoryGame.src = 'endOfStoryGame.html';
   iframeEndOfInfiniteGame.src = 'endOfInfiniteGame.html';
+  iframeWin.src = 'win.html';
 
   mountIframe(iframeMenu);
 
@@ -96,7 +98,7 @@ window.onload = function() {
         mountIframe(iframeMenu);
         break;
       case 'win':
-        mountIframe(iframeMenu);
+        mountIframe(iframeWin);
         break;
     }
   }

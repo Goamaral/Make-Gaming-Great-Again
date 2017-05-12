@@ -52,11 +52,11 @@ class Canvas {
 
     // Game mode
     this.mode = mode;
-    this.maxRequests = 1500;
+    this.maxRequests = 300;
   }
 
   gameloop() {
-    if (this.mode == 'storyGame' && this.animationRequest % 500 == 0) {
+    if (this.mode == 'storyGame' && this.animationRequest % 100 == 0) {
       if (this.animationRequest == this.maxRequests) {
         window.cancelAnimationFrame(this.animationRequest);
         let ev = new Event('win');
@@ -187,6 +187,8 @@ class Canvas {
     let wig = this.wigs[this.currentWig];
     let wigSprite = wig.sprite;
     this.drawSprite(wigSprite, wig.x, wig.y);
+    const level = this.level + 1;
+    if (this.mode == 'storyGame') this.ctx.fillText(['LEVEL ' + level], 300, 50);
 
     if (this.mode == 'infiniteGame') this.ctx.fillText(['SCORE', this.animationRequest+1].join(' '), 300, 50);
   }
