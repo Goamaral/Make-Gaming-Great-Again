@@ -1,8 +1,4 @@
-class wig: extends sprite
-  - name
-  - move method(dx, dy)
-
-add volume control
-lower button hover volume
-
+Levels with different Backgrounds
+add volume control in game
 pauseGame() -> pauses game
+How to Play
