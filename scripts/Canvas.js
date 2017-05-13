@@ -47,16 +47,13 @@ class Canvas {
     // If enemy has collide
     this.end = false;
 
-    // If player wins level
-    this.newLevel = false;
-
     // Game mode
     this.mode = mode;
-    this.maxRequests = 300;
+    this.maxRequests = 900;
   }
 
   gameloop() {
-    if (this.mode == 'storyGame' && this.animationRequest % 100 == 0) {
+    if (this.mode == 'storyGame' && this.animationRequest % 300 == 0) {
       if (this.animationRequest == this.maxRequests) {
         window.cancelAnimationFrame(this.animationRequest);
         let ev = new Event('win');
@@ -66,9 +63,6 @@ class Canvas {
       this.level++;
       this.speed += 1;
       this.selectBackground(this.backgroundsNames[this.level]);
-      this.newLevel = false;
-      window.cancelAnimationFrame(this.animationRequest);
-      console.log("oi");
     } else if (this.mode == 'infiniteGame' && this.animationRequest % 200 == 0) {
       this.speed += 0.2;
     }
