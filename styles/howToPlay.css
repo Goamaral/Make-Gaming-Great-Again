@@ -17,7 +17,7 @@ body {
 }
 
 menu {
-  margin-left: 12%;
+  margin-top: 0;
   padding: 0px;
   display: flex;
   flex-direction: column;
@@ -25,14 +25,17 @@ menu {
 }
 
 left {
-  margin-top: 3%;
+  margin-top: 5%;
   margin-left: 5%;
   display: inline-flex;
   flex-direction: column;
 }
 
 .video-how-to-play {
-  max-width: 500px;
+  margin-left: 24%;
+  margin-top: 5%;
+  margin-bottom: 2%;
+  width: 450px;
 }
 
 

@@ -46,7 +46,8 @@ menu {
 }
 
 .button {
-  width: 80%;
+  margin-top: 10%;
+  width: 50%;
   padding: 10%;
   font-family: Helvetica;
   border-radius: 5px;

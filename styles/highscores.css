@@ -18,7 +18,6 @@ body {
 }
 
 menu {
-  margin-left: 12%;
   padding: 0px;
   display: flex;
   flex-direction: column;
@@ -33,10 +32,9 @@ left {
 }
 
 .button {
-  width: 50%;
+  width: 30%;
   padding: 6%;
   margin-top: 20%;
-  margin-left: 11%;
   font-family: Helvetica;
   border-radius: 5px;
   font-size: 0.85em;

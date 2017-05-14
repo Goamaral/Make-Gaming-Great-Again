@@ -141,7 +141,7 @@ function loadBackgroundImages() {
   // Backgrounds path
   let backgroundsPath = './resources/images/backgrounds/';
   // Background names
-  let backgroundNames = [ 'desert', 'new-york', 'white-house' ];
+  let backgroundNames = [ 'white-house', 'new-york', 'desert' ];
   // Load every background and create a image node for each one
   let backgroundNodesObject = createImageNodes(backgroundNames, backgroundsPath, 'backgrounds');
   return backgroundNodesObject;
