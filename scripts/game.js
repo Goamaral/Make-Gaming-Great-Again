@@ -147,14 +147,6 @@ function loadBackgroundImages() {
   return backgroundNodesObject;
 }
 
-// Load background images
-function loadPlayAndPauseButtons() {
-  let playAndPauseButtonsPath = './resources/images/buttons';;
-  let playAndPauseButtonsName = ['playpause']
-  let playAndPauseNodes = createImageNodes(playAndPauseButtonsName, playAndPauseButtonsPath, 'playpause') 
-  return playAndPauseNodes;
-}
-
 // Load every sprite and create a image node for each one
 function createImageNodes(names, path, mode) {
   let out = {};
@@ -243,6 +235,7 @@ function createImageNodes(names, path, mode) {
 // Create Sprite objects for each sprite node of hero
 function spriteNodesToHeroObjects(heroSpriteNodesObject) {
   let out = {};
+
   // Create Sprite objects
   for (let spriteName in heroSpriteNodesObject) {
     let img = heroSpriteNodesObject[spriteName];
@@ -258,11 +251,13 @@ function spriteNodesToEnemiesObjects(enemiesSpriteNodesObject) {
   for (let key in enemiesSpriteNodesObject) {
     let _out = [];
     let obj = enemiesSpriteNodesObject[key].sprites;
+
     // Create Sprite objects
     for (let spriteName in obj) {
       let img = obj[spriteName];
       _out.push(new Sprite(img));
     }
+
     out[key] = new Enemy(_out, enemiesSpriteNodesObject[key].type);
   }
   return out;
@@ -271,22 +266,26 @@ function spriteNodesToEnemiesObjects(enemiesSpriteNodesObject) {
 // Create Sprite objects for each wig node
 function spriteNodesToWigObjects(wigNodesObject) {
   let out = {};
+
   // Create Sprite objects
   for (let wigName in wigNodesObject) {
     let img = wigNodesObject[wigName];
     out[wigName] = new Wig(img);
   }
+
   return out;
 }
 
 // Create Sprite objects for each background node
 function spriteNodesToBackgroundObjects(backgroundNodesObject) {
   let out = {};
+
   // Create Sprite objects
   for (let backgroundName in backgroundNodesObject) {
     let img = backgroundNodesObject[backgroundName];
     out[backgroundName] = new Background(img);
   }
+
   return out;
 }
 
