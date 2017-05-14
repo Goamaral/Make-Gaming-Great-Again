@@ -32,6 +32,7 @@ class Hero {
   }
 
   update(locked, speed) {
+	console.log(locked, speed, this.jumping, this.sliding);
     if (this.jumping > 0) {
       this.runInstruction('ContinueJump', speed);
     } else if (this.sliding > 0) {
@@ -67,6 +68,9 @@ class Hero {
           this.runInstruction('up', speed);
           this.jumping = this.jumping - 1;
         }
+		if (this.jumping < 0) {
+			this.jumping = 0;
+		}
         break;
       case 'ArrowDown':
         this.y = this.slidingY;
