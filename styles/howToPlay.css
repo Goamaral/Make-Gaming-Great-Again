@@ -1,0 +1,61 @@
+@import url(https://fonts.googleapis.com/css?family=Cabin);
+@import url(https://fonts.googleapis.com/css?family=Righteous);
+
+#title {
+  justify-content: center;
+  font-size: 30px;
+  font-family: 'Righteous', cursive;
+  margin: 0;
+  color: #595959;
+}
+
+body {
+  background: url(../resources/images/fundo1.jpg);
+  background-size: cover;
+  padding: 0;
+  margin: 0;
+}
+
+menu {
+  margin-left: 12%;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+left {
+  margin-top: 3%;
+  margin-left: 5%;
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.video-how-to-play {
+  max-width: 500px;
+}
+
+
+.button {
+  width: 15%;
+  padding: 3%;
+  margin-top: 1%;
+  font-family: Helvetica;
+  border-radius: 5px;
+  font-size: 0.85em;
+  border: none;
+  color: #404040;
+  background-color: #fcca67;
+  font-weight: bold;
+  outline: 0;
+}
+
+.button:hover {
+  background-color: #fcdc9c;
+}
+
+.menu-subtitle {
+  font-size: 12px;
+  margin: 0;
+  font-family: 'Cabin', sans-serif;
+}
