@@ -2,10 +2,21 @@
 
 window.onload = function() {
     let buttons = [];
+    let audio = {};
     buttons.push(document.getElementById('skip'));
     buttons.push(document.getElementById('submit'));
     buttons[0].onclick = buttonClickHandler;
     buttons[1].onclick = submitScoreHandler;
+    for (let i = 0; i < 2; i++) {
+      buttons[i].onmouseover = playSoundHandler;
+      audio[buttons[i].id] = document.createElement('audio');
+      audio[buttons[i].id].src = 'resources/sounds/hover-sound.mp3';
+    }
+
+    // Play sound on button hover
+    function playSoundHandler(ev) {
+      playSound(audio[ev.target.id]);
+    }
 
     function buttonClickChildHandler(ev) {
       talkWithParent(ev.target.parentNode.id);
@@ -37,4 +48,10 @@ window.onload = function() {
 
 function talkWithParent(msg) {
   parent.postMessage(msg, '*');
+}
+
+function playSound(audio) {
+  if (audio !== undefined) {
+    audio.play();
+  }
 }
