@@ -15,8 +15,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
 window.onload = function() {
   window.addEventListener('messageRecieved', messageRecievedHandler);
-  //Get Audio node
+
+  // Get Audio node
   let audio = document.getElementsByTagName('audio')[0];
+  let audioGame = document.getElementsByTagName('audio')[1];
+  let mute = false;
 
   // The place we load the iframes onto
   let main = document.getElementsByTagName('main')[0];
@@ -50,12 +53,19 @@ window.onload = function() {
 
     if(ev.data.msg == 'endOfStoryGame') {
       audio.currentTime = 0;
-      audio.muted = false;
+      audioGame.currentTime = 0;
+      if(!mute) {
+        audioGame.muted = true;
+        audio.muted = false;
+      }
       mountIframe(iframeEndOfStoryGame);
     }
     if(ev.data.msg =='endOfInfiniteGame') {
       audio.currentTime = 0;
-      audio.muted = false;
+      if(!mute) {
+        audioGame.muted = true;
+        audio.muted = false;
+      }
       mountIframe(iframeEndOfInfiniteGame);
       iframeEndOfInfiniteGame.onload = function () {
         iframeEndOfInfiniteGame.contentWindow.document.getElementById('score').innerHTML = ev.data.score;
@@ -65,11 +75,22 @@ window.onload = function() {
     switch (ev.data) {
       case 'storyGameButton':
         audio.muted = true;
+        console.log(mute);
+        if(!mute) {
+          audioGame.currentTime = 0;
+          audioGame.muted = false;
+          audioGame.play();
+        }
         iframeGame.name = 'storyGame';
         mountIframe(iframeGame);
         break;
       case 'infiniteGameButton':
         audio.muted = true;
+        if(!mute) {
+          audioGame.currentTime = 0;
+          audioGame.muted = false;
+          audioGame.play();
+        }
         iframeGame.name = 'infiniteGame';
         mountIframe(iframeGame);
         break;
@@ -87,17 +108,26 @@ window.onload = function() {
         muteButton = iframeDoc.getElementById('muteButton');
         unmuteButton = iframeDoc.getElementById('unmuteButton');
         toggleAudio(audio, muteButton, unmuteButton);
+        mute = !mute;
         break;
       case 'unmuteButton':
         iframeDoc = currentIframe.contentDocument;
         muteButton = iframeDoc.getElementById('muteButton');
         unmuteButton = iframeDoc.getElementById('unmuteButton');
         toggleAudio(audio, unmuteButton, muteButton);
+        mute = !mute;
         break;
       case 'backButton':
         mountIframe(iframeMenu);
         break;
       case 'win':
+        audio.currentTime = 0;
+        audioGame.currentTime = 0;
+        if(!mute) {
+          audioGame.muted = true;
+          audio.muted = false;
+        }
+        iframeGame.name = 'storyGame';
         mountIframe(iframeWin);
         break;
     }

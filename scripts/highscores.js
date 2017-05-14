@@ -31,12 +31,21 @@ window.onload = function() {
   xmlhttp.send();
 
   let buttons = [];
+  let audio = {};
   buttons.push(document.getElementById('backButton'));
   for (let i = 0; i < buttons.length; i++) {
     buttons[i].onclick = buttonClickHandler;
     for (let j = 0; j < buttons[i].children.length; ++j ) {
       buttons[i].children[j].onclick = buttonClickChildHandler;
     }
+    buttons[i].onmouseover = playSoundHandler;
+    audio[buttons[i].id] = document.createElement('audio');
+    audio[buttons[i].id].src = 'resources/sounds/hover-sound.mp3';
+  }
+
+  // Play sound on button hover
+  function playSoundHandler(ev) {
+    playSound(audio[ev.target.id]);
   }
 
   function buttonClickChildHandler(ev) {
@@ -50,4 +59,10 @@ window.onload = function() {
 
 function talkWithParent(msg) {
   parent.postMessage(msg, '*');
+}
+
+function playSound(audio) {
+  if (audio !== undefined) {
+    audio.play();
+  }
 }
