@@ -147,21 +147,31 @@ function loadBackgroundImages() {
   return backgroundNodesObject;
 }
 
+// Load background images
+function loadPlayAndPauseButtons() {
+  let playAndPauseButtonsPath = './resources/images/buttons';;
+  let playAndPauseButtonsName = ['playpause']
+  let playAndPauseNodes = createImageNodes(playAndPauseButtonsName, playAndPauseButtonsPath, 'playpause') 
+  return playAndPauseNodes;
+}
+
 // Load every sprite and create a image node for each one
-// NOT RESPONSIVE
 function createImageNodes(names, path, mode) {
   let out = {};
   let count = 0;
 
   if (mode == 'enemies') {
     var picCount = 0;
+
     for (let key in names) {
       let arr = names[key].arr;
       picCount += arr.length;
     }
+
     for (let key in names) {
       let arr = names[key].arr;
       let _out = {};
+
       for (let ind in arr) {
         let name = arr[ind];
         let node = new Image();
@@ -169,6 +179,7 @@ function createImageNodes(names, path, mode) {
         node.src = path + name + '.png';
         _out[name] = node;
       }
+
       out[names[key].name] = { sprites: _out, type: names[key].type };
     }
     return out;
@@ -186,27 +197,21 @@ function createImageNodes(names, path, mode) {
 
   function onloadHandler(ev) {
     let targ = ev.target;
+
     if(mode == 'hero') {
-      //NOT RESPONSIVE
       targ.height = targ.naturalHeight/5;
-      //NOT RESPONSIVE
       targ.width = targ.naturalWidth/5;
     } else if(mode == 'backgrounds') {
-      //NOT RESPONSIVE
       targ.height = targ.naturalHeight;
-      //NOT RESPONSIVE
       targ.width = targ.naturalWidth;
     } else if (mode == 'enemies') {
-      //NOT RESPONSIVE
       targ.height = targ.naturalHeight;
-      //NOT RESPONSIVE
       targ.width = targ.naturalWidth;
     } else if (mode == 'wigs') {
-      //NOT RESPONSIVE
       targ.height = targ.naturalHeight;
-      //NOT RESPONSIVE
       targ.width = targ.naturalWidth;
     }
+
     ++count;
     if (mode == 'enemies') {
       if(count == picCount) {
