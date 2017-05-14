@@ -37,7 +37,7 @@ window.onload = function() {
 
   iframeMenu.src = 'menu.html';
   iframeGame.src = 'game.html';
-  //iframeHowToPlay.src = 'howToPlay.html';
+  iframeHowToPlay.src = 'howToPlay.html';
   iframeHighscores.src = 'highscores.html';
   iframeSettings.src = 'settings.html';
   iframeEndOfStoryGame.src = 'endOfStoryGame.html';
@@ -75,7 +75,6 @@ window.onload = function() {
     switch (ev.data) {
       case 'storyGameButton':
         audio.muted = true;
-        console.log(mute);
         if(!mute) {
           audioGame.currentTime = 0;
           audioGame.muted = false;
