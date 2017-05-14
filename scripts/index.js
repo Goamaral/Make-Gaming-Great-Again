@@ -75,7 +75,6 @@ window.onload = function() {
     switch (ev.data) {
       case 'storyGameButton':
         audio.muted = true;
-        console.log(mute);
         if(!mute) {
           audioGame.currentTime = 0;
           audioGame.muted = false;
