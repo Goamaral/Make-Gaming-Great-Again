@@ -24,11 +24,14 @@ class Enemy {
 
   update(speed) {
     if (this.runTick == 0) {
-      if (this.currentSprite == 0) {
+      if (this.currentSprite == 0)
         this.currentSprite = 1;
-      } else if (this.currentSprite == 1) {
+      else if (this.currentSprite == 1 && this.sprites.length == 2)
         this.currentSprite = 0;
-      }
+      else if (this.currentSprite == 1 && this.sprites.length == 3)
+        this.currentSprite = 2;
+      else
+        this.currentSprite = 0;
       this.runTick += 1;
     } else if(this.runTick == this.maxRunTicks){
       this.runTick = 0;

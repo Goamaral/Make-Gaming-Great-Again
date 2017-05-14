@@ -47,16 +47,13 @@ class Canvas {
     // If enemy has collide
     this.end = false;
 
-    // If player wins level
-    this.newLevel = false;
-
     // Game mode
     this.mode = mode;
-    this.maxRequests = 300;
+    this.maxRequests = 3000;
   }
 
   gameloop() {
-    if (this.mode == 'storyGame' && this.animationRequest % 100 == 0) {
+    if (this.mode == 'storyGame' && this.animationRequest % 1000 == 0) {
       if (this.animationRequest == this.maxRequests) {
         window.cancelAnimationFrame(this.animationRequest);
         let ev = new Event('win');
@@ -65,12 +62,11 @@ class Canvas {
       }
       this.level++;
       this.speed += 1;
+      this.hero.jumpingTime = 25 - (this.speed-3) * 4;
       this.selectBackground(this.backgroundsNames[this.level]);
-      this.newLevel = false;
-      window.cancelAnimationFrame(this.animationRequest);
-      console.log("oi");
-    } else if (this.mode == 'infiniteGame' && this.animationRequest % 200 == 0) {
-      this.speed += 0.2;
+    } else if (this.mode == 'infiniteGame' && this.animationRequest % 500 == 0) {
+      this.speed = this.speed + 1;
+      this.hero.jumpingTime = 25 - (this.speed - 3) * 4;
     }
 
     if (this.end) {
@@ -95,9 +91,9 @@ class Canvas {
   keyDownHandler(key) {
     if (this.locker == null) {
       this.locker = key;
-      this.hero.keyPress(key);
+      this.hero.keyPress(key, this.speed);
     } else if (this.locker == key) {
-      this.hero.keyPress(key);
+      this.hero.keyPress(key, this.speed);
     }
   }
 
@@ -126,7 +122,7 @@ class Canvas {
 
     background.update(this.speed);
     wig.update();
-    this.hero.update(locked);
+    this.hero.update(locked, this.speed);
     this.updateEnemies();
   }
 

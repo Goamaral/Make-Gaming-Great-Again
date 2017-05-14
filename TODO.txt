@@ -1,4 +1,3 @@
-Levels with different Backgrounds
 add volume control in game
 pauseGame() -> pauses game
-How to Play
+how to Play

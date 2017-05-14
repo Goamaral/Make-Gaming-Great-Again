@@ -113,7 +113,7 @@ function loadEnemiesSpriteImages() {
   let mexicanSpriteNames = { name: 'mexican', arr: [ 'mexicanDown','mexicanUp' ], type: 'ground' };
 
   // Obama sprite names
-  let obamaSpriteNames = { name: 'obama', arr: [ 'obamaDown','obamaUp' ], type: 'ground' };
+  let obamaSpriteNames = { name: 'obama', arr: [ 'obama-left','obama-middle', 'obama-right' ], type: 'ground' };
 
   // Nyan sprite names
   let nyanSpriteNames = { name: 'nyan', arr: [ 'nyan', 'nyan2' ], type: 'air'};

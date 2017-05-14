@@ -31,25 +31,25 @@ class Hero {
     this.slidingY = y + 25;
   }
 
-  update(locked) {
+  update(locked, speed) {
     if (this.jumping > 0) {
-      this.runInstruction('ContinueJump');
+      this.runInstruction('ContinueJump', speed);
     } else if (this.sliding > 0) {
-      this.runInstruction('ContinueSliding');
+      this.runInstruction('ContinueSliding', speed);
     } else {
       if (!locked) {
-        this.runInstruction('run');
+        this.runInstruction('run', speed);
       }
     }
   }
 
-  keyPress(key) {
+  keyPress(key, speed) {
     if(this.sliding == 0 && this.jumping == 0) {
-      this.runInstruction(key);
+      this.runInstruction(key, speed);
     }
   }
 
-  runInstruction(instruction) {
+  runInstruction(instruction, speed) {
     if(debugging) {
       console.log(instruction);
     }
@@ -57,14 +57,14 @@ class Hero {
       case 'ArrowUp':
         this.jumping = this.jumpingTime;
         this.currentSprite = 'jump';
-        this.runInstruction('up');
+        this.runInstruction('up', speed);
         break;
       case 'ContinueJump':
         if (this.jumping <= this.jumpingTime / 2) {
-          this.runInstruction('down');
+          this.runInstruction('down', speed);
           this.jumping = this.jumping - 1;
         } else {
-          this.runInstruction('up');
+          this.runInstruction('up', speed);
           this.jumping = this.jumping - 1;
         }
         break;
@@ -100,10 +100,10 @@ class Hero {
         }
         break;
       case 'up':
-        this.move(-15);
+        this.move(-(15 + (speed-3) * 5));
         break;
       case 'down':
-        this.move(15);
+        this.move(15 + (speed-3) * 5);
         break;
       default:
         if (debugging) {
