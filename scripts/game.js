@@ -134,9 +134,12 @@ function loadEnemiesSpriteImages() {
   let obamaSpriteNames = { name: 'obama', arr: [ 'obama-left','obama-middle', 'obama-right' ], type: 'ground' };
 
   // Nyan sprite names
+  let hillarySpriteNames = { name: 'hillary', arr: [ 'hillary1', 'hillary2', 'hillary3' ], type: 'ground'};
+
+  // Nyan sprite names
   let nyanSpriteNames = { name: 'nyan', arr: [ 'nyan', 'nyan2' ], type: 'air'};
 
-  let spriteNames = { mexicanSpriteNames, obamaSpriteNames, nyanSpriteNames };
+  let spriteNames = { mexicanSpriteNames, obamaSpriteNames, hillarySpriteNames, nyanSpriteNames };
 
   // Load every sprite and create a image node for each one
   let enemiesSpritesObject = createImageNodes(spriteNames, spritesPath, 'enemies');
@@ -159,7 +162,7 @@ function loadBackgroundImages() {
   // Backgrounds path
   let backgroundsPath = './resources/images/backgrounds/';
   // Background names
-  let backgroundNames = [ 'desert', 'new-york', 'white-house' ];
+  let backgroundNames = [ 'white-house', 'new-york', 'desert' ];
   // Load every background and create a image node for each one
   let backgroundNodesObject = createImageNodes(backgroundNames, backgroundsPath, 'backgrounds');
   return backgroundNodesObject;
