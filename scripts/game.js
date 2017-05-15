@@ -52,10 +52,12 @@ window.onload = function() {
   document.getElementById('playpause').addEventListener("click", playPauseButtonClick);
   function playPauseButtonClick() {
     if (counter == 0) {
+      document.getElementById('playpause').src = './resources/images/buttons/play.png'
       talkWithParent_2('muteSound');
       window.cancelAnimationFrame(canvas.animationRequest);
       counter++;
     } else {
+      document.getElementById('playpause').src = './resources/images/buttons/pause.png'
       talkWithParent_2('muteSound');
       canvas.gameloop();
       counter = 0;
