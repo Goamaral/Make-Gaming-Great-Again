@@ -11,6 +11,9 @@
 
 // On window full load
 window.onload = function() {
+  // Counter to check if game is paused
+  let counter = 0;
+
   // Get main node from DOM
   let main = document.getElementsByTagName("main")[0];
 
@@ -45,6 +48,21 @@ window.onload = function() {
   window.addEventListener('backgroundsLoaded', backgroundsLoadedHandler);
   //Load background images
   let backgroundNodesObject = loadBackgroundImages();
+
+  document.getElementById('playpause').addEventListener("click", playPauseButtonClick);
+  function playPauseButtonClick() {
+    if (counter == 0) {
+      document.getElementById('playpause').src = './resources/images/buttons/play.png'
+      talkWithParent_2('muteSound');
+      window.cancelAnimationFrame(canvas.animationRequest);
+      counter++;
+    } else {
+      document.getElementById('playpause').src = './resources/images/buttons/pause.png'
+      talkWithParent_2('muteSound');
+      canvas.gameloop();
+      counter = 0;
+    }
+  }
 
   // Waits for event heroSpritesLoaded event to be triggered
   function heroSpritesLoadedHandler() {
@@ -151,20 +169,22 @@ function loadBackgroundImages() {
 }
 
 // Load every sprite and create a image node for each one
-// NOT RESPONSIVE
 function createImageNodes(names, path, mode) {
   let out = {};
   let count = 0;
 
   if (mode == 'enemies') {
     var picCount = 0;
+
     for (let key in names) {
       let arr = names[key].arr;
       picCount += arr.length;
     }
+
     for (let key in names) {
       let arr = names[key].arr;
       let _out = {};
+
       for (let ind in arr) {
         let name = arr[ind];
         let node = new Image();
@@ -172,6 +192,7 @@ function createImageNodes(names, path, mode) {
         node.src = path + name + '.png';
         _out[name] = node;
       }
+
       out[names[key].name] = { sprites: _out, type: names[key].type };
     }
     return out;
@@ -189,27 +210,21 @@ function createImageNodes(names, path, mode) {
 
   function onloadHandler(ev) {
     let targ = ev.target;
+
     if(mode == 'hero') {
-      //NOT RESPONSIVE
       targ.height = targ.naturalHeight/5;
-      //NOT RESPONSIVE
       targ.width = targ.naturalWidth/5;
     } else if(mode == 'backgrounds') {
-      //NOT RESPONSIVE
       targ.height = targ.naturalHeight;
-      //NOT RESPONSIVE
       targ.width = targ.naturalWidth;
     } else if (mode == 'enemies') {
-      //NOT RESPONSIVE
       targ.height = targ.naturalHeight;
-      //NOT RESPONSIVE
       targ.width = targ.naturalWidth;
     } else if (mode == 'wigs') {
-      //NOT RESPONSIVE
       targ.height = targ.naturalHeight;
-      //NOT RESPONSIVE
       targ.width = targ.naturalWidth;
     }
+
     ++count;
     if (mode == 'enemies') {
       if(count == picCount) {
@@ -241,6 +256,7 @@ function createImageNodes(names, path, mode) {
 // Create Sprite objects for each sprite node of hero
 function spriteNodesToHeroObjects(heroSpriteNodesObject) {
   let out = {};
+
   // Create Sprite objects
   for (let spriteName in heroSpriteNodesObject) {
     let img = heroSpriteNodesObject[spriteName];
@@ -256,11 +272,13 @@ function spriteNodesToEnemiesObjects(enemiesSpriteNodesObject) {
   for (let key in enemiesSpriteNodesObject) {
     let _out = [];
     let obj = enemiesSpriteNodesObject[key].sprites;
+
     // Create Sprite objects
     for (let spriteName in obj) {
       let img = obj[spriteName];
       _out.push(new Sprite(img));
     }
+
     out[key] = new Enemy(_out, enemiesSpriteNodesObject[key].type);
   }
   return out;
@@ -269,22 +287,26 @@ function spriteNodesToEnemiesObjects(enemiesSpriteNodesObject) {
 // Create Sprite objects for each wig node
 function spriteNodesToWigObjects(wigNodesObject) {
   let out = {};
+
   // Create Sprite objects
   for (let wigName in wigNodesObject) {
     let img = wigNodesObject[wigName];
     out[wigName] = new Wig(img);
   }
+
   return out;
 }
 
 // Create Sprite objects for each background node
 function spriteNodesToBackgroundObjects(backgroundNodesObject) {
   let out = {};
+
   // Create Sprite objects
   for (let backgroundName in backgroundNodesObject) {
     let img = backgroundNodesObject[backgroundName];
     out[backgroundName] = new Background(img);
   }
+
   return out;
 }
 
