@@ -11,8 +11,8 @@
 
 // On window full load
 window.onload = function() {
-  // Counter to check if game is paused
-  let counter = 0;
+  // Var to mute game on pause
+  let pauseGameMute = false;
 
   // Get main node from DOM
   let main = document.getElementsByTagName("main")[0];
@@ -51,19 +51,22 @@ window.onload = function() {
 
   // Play and pause menu
   document.getElementById('playpause').addEventListener("click", playPauseButtonClick);
+
   function playPauseButtonClick() {
-    if (counter == 0) {
-      document.getElementById('playpause').src = './resources/images/buttons/play.png'
-      document.getElementById('pause-menu').style.display = 'block'
-      talkWithParent_2('muteSound');
-      window.cancelAnimationFrame(canvas.animationRequest);
-      counter++;
-    } else {
+    if (pauseGameMute == true) {
       document.getElementById('pause-menu').style.display = 'none'
       document.getElementById('playpause').src = './resources/images/buttons/pause.png'
+
+      pauseGameMute = false;
       talkWithParent_2('muteSound');
       canvas.gameloop();
-      counter = 0;
+    } else if(pauseGameMute == false) {
+      window.cancelAnimationFrame(canvas.animationRequest);
+      document.getElementById('pause-menu').style.display = 'block'
+      document.getElementById('playpause').src = './resources/images/buttons/play.png'
+
+      pauseGameMute = true;
+      talkWithParent_2('muteSound');
     }
   }
 
