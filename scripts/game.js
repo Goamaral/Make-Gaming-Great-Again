@@ -14,6 +14,9 @@ window.onload = function() {
   // Var to mute game on pause
   let pauseGameMute = false;
 
+  // Var that tells if game is muted by pause-menu
+  let gameMuted = false;
+
   // Get main node from DOM
   let main = document.getElementsByTagName("main")[0];
 
@@ -52,13 +55,15 @@ window.onload = function() {
   // Play and pause menu
   document.getElementById('playpause').addEventListener("click", playPauseButtonClick);
 
-  function playPauseButtonClick() {
+  function handleClicksOnPlayPauseButton(gameMuted) {
     if (pauseGameMute == true) {
       document.getElementById('pause-menu').style.display = 'none'
       document.getElementById('playpause').src = './resources/images/buttons/pause.png'
 
       pauseGameMute = false;
-      talkWithParent_2('muteSound');
+      if (gameMuted == false) {
+        talkWithParent_2('muteSound');
+      }
       canvas.gameloop();
     } else if(pauseGameMute == false) {
       window.cancelAnimationFrame(canvas.animationRequest);
@@ -66,8 +71,14 @@ window.onload = function() {
       document.getElementById('playpause').src = './resources/images/buttons/play.png'
 
       pauseGameMute = true;
-      talkWithParent_2('muteSound');
+      if (gameMuted == false) {
+        talkWithParent_2('muteSound');
+      }
     }
+  }
+
+  function playPauseButtonClick() {
+    handleClicksOnPlayPauseButton(gameMuted);
   }
 
   // Waits for event heroSpritesLoaded event to be triggered
