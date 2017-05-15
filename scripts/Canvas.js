@@ -64,7 +64,7 @@ class Canvas {
       this.speed += 1;
       this.hero.jumpingTime = 25 - (this.speed-3) * 4;
       this.selectBackground(this.backgroundsNames[this.level]);
-    } else if (this.mode == 'infiniteGame' && this.animationRequest % 500 == 0) {
+    } else if (this.mode == 'infiniteGame' && this.animationRequest % 350 == 0 && this.speed < 6.6) {
       this.speed = this.speed + 0.2;
       this.hero.jumpingTime = 25 - (this.speed - 3) * 4;
     }
