@@ -32,7 +32,6 @@ class Hero {
   }
 
   update(locked, speed) {
-	console.log(locked, speed, this.jumping, this.sliding);
     if (this.jumping > 0) {
       this.runInstruction('ContinueJump', speed);
     } else if (this.sliding > 0) {
