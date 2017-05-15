@@ -46,6 +46,11 @@ window.onload = function() {
   //Load background images
   let backgroundNodesObject = loadBackgroundImages();
 
+  document.getElementById('playpause').addEventListener("click", playPauseButtonClick)
+  function playPauseButtonClick() {
+    talkWithParent_2('muteSound')
+  }
+
   // Waits for event heroSpritesLoaded event to be triggered
   function heroSpritesLoadedHandler() {
     window.removeEventListener('heroSpritesLoaded', heroSpritesLoadedHandler);

@@ -54,6 +54,7 @@ window.onload = function() {
     if(ev.data.msg == 'endOfStoryGame') {
       audio.currentTime = 0;
       audioGame.currentTime = 0;
+
       if(!mute) {
         audioGame.muted = true;
         audio.muted = false;
@@ -75,7 +76,7 @@ window.onload = function() {
     switch (ev.data) {
       case 'storyGameButton':
         audio.muted = true;
-        console.log(mute);
+
         if(!mute) {
           audioGame.currentTime = 0;
           audioGame.muted = false;
@@ -86,6 +87,7 @@ window.onload = function() {
         break;
       case 'infiniteGameButton':
         audio.muted = true;
+
         if(!mute) {
           audioGame.currentTime = 0;
           audioGame.muted = false;
@@ -129,6 +131,15 @@ window.onload = function() {
         }
         iframeGame.name = 'storyGame';
         mountIframe(iframeWin);
+      case 'muteSound':
+        if(!mute) {
+          audioGame.muted = true;
+          mute = true;
+        } else {
+          audioGame.currentTime = 0;
+          audioGame.muted = false;
+          mute = false;
+        }
         break;
     }
   }
