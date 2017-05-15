@@ -11,6 +11,9 @@
 
 // On window full load
 window.onload = function() {
+  // Counter to check if game is paused
+  let counter = 0;
+
   // Get main node from DOM
   let main = document.getElementsByTagName("main")[0];
 
@@ -48,8 +51,15 @@ window.onload = function() {
 
   document.getElementById('playpause').addEventListener("click", playPauseButtonClick);
   function playPauseButtonClick() {
-    talkWithParent_2('muteSound');
-    window.cancelAnimationFrame(canvas.animationRequest);
+    if (counter == 0) {
+      talkWithParent_2('muteSound');
+      window.cancelAnimationFrame(canvas.animationRequest);
+      counter++;
+    } else {
+      talkWithParent_2('muteSound');
+      canvas.gameloop();
+      counter = 0;
+    }
   }
 
   // Waits for event heroSpritesLoaded event to be triggered

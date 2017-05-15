@@ -136,7 +136,7 @@ window.onload = function() {
           audioGame.muted = true;
           mute = true;
         } else {
-          audioGame.currentTime = 0;
+          //audioGame.currentTime = 0;
           audioGame.muted = false;
           mute = false;
         }
