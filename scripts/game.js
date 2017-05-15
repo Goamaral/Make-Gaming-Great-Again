@@ -9,14 +9,13 @@
 // NOTE: Auxiliar variables should hava a _ before their proper name, for example, _auxVar instead of auxVar
 
 
+// Var to mute game on pause
+let pauseGameMute = false;
+// Var that tells if game is muted by pause-menu
+let gameMuted = false;
+
 // On window full load
 window.onload = function() {
-  // Var to mute game on pause
-  let pauseGameMute = false;
-
-  // Var that tells if game is muted by pause-menu
-  let gameMuted = false;
-
   // Get main node from DOM
   let main = document.getElementsByTagName("main")[0];
 
@@ -55,6 +54,10 @@ window.onload = function() {
   // Play and pause menu
   document.getElementById('playpause').addEventListener("click", playPauseButtonClick);
 
+  // Add click event to mute button on pause menu
+  let muteButtons = document.getElementsByClassName('mute') 
+  muteButtons[0].addEventListener("click", muteGame);
+
   function handleClicksOnPlayPauseButton(gameMuted) {
     if (pauseGameMute == true) {
       document.getElementById('pause-menu').style.display = 'none'
@@ -79,6 +82,14 @@ window.onload = function() {
 
   function playPauseButtonClick() {
     handleClicksOnPlayPauseButton(gameMuted);
+  }
+
+  function muteGame() {
+    if (gameMuted == false) {
+      gameMuted = true;
+    } else {
+      gameMuted = false;
+    }
   }
 
   // Waits for event heroSpritesLoaded event to be triggered
@@ -361,10 +372,17 @@ function imageLoadingComplete(canvas, resources) {
 
   function gameEndedHandler(ev) {
     let { score, mode } = ev.data;
-    if (mode == 'storyGame')
+
+    if (gameMuted == true) {
+      talkWithParent_2('muteSound')
+    }
+
+    if (mode == 'storyGame') {
       talkWithParent("endOfStoryGame", 0);
-    else
+    }
+    else {
       talkWithParent("endOfInfiniteGame", score);
+    }
   }
 
   function winHandler(ev) {
