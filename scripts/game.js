@@ -46,9 +46,10 @@ window.onload = function() {
   //Load background images
   let backgroundNodesObject = loadBackgroundImages();
 
-  document.getElementById('playpause').addEventListener("click", playPauseButtonClick)
+  document.getElementById('playpause').addEventListener("click", playPauseButtonClick);
   function playPauseButtonClick() {
-    talkWithParent_2('muteSound')
+    talkWithParent_2('muteSound');
+    window.cancelAnimationFrame(canvas.animationRequest);
   }
 
   // Waits for event heroSpritesLoaded event to be triggered
