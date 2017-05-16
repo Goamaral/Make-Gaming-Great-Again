@@ -55,8 +55,11 @@ window.onload = function() {
   document.getElementById('playpause').addEventListener("click", playPauseButtonClick);
 
   // Add click event to mute button on pause menu
-  let muteButtons = document.getElementsByClassName('mute') 
+  let muteButtons = document.getElementsByClassName('mute');
   muteButtons[0].addEventListener("click", muteGame);
+
+  let menuButtons = document.getElementsByClassName('menu'); 
+  menuButtons[0].addEventListener("click", backToMenu);
 
   // Handle play/pause click according to if the game sound is muted or not
   function playPauseButtonClick() {
@@ -81,6 +84,7 @@ window.onload = function() {
     }
   }
 
+  // Handles muting game sound and changes button text
   function muteGame() {
     if (gameMuted == false) {
       muteButtons[0].value = 'Unmute Sound'
@@ -89,6 +93,14 @@ window.onload = function() {
       muteButtons[0].value = 'Mute Sound'
       gameMuted = false;
     }
+  }
+
+  // Goes back to menu
+  function backToMenu() {
+    if (gameMuted == true) {
+      talkWithParent_2('muteSound')
+    }
+    talkWithParent_2('backToMenu');
   }
 
   // Waits for event heroSpritesLoaded event to be triggered
