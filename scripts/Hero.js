@@ -67,9 +67,10 @@ class Hero {
           this.runInstruction('up', speed);
           this.jumping = this.jumping - 1;
         }
-		if (this.jumping < 0) {
-			this.jumping = 0;
-		}
+        if (this.jumping <= 0) {
+          this.jumping = 0;
+          this.y = this.baseY;
+        }
         break;
       case 'ArrowDown':
         this.y = this.slidingY;
