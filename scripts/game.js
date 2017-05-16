@@ -83,8 +83,10 @@ window.onload = function() {
 
   function muteGame() {
     if (gameMuted == false) {
+      muteButtons[0].value = 'Unmute Sound'
       gameMuted = true;
     } else {
+      muteButtons[0].value = 'Mute Sound'
       gameMuted = false;
     }
   }
