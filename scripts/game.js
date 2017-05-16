@@ -9,11 +9,13 @@
 // NOTE: Auxiliar variables should hava a _ before their proper name, for example, _auxVar instead of auxVar
 
 
+// Var to mute game on pause
+let pauseGameMute = false;
+// Var that tells if game is muted by pause-menu
+let gameMuted = false;
+
 // On window full load
 window.onload = function() {
-  // Counter to check if game is paused
-  let counter = 0;
-
   // Get main node from DOM
   let main = document.getElementsByTagName("main")[0];
 
@@ -49,19 +51,56 @@ window.onload = function() {
   //Load background images
   let backgroundNodesObject = loadBackgroundImages();
 
+  // Play and pause menu
   document.getElementById('playpause').addEventListener("click", playPauseButtonClick);
+
+  // Add click event to mute button on pause menu
+  let muteButtons = document.getElementsByClassName('mute');
+  muteButtons[0].addEventListener("click", muteGame);
+
+  let menuButtons = document.getElementsByClassName('menu'); 
+  menuButtons[0].addEventListener("click", backToMenu);
+
+  // Handle play/pause click according to if the game sound is muted or not
   function playPauseButtonClick() {
-    if (counter == 0) {
-      document.getElementById('playpause').src = './resources/images/buttons/play.png'
-      talkWithParent_2('muteSound');
-      window.cancelAnimationFrame(canvas.animationRequest);
-      counter++;
-    } else {
+    if (pauseGameMute == true) {
+      document.getElementById('pause-menu').style.display = 'none'
       document.getElementById('playpause').src = './resources/images/buttons/pause.png'
-      talkWithParent_2('muteSound');
+
+      pauseGameMute = false;
+      if (gameMuted == false) {
+        talkWithParent_2('muteSound');
+      }
       canvas.gameloop();
-      counter = 0;
+    } else if(pauseGameMute == false) {
+      window.cancelAnimationFrame(canvas.animationRequest);
+      document.getElementById('pause-menu').style.display = 'block'
+      document.getElementById('playpause').src = './resources/images/buttons/play.png'
+
+      pauseGameMute = true;
+      if (gameMuted == false) {
+        talkWithParent_2('muteSound');
+      }
     }
+  }
+
+  // Handles muting game sound and changes button text
+  function muteGame() {
+    if (gameMuted == false) {
+      muteButtons[0].value = 'Unmute Sound'
+      gameMuted = true;
+    } else {
+      muteButtons[0].value = 'Mute Sound'
+      gameMuted = false;
+    }
+  }
+
+  // Goes back to menu
+  function backToMenu() {
+    if (gameMuted == true) {
+      talkWithParent_2('muteSound')
+    }
+    talkWithParent_2('backToMenu');
   }
 
   // Waits for event heroSpritesLoaded event to be triggered
@@ -344,10 +383,17 @@ function imageLoadingComplete(canvas, resources) {
 
   function gameEndedHandler(ev) {
     let { score, mode } = ev.data;
-    if (mode == 'storyGame')
+
+    if (gameMuted == true) {
+      talkWithParent_2('muteSound')
+    }
+
+    if (mode == 'storyGame') {
       talkWithParent("endOfStoryGame", 0);
-    else
+    }
+    else {
       talkWithParent("endOfInfiniteGame", score);
+    }
   }
 
   function winHandler(ev) {

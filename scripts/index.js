@@ -125,21 +125,32 @@ window.onload = function() {
       case 'win':
         audio.currentTime = 0;
         audioGame.currentTime = 0;
+
         if(!mute) {
           audioGame.muted = true;
           audio.muted = false;
         }
         iframeGame.name = 'storyGame';
         mountIframe(iframeWin);
+        break;
       case 'muteSound':
         if(!mute) {
           audioGame.muted = true;
           mute = true;
         } else {
-          //audioGame.currentTime = 0;
           audioGame.muted = false;
           mute = false;
         }
+        break;
+      case 'backToMenu':
+        audio.currentTime = 0;
+        audioGame.currentTime = 0;
+
+        if(!mute) {
+          audioGame.muted = true;
+          audio.muted = false;
+        }
+        mountIframe(iframeMenu);
         break;
     }
   }
