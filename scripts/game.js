@@ -58,7 +58,8 @@ window.onload = function() {
   let muteButtons = document.getElementsByClassName('mute') 
   muteButtons[0].addEventListener("click", muteGame);
 
-  function handleClicksOnPlayPauseButton(gameMuted) {
+  // Handle play/pause click according to if the game sound is muted or not
+  function playPauseButtonClick() {
     if (pauseGameMute == true) {
       document.getElementById('pause-menu').style.display = 'none'
       document.getElementById('playpause').src = './resources/images/buttons/pause.png'
@@ -78,10 +79,6 @@ window.onload = function() {
         talkWithParent_2('muteSound');
       }
     }
-  }
-
-  function playPauseButtonClick() {
-    handleClicksOnPlayPauseButton(gameMuted);
   }
 
   function muteGame() {
