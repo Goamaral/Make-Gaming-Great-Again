@@ -88,6 +88,10 @@ window.onload = function() {
           iframeGame.onload = function() {
             iframeGame.contentWindow.postMessage('muted', '*');
           }
+        } else {
+          iframeGame.onload = function() {
+            iframeGame.contentWindow.postMessage('notMuted', '*');
+          }
         }
         break;
       case 'infiniteGameButton':
@@ -103,6 +107,10 @@ window.onload = function() {
         if (mute == true) {
           iframeGame.onload = function() {
             iframeGame.contentWindow.postMessage('muted', '*');
+          }
+        } else {
+          iframeGame.onload = function() {
+            iframeGame.contentWindow.postMessage('notMuted', '*');
           }
         }
         break;

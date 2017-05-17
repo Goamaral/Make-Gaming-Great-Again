@@ -79,7 +79,11 @@ window.onload = function() {
 
   function messageRecievedHandler(ev) {
     if (ev.data == 'muted') {
+      muteButtons[0].style.display = 'none';
       settingsMuted = true;
+    }
+    if (ev.data == 'notMuted') {
+      muteButtons[0].style.display = 'inline';
     }
   }
 
@@ -123,10 +127,10 @@ window.onload = function() {
   // Handles muting game sound and changes button text
   function muteGame() {
     if (gameMuted == false) {
-      muteButtons[0].value = 'Unmute Sound'
+      muteButtons[0].value = 'Unmute Game'
       gameMuted = true;
     } else {
-      muteButtons[0].value = 'Mute Sound'
+      muteButtons[0].value = 'Mute Game'
       gameMuted = false;
     }
   }
