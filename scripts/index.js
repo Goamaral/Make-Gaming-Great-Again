@@ -84,6 +84,11 @@ window.onload = function() {
         }
         iframeGame.name = 'storyGame';
         mountIframe(iframeGame);
+        if (mute == true) {
+          iframeGame.onload = function() {
+            iframeGame.contentWindow.postMessage('muted', '*');
+          }
+        }
         break;
       case 'infiniteGameButton':
         audio.muted = true;
@@ -95,6 +100,11 @@ window.onload = function() {
         }
         iframeGame.name = 'infiniteGame';
         mountIframe(iframeGame);
+        if (mute == true) {
+          iframeGame.onload = function() {
+            iframeGame.contentWindow.postMessage('muted', '*');
+          }
+        }
         break;
       case 'howToPlayButton':
         mountIframe(iframeHowToPlay);
@@ -143,14 +153,16 @@ window.onload = function() {
         }
         break;
       case 'backToMenu':
-        audio.currentTime = 0;
-        audioGame.currentTime = 0;
-
+        mountIframe(iframeMenu);
         if(!mute) {
+          audio.currentTime = 0;
+          audioGame.currentTime = 0;
           audioGame.muted = true;
           audio.muted = false;
+        } else {
+          audioGame.muted = true;
+          audio.muted = true;
         }
-        mountIframe(iframeMenu);
         break;
     }
   }
