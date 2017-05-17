@@ -121,6 +121,7 @@ window.onload = function() {
         mountIframe(iframeHighscores);
         break;
       case 'settingsButton':
+        iframeSettings.name = 'settings'
         mountIframe(iframeSettings);
         break;
       case 'muteButton':
@@ -161,8 +162,7 @@ window.onload = function() {
         }
         break;
       case 'backToMenu':
-        mountIframe(iframeMenu);
-        if(!mute) {
+        if(mute == false) {
           audio.currentTime = 0;
           audioGame.currentTime = 0;
           audioGame.muted = true;
@@ -171,6 +171,7 @@ window.onload = function() {
           audioGame.muted = true;
           audio.muted = true;
         }
+        mountIframe(iframeMenu);
         break;
     }
   }

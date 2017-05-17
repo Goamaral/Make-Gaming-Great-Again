@@ -139,6 +139,12 @@ window.onload = function() {
   function backToMenu() {
     if (gameMuted == true && settingsMuted == false) {
       talkWithParent_2('muteSound')
+    } else if (pauseGameMute == true && settingsMuted == false) {
+      pauseGameMute = false;
+      talkWithParent_2('muteSound');
+      talkWithParent_2('backToMenu');
+    } else {
+      talkWithParent_2('backToMenu');
     }
     talkWithParent_2('backToMenu');
   }
