@@ -84,6 +84,15 @@ window.onload = function() {
         }
         iframeGame.name = 'storyGame';
         mountIframe(iframeGame);
+        if (mute == true) {
+          iframeGame.onload = function() {
+            iframeGame.contentWindow.postMessage('muted', '*');
+          }
+        } else {
+          iframeGame.onload = function() {
+            iframeGame.contentWindow.postMessage('notMuted', '*');
+          }
+        }
         break;
       case 'infiniteGameButton':
         audio.muted = true;
@@ -95,6 +104,15 @@ window.onload = function() {
         }
         iframeGame.name = 'infiniteGame';
         mountIframe(iframeGame);
+        if (mute == true) {
+          iframeGame.onload = function() {
+            iframeGame.contentWindow.postMessage('muted', '*');
+          }
+        } else {
+          iframeGame.onload = function() {
+            iframeGame.contentWindow.postMessage('notMuted', '*');
+          }
+        }
         break;
       case 'howToPlayButton':
         mountIframe(iframeHowToPlay);
@@ -103,6 +121,7 @@ window.onload = function() {
         mountIframe(iframeHighscores);
         break;
       case 'settingsButton':
+        iframeSettings.name = 'settings'
         mountIframe(iframeSettings);
         break;
       case 'muteButton':
@@ -143,12 +162,14 @@ window.onload = function() {
         }
         break;
       case 'backToMenu':
-        audio.currentTime = 0;
-        audioGame.currentTime = 0;
-
-        if(!mute) {
+        if(mute == false) {
+          audio.currentTime = 0;
+          audioGame.currentTime = 0;
           audioGame.muted = true;
           audio.muted = false;
+        } else {
+          audioGame.muted = true;
+          audio.muted = true;
         }
         mountIframe(iframeMenu);
         break;
