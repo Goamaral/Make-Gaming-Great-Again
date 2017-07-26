@@ -1,3 +1,0 @@
-add volume control in game
-pauseGame() -> pauses game
-how to Play
